@@ -19,6 +19,7 @@ const
 client.config = config;
 client.commands = new Collection();
 client.queue = new Map();
+client.prefix = DEFAULTPREFIX;
 
 /* ---------- IMPORT ALL COMMANDS ---------- */
 var walk = (dir, done) => {
