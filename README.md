@@ -1,6 +1,8 @@
 # Music Bot
 GitHub Repository of Music Bot.
 
+(The bot's music system was made using source from eritislami/evobot, including changes by me. Thank them for the amazing music system.)
+
 ## Music Bot Features
 
 YouTube, SoundCloud, Spotify (unstable-ish) support.
