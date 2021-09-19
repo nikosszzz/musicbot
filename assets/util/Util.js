@@ -19,7 +19,7 @@ module.exports = {
                     .setFooter(message.member.displayName, message.author.displayAvatarURL({ dynamic: true }))
                     .setTimestamp()
                 !PRUNING && queue.textChannel.send(inactivityLeave);
-            }, STAY_TIME * 20);
+            }, STAY_TIME * 1000);
             return message.client.queue.delete(message.guild.id);
         };
 

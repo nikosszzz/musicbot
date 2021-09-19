@@ -8,6 +8,6 @@
     "MAX_PLAYLIST_SIZE": 20,
     "DEFAULTPREFIX": "!",
     "PRUNING": true,
-    "STAY_TIME": 2000,
+    "STAY_TIME": 30,
     "DEFAULT_VOLUME": 50
 }
