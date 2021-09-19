@@ -16,5 +16,5 @@ exports.SPOTIFY_CLIENT_ID = config ? config.SPOTIFY_CLIENT_ID : process.env.SPOT
 exports.SPOTIFY_SECRET_ID = config ? config.SPOTIFY_SECRET_ID : process.env.SPOTIFY_SECRET_ID;
 exports.PRUNING = (config ? config.PRUNING : process.env.PRUNING) || true;
 exports.STAY_TIME = (config ? config.STAY_TIME : process.env.STAY_TIME) || 30;
-exports.DEFAULTPREFIX = (config ? config.PREFIX : process.env.PREFIX) || "r!";
+exports.DEFAULTPREFIX = (config ? config.PREFIX : process.env.PREFIX) || "!";
 exports.DEFAULT_VOLUME = (config ? config.DEFAULT_VOLUME : process.env.DEFAULT_VOLUME) || 50;
