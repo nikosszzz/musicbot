@@ -25,13 +25,6 @@ module.exports = {
             .setFooter(message.member.displayName, message.author.displayAvatarURL({ dynamic: true }))
             .setTimestamp()
 
-        let joinVCF = new MessageEmbed()
-            .setColor('#000000')
-            .setTitle(`Track Player`)
-            .setDescription(`You need to join the voice channel the bot is in.`)
-            .setFooter(message.member.displayName, message.author.displayAvatarURL({ dynamic: true }))
-            .setTimestamp()
-
         if (!canModifyQueue(message.member)) return message.channel.send(joinVCF); 
         if (!queue) return message.channel.send(nothingPlaying);
 
