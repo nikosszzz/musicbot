@@ -9,7 +9,6 @@ const
     config = require("./config.json"),
     client = new Client({ fetchAllMembers: false, restTimeOffset: 0, restWsBridgetimeout: 100, disableMentions: 'everyone' }),
     mongoose = require('mongoose'),
-    Auditlog = require('./assets/handlers/auditlog'),
     errorHandler = require('./assets/handlers/error'),
     fs = require("fs"),
     path = require("path"),
