@@ -1,0 +1,1 @@
+exports.canModifyQueue = (member) => member.voice.channelID === member.guild.voice.channelID;
