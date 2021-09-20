@@ -1,6 +1,6 @@
 const
     { MessageEmbed } = require("discord.js"),
-    { YOUTUBE_API_KEY, PREFIX } = require('../../assets/handlers/config'),
+    { YOUTUBE_API_KEY } = require('../../assets/handlers/config'),
     { canModifyQueue } = require('../../assets/handlers/modifyqueue'),
     YouTubeAPI = require("simple-youtube-api"),
 
@@ -15,7 +15,7 @@ module.exports = {
         let usagevc1 = new MessageEmbed()
             .setColor('#000000')
             .setTitle(`Track Player`)
-            .setDescription(`Usage: ${DEFAULTPREFIX}${module.exports.config.name} <Video Name>`)
+            .setDescription(`Usage: ${message.client.prefix}${module.exports.config.name} <Video Name>`)
             .setFooter(message.member.displayName, message.author.displayAvatarURL({ dynamic: true }))
             .setTimestamp()
 

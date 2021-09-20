@@ -1,7 +1,6 @@
 const
     { MessageEmbed } = require("discord.js"),
-    { canModifyQueue } = require("../../assets/handlers/modifyqueue"),
-    { DEFAULTPREFIX } = require('../../assets/handlers/config');
+    { canModifyQueue } = require("../../assets/handlers/modifyqueue");
 
 module.exports = {
     config: {
@@ -13,7 +12,7 @@ module.exports = {
         let usagevc1 = new MessageEmbed()
             .setColor('#000000')
             .setTitle(`Track Player`)
-            .setDescription(`Usage: ${DEFAULTPREFIX}${module.exports.config.name} <Queue Number>`)
+            .setDescription(`Usage: ${message.client.prefix}${module.exports.config.name} <Queue Number>`)
             .setFooter(message.member.displayName, message.author.displayAvatarURL({ dynamic: true }))
             .setTimestamp()
 

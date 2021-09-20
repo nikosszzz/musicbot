@@ -1,7 +1,7 @@
 const
     { MessageEmbed } = require("discord.js"),
     { play } = require('../../assets/util/Util'),
-    { YOUTUBE_API_KEY, SOUNDCLOUD_CLIENT_ID, DEFAULT_VOLUME, SPOTIFY_CLIENT_ID, SPOTIFY_SECRET_ID, DEFAULTPREFIX } = require("../../assets/handlers/config"),
+    { YOUTUBE_API_KEY, SOUNDCLOUD_CLIENT_ID, DEFAULT_VOLUME, SPOTIFY_CLIENT_ID, SPOTIFY_SECRET_ID } = require("../../assets/handlers/config"),
     ytdl = require("ytdl-core"),
     YouTubeAPI = require("simple-youtube-api"),
     scdl = require("soundcloud-downloader").default,
@@ -42,7 +42,7 @@ module.exports = {
         let usagevc1 = new MessageEmbed()
             .setColor('#000000')
             .setTitle(`Track Player`)
-            .setDescription(`Usage: ${DEFAULTPREFIX}${module.exports.config.name} <YouTube Video Name/URL, Spotify Link or Soundcloud URL>.`)
+            .setDescription(`Usage: ${message.client.prefix}${module.exports.config.name} <YouTube Video Name/URL, Spotify Link or Soundcloud URL>.`)
             .setFooter(message.member.displayName, message.author.displayAvatarURL({ dynamic: true }))
             .setTimestamp()
 
