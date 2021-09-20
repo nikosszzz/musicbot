@@ -1,10 +1,7 @@
 const
     { MessageEmbed } = require("discord.js"),
-    { YOUTUBE_API_KEY } = require('../../assets/handlers/config'),
     { canModifyQueue } = require('../../assets/handlers/modifyqueue'),
-    YouTubeAPI = require("simple-youtube-api"),
-
-    youtube = new YouTubeAPI(YOUTUBE_API_KEY);
+    YouTubeAPI = require("youtube-sr").default;
 
 module.exports = {
     config: {
@@ -12,6 +9,9 @@ module.exports = {
         description: "Search and select tracks to play.",
     },
     execute: async (message, args) => {
+        const { channel } = message.member.voice;
+        const search = args.join(" ");
+
         let usagevc1 = new MessageEmbed()
             .setColor('#000000')
             .setTitle(`Track Player`)
@@ -33,19 +33,12 @@ module.exports = {
             .setFooter(message.member.displayName, message.author.displayAvatarURL({ dynamic: true }))
             .setTimestamp()
 
-        let joinVCF = new MessageEmbed()
-            .setColor('#000000')
-            .setTitle(`Track Player`)
-            .setDescription(`You need to join the voice channel the bot is in.`)
-            .setFooter(message.member.displayName, message.author.displayAvatarURL({ dynamic: true }))
-            .setTimestamp()
-
-        if (!canModifyQueue(message.member)) return message.channel.send(joinVCF); 
         if (!search) return message.channel.send(usagevc1);
         if (message.channel.activeCollector) return message.channel.send(collectorActive);
         if (!message.member.voice.channel) return message.channel.send(nothingPlaying);
 
-        const search = args.join(" ");
+        await message.guild.me.voice.setSelfDeaf(true);
+        await channel.join();
 
         let resultsEmbed = new MessageEmbed()
             .setTitle(`**Reply with the song number you want to play.**`)
@@ -55,8 +48,9 @@ module.exports = {
             .setTimestamp()
 
         try {
-            const results = await youtube.searchVideos(search, 10);
-            results.map((video, index) => resultsEmbed.addField(video.shortURL, `${index + 1}. ${video.title}`));
+            let results = await YouTubeAPI.search(search, { limit: 10 });
+
+            results.map((video, index) => resultsEmbed.addField(video.url, `${index + 1}. ${video.title}`));
 
             let resultsMessage = await message.channel.send(resultsEmbed);
 

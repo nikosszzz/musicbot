@@ -1,7 +1,7 @@
 const
     { MessageEmbed } = require("discord.js"),
     { play } = require('../../assets/util/Util'),
-    { YOUTUBE_API_KEY, SOUNDCLOUD_CLIENT_ID, MAX_PLAYLIST_SIZE, DEFAULT_VOLUME } = require("../../assets/handlers/config"),
+    { YOUTUBE_API_KEY, SOUNDCLOUD_CLIENT_ID, MAX_PLAYLIST_SIZE, DEFAULT_VOLUME, DEFAULTPREFIX } = require("../../assets/handlers/config"),
     { getTracks } = require('spotify-url-info'),
     YouTubeAPI = require("simple-youtube-api"),
     scdl = require("soundcloud-downloader").default,
@@ -104,7 +104,7 @@ module.exports = {
             };
         } else if (urlValid) {
             try {
-                playlist = await youtube.getPlaylist(url, { part: "id" });
+                playlist = await youtube.getPlaylist(url, { part: "snippet" });
                 videos = await playlist.getVideos(MAX_PLAYLIST_SIZE, { part: "snippet" });
             } catch (error) {
                 console.error(error);
@@ -123,7 +123,7 @@ module.exports = {
             };
         } else {
             try {
-                const results = await youtube.searchPlaylists(search, 1, { part: "snippet" });
+                const results = await youtube.searchPlaylists(search, 1, { part: "id" });
                 playlist = results[0];
                 videos = await playlist.getVideos(MAX_PLAYLIST_SIZE || 10, { part: "snippet" });
             } catch (error) {
