@@ -5,7 +5,6 @@
 .node-version
 .prettierrc
 .replit
-.config.json
 CODE_OF_CONDUCT.md
 config.json.example
 CONTRIBUTING.md
