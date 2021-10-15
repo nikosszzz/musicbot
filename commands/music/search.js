@@ -1,6 +1,5 @@
 const
     { MessageEmbed } = require("discord.js"),
-    { canModifyQueue } = require('../../assets/handlers/modifyqueue'),
     YouTubeAPI = require("youtube-sr").default;
 
 module.exports = {
@@ -55,7 +54,7 @@ module.exports = {
             let resultsMessage = await message.channel.send(resultsEmbed);
 
             function filter(msg) {
-                const pattern = /^[0-9]{1,2}(\s*,\s*[0-9]{1,2})*$/;
+                const pattern = /^[1-9][0]?(\s*,\s*[1-9][0]?)*$/;
                 return pattern.test(msg.content);
             };
 

@@ -1,15 +1,14 @@
 const
     { MessageEmbed } = require("discord.js"),
     { play } = require('../../assets/util/Util'),
-    { YOUTUBE_API_KEY, SOUNDCLOUD_CLIENT_ID, DEFAULT_VOLUME, SPOTIFY_CLIENT_ID, SPOTIFY_SECRET_ID } = require("../../assets/handlers/config"),
+    { SOUNDCLOUD_CLIENT_ID, DEFAULT_VOLUME, SPOTIFY_CLIENT_ID, SPOTIFY_SECRET_ID, DEFAULTPREFIX } = require("../../assets/handlers/config"),
     ytdl = require("ytdl-core"),
-    YouTubeAPI = require("simple-youtube-api"),
+    YouTube = require("youtube-sr").default,
     scdl = require("soundcloud-downloader").default,
     https = require("https"),
     spotifyURI = require('spotify-uri'),
     Spotify = require('node-spotify-api'),
 
-    youtube = new YouTubeAPI(YOUTUBE_API_KEY),
     spotify = new Spotify({
         id: SPOTIFY_CLIENT_ID,
         secret: SPOTIFY_SECRET_ID
@@ -121,7 +120,7 @@ module.exports = {
             spotifyArtist = spotifyInfo.artists[0].name;
 
             try {
-                const spotifyresult = await youtube.searchVideos(`${spotifyTitle} - ${spotifyArtist}`, 1, { part: 'id' });
+                const spotifyresult = await YouTube.search(`${spotifyTitle} - ${spotifyArtist}`, { limit: 1 });
                 songInfo = await ytdl.getInfo(spotifyresult[0].url);
                 song = {
                     title: songInfo.videoDetails.title,
@@ -163,7 +162,7 @@ module.exports = {
             };
         } else {
             try {
-                const results = await youtube.searchVideos(search, 1, { part: "id" });
+                const results = await YouTube.search(search, { limit: 1 });
                 if (results.length <= 0) {
                     message.channel.send(`No video results.`).catch(console.error);
                     return;

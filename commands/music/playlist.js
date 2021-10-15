@@ -1,11 +1,10 @@
 const
     { MessageEmbed } = require("discord.js"),
     { play } = require('../../assets/util/Util'),
-    { YOUTUBE_API_KEY, SOUNDCLOUD_CLIENT_ID, MAX_PLAYLIST_SIZE, DEFAULT_VOLUME, DEFAULTPREFIX } = require("../../assets/handlers/config"),
+    { SOUNDCLOUD_CLIENT_ID, MAX_PLAYLIST_SIZE, DEFAULT_VOLUME } = require("../../assets/handlers/config"),
     { getTracks } = require('spotify-url-info'),
-    YouTubeAPI = require("simple-youtube-api"),
+    YouTube = require("youtube-sr").default,
     scdl = require("soundcloud-downloader").default,
-    youtube = new YouTubeAPI(YOUTUBE_API_KEY),
     ytsr = require('ytsr');
 
 module.exports = {
@@ -104,8 +103,8 @@ module.exports = {
             };
         } else if (urlValid) {
             try {
-                playlist = await youtube.getPlaylist(url, { part: "snippet" });
-                videos = await playlist.getVideos(MAX_PLAYLIST_SIZE, { part: "snippet" });
+                playlist = await YouTube.getPlaylist(url);
+                videos = await playlist.fetch();
             } catch (error) {
                 console.error(error);
                 return message.channel.send("The playlist was not found.");
@@ -123,22 +122,22 @@ module.exports = {
             };
         } else {
             try {
-                const results = await youtube.searchPlaylists(search, 1, { part: "id" });
+                const results = await YouTube.getPlaylist(url);
                 playlist = results[0];
-                videos = await playlist.getVideos(MAX_PLAYLIST_SIZE || 10, { part: "snippet" });
+                videos = await playlist.next();
             } catch (error) {
                 console.error(error);
                 return message.channel.send(error.message);
             };
         };
 
-        newSongs = videos
-            .filter((video) => video.title != "Private video" && video.title != "Deleted video")
+        newSongs = videos.videos
+            .filter((Video) => Video.title != "Private video" && Video.title != "Deleted video")
             .map((video) => {
                 return (song = {
                     title: video.title,
                     url: video.url,
-                    duration: video.durationSeconds,
+                    duration: video.duration,
                     req: message.author,
                 });
             });

@@ -90,7 +90,7 @@ function generateQueueEmbed(message, queue) {
             .setTitle("Track Queue")
             .setThumbnail(message.guild.iconURL())
             .setColor("#000000")
-            .setDescription(`**Current Song - [${queue[0].title}](${queue[0].url})**\n\n${info}`)
+            .setDescription(`**Current Song - ${queue[0].title}(${queue[0].url})**\n\n${info}`)
             .addField("Voice Channel", channel)
             .setFooter(message.member.displayName, message.author.displayAvatarURL({ dynamic: true }))
             .setTimestamp()

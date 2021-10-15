@@ -9,7 +9,6 @@ module.exports = {
     },
     execute: async (message) => {
 
-        let botversion = `1.0.0`;
         let djsversion = DiscordJSversion;
 
         let infoEmbed = new MessageEmbed()
@@ -23,7 +22,7 @@ module.exports = {
                 value: `𝕟𝕚𝕜𝕠𝕤𝕫𝕫#1275`
             }, {
                 name: 'Version',
-                value: `${botversion} (stable) running on Discord.JS v${djsversion}`
+                value: `${message.client.botversion} (${message.client.botbranch}) running on Discord.JS v${djsversion}`
             })
             .setFooter(message.member.displayName, message.author.displayAvatarURL({ dynamic: true }))
             .setTimestamp()
