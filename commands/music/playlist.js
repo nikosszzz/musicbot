@@ -10,6 +10,7 @@ const
 module.exports = {
     config: {
         name: "playlist",
+        category: 'music',
         aliases: ["pl"],
         description: "Play a playlist from YouTube or SoundCloud.",
     },
@@ -17,43 +18,55 @@ module.exports = {
         const { channel } = message.member.voice;
         const serverQueue = message.client.queue.get(message.guild.id);
 
-        let joinVCF = new MessageEmbed()
+        /* Embeds for music */
+        let playlistFetch = new MessageEmbed()
+            .setColor('#000000')
+            .setTitle(`Track Player`)
+            .setDescription(`Fetching playlist...`)
+            .setFooter(message.member.displayName, message.author.displayAvatarURL({ dynamic: true }))
+            .setTimestamp()
+
+        let playlistNotFound = new MessageEmbed()
+            .setColor('#000000')
+            .setTitle(`Track Player`)
+            .setDescription(`The playlist was not found.`)
+            .setFooter(message.member.displayName, message.author.displayAvatarURL({ dynamic: true }))
+            .setTimestamp()
+
+        let notInVC = new MessageEmbed()
             .setColor('#000000')
             .setTitle(`Track Player`)
             .setDescription(`You need to join a voice channel first.`)
             .setFooter(message.member.displayName, message.author.displayAvatarURL({ dynamic: true }))
             .setTimestamp()
 
-        let vcsc = new MessageEmbed()
+        let notInBotChannel = new MessageEmbed()
             .setColor('#000000')
             .setTitle(`Track Player`)
-            .setDescription(`You must be in the same channel as ${message.client.user}.`)
+            .setDescription(`You need to join the voice channel the bot is in.`)
             .setFooter(message.member.displayName, message.author.displayAvatarURL({ dynamic: true }))
             .setTimestamp()
 
-        let usagevc1 = new MessageEmbed()
+        let cmdUsage = new MessageEmbed()
             .setColor('#000000')
             .setTitle(`Track Player`)
             .setDescription(`Usage: ${message.client.prefix}${module.exports.config.name} <YouTube Playlist URL or Soundcloud Playlist URL>.`)
             .setFooter(message.member.displayName, message.author.displayAvatarURL({ dynamic: true }))
             .setTimestamp()
 
-        if (!channel) return message.channel.send(joinVCF);
-        if (serverQueue && channel !== message.guild.me.voice.channel) return message.channel.send(vcsc);
-        if (!args.length) return message.channel.send(usagevc1);
+        if (!channel) return message.channel.send(notInVC);
+        if (serverQueue && channel !== message.guild.me.voice.channel) return message.channel.send(notInBotChannel);
+        if (!args.length) return message.channel.send(cmdUsage);
 
         const permissions = channel.permissionsFor(message.client.user);
-
-        let missingperms = new MessageEmbed()
+        let botNoPermissions = new MessageEmbed()
             .setColor('#000000')
             .setTitle(`Track Player`)
             .setDescription(`I am missing permissions to join your channel or speak in your voice channel.`)
             .setFooter(message.member.displayName, message.author.displayAvatarURL({ dynamic: true }))
             .setTimestamp()
+        if (!permissions.has(["CONNECT", "SPEAK"])) return message.channel.send(botNoPermissions);
 
-        if (!permissions.has(["CONNECT", "SPEAK"])) return message.channel.send(missingperms);
-
-        const search = args.join(" ");
         const pattern = /^.*(youtu.be\/|list=)([^#\&\?]*).*/gi;
         const spotifyPlaylistPattern = /^.*(https:\/\/open\.spotify\.com\/playlist)([^#\&\?]*).*/gi;
         const spotifyPlaylistValid = spotifyPlaylistPattern.test(args[0]);
@@ -78,7 +91,7 @@ module.exports = {
 
         if (spotifyPlaylistValid) {
             try {
-                waitMessage = await message.channel.send('Fetching playlist...');
+                waitMessage = await message.channel.send(playlistFetch);
                 let playlistTrack = await getTracks(url);
                 if (playlistTrack > MAX_PLAYLIST_SIZE) {
                     playlistTrack.length = MAX_PLAYLIST_SIZE
@@ -107,11 +120,11 @@ module.exports = {
                 videos = await playlist.fetch();
             } catch (error) {
                 console.error(error);
-                return message.channel.send("The playlist was not found.");
+                return message.channel.send(playlistNotFound);
             };
         } else if (scdl.isValidUrl(args[0])) {
             if (args[0].includes("/sets/")) {
-                message.channel.send("⌛ Fetching SoundCloud playlist...");
+                message.channel.send(playlistFetch);
                 playlist = await scdl.getSetInfo(args[0], SOUNDCLOUD_CLIENT_ID);
                 videos = playlist.tracks.map((track) => ({
                     title: track.title,
@@ -131,8 +144,8 @@ module.exports = {
             };
         };
 
-        newSongs = videos.videos
-            .filter((Video) => Video.title != "Private video" && Video.title != "Deleted video")
+        newSongs = videos.videos || videos
+            .filter((video) => video.title != "Private video" && video.title != "Deleted video")
             .map((video) => {
                 return (song = {
                     title: video.title,
@@ -164,11 +177,9 @@ module.exports = {
                 await playQueue.connection.voice.setSelfDeaf(true);
                 play(playQueue.songs[0], message);
             } catch (error) {
-                console.error(error);
                 message.client.queue.delete(message.guild.id);
-                await channel.leave();
                 console.log(`BOT LOG: [TRACK PLAYER] Couldnt join a channel in ${message.guild.name}. Error Output: ${error}`);
-                return message.channel.send(`An error has occured and it has automatically been reported.`);
+                return await channel.leave();
             };
         };
     },

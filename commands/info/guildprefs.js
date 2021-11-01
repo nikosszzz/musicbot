@@ -19,12 +19,25 @@ module.exports = {
                         const prefix = args[1];
 
                         if (!prefix) {
-                            return message.channel.send(`You didn't specify a prefix.`);
-                        };
+                            let unspecifiedPrefix = new MessageEmbed()
+                                .setColor('#000000')
+                                .setTitle('Server | Settings')
+                                .setDescription(`Usage: ${message.client.prefix}${module.exports.config.name} <Setting> <Value>`)
+                                .setFooter(message.member.displayName, message.author.displayAvatarURL({ dynamic: true }))
+                                .setTimestamp()
+                            return message.channel.send(unspecifiedPrefix);
+                        }
+
+                        let PrefixUpdated = new MessageEmbed()
+                        .setColor('#000000')
+                        .setTitle('Server | Settings')
+                        .setDescription(`Successfully set this server's prefix to **__${prefix}__**. (Old prefix: ${guildPrefs.Prefix})`)
+                        .setFooter(message.member.displayName, message.author.displayAvatarURL({ dynamic: true }))
+                        .setTimestamp()
 
                         await guildModel.findOneAndUpdate({ GuildID: message.guild.id, }, { Prefix: prefix }, { upsert: true, useFindAndModify: false })
-                        message.channel.send(`Successfully set this server's prefix to **__${prefix}__**.`);
-                    };
+                        message.channel.send(PrefixUpdated);
+                    }
                 default:
                     {
                         if (args[1]) {
@@ -33,22 +46,22 @@ module.exports = {
                         let serversettings = new MessageEmbed()
                             .setColor('#000000')
                             .setTitle('Server | Settings')
-                            .setDescription(`Prefix: ${guildPrefs.Prefix}\nGuild ID: ${guildPrefs.GuildID}`)
-                            .setFooter(`You can change each setting with the following arguments: prefix.`)
-
+                            .setDescription(`Displaying server settings for ${message.guild.name} (${message.guild.id})`)
+                            .addField(`Prefix`, `${guildPrefs.Prefix}`, true)
+                            .addField(`Guild ID`, `${guildPrefs.GuildID}`, true)
+                            .setFooter(`You can change each setting with the following arguments: ${message.client.prefix}prefix.`)
+                            .setTimestamp()
                         return message.channel.send(serversettings);
-                    };
-            };
+                    }
+            }
         } else {
             let missingperms = new MessageEmbed()
                 .setColor('#000000')
-                .setTitle(`Fun | Information`)
-                .setDescription(`You do not have permission to use the settings command.`)
+                .setTitle(`Info | Server Settings`)
+                .setDescription(`You do not have permission to use the ${module.exports.config.name} command.`)
                 .setFooter(message.member.displayName, message.author.displayAvatarURL({ dynamic: true }))
                 .setTimestamp()
-
-            message.channel.send(missingperms);
-            return;
+            return message.channel.send(missingperms);
         };
     },
 };

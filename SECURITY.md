@@ -9,7 +9,7 @@ Node js Versions Support
 
 | Version   | Supported          |
 | --------- | ------------------ |
-| N.JS 16.x | Along with D.JS 13 |
+| N.JS 16.x | :white_check_mark: |
 | N.JS 14.x | :white_check_mark: |
 | N.JS 12.x | :x:                |
 

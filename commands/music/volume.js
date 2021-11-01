@@ -5,13 +5,14 @@ const
 module.exports = {
     config: {
         name: "volume",
+        category: 'music',
         aliases: ["v", "vol"],
         description: "Changes volume of currently playing music.",
     },
     execute: (message, args) => {
         const queue = message.client.queue.get(message.guild.id);
 
-        let joinVCF = new MessageEmbed()
+        let notInVC = new MessageEmbed()
             .setColor('#000000')
             .setTitle(`Track Player`)
             .setDescription(`You need to join a voice channel first.`)
@@ -25,7 +26,7 @@ module.exports = {
             .setFooter(message.member.displayName, message.author.displayAvatarURL({ dynamic: true }))
             .setTimestamp()
 
-        if (!canModifyQueue(message.member)) return message.channel.send(joinVCF); 
+        if (!canModifyQueue(message.member)) return message.channel.send(notInVC);
         if (!queue) return message.channel.send(nothingPlaying);
 
         let currentVolume = new MessageEmbed()
@@ -35,10 +36,10 @@ module.exports = {
             .setFooter(message.member.displayName, message.author.displayAvatarURL({ dynamic: true }))
             .setTimestamp()
 
-        let usagevc1 = new MessageEmbed()
+        let cmdUsage = new MessageEmbed()
             .setColor('#000000')
             .setTitle(`Track Player`)
-            .setDescription(`Please use a number to set volume.`)
+            .setDescription(`Usage: ${message.client.prefix}${module.exports.config.name} <Integer (0-100)>`)
             .setFooter(message.member.displayName, message.author.displayAvatarURL({ dynamic: true }))
             .setTimestamp()
 
@@ -50,9 +51,8 @@ module.exports = {
             .setTimestamp()
 
         if (!args[0]) return message.channel.send(currentVolume);
-        if (isNaN(args[0])) return message.channel.send(usagevc1);
-        if (Number(args[0]) > 100 || Number(args[0]) < 0)
-            return message.channel.send(useNum0100);
+        if (isNaN(args[0])) return message.channel.send(cmdUsage);
+        if (Number(args[0]) > 100 || Number(args[0]) < 0) return message.channel.send(useNum0100);
 
         queue.volume = args[0];
         queue.connection.dispatcher.setVolumeLogarithmic(args[0] / 100);
@@ -63,7 +63,6 @@ module.exports = {
             .setDescription(`Volume set to: **${queue.volume}%**.`)
             .setFooter(message.member.displayName, message.author.displayAvatarURL({ dynamic: true }))
             .setTimestamp()
-
         return queue.textChannel.send(volumeEmbed);
     },
 };

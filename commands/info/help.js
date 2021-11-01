@@ -25,6 +25,6 @@ module.exports = {
             helpEmbed.setFooter(message.member.displayName, message.author.displayAvatarURL({ dynamic: true }))
             helpEmbed.setTimestamp()
 
-        await message.channel.send(helpEmbed).catch(console.error);
+        return await message.channel.send(helpEmbed).catch(console.error);
     },
 };

@@ -46,16 +46,16 @@ module.exports = {
                 } catch (error) {
                     stream = await scdl.downloadFormat(song.url, scdl.FORMATS.MP3, SOUNDCLOUD_CLIENT_ID);
                     streamType = "unknown";
-                };
-            };
+                }
+            }
         } catch (error) {
             if (queue) {
                 queue.songs.shift();
                 module.exports.play(queue.songs[0], message);
-            };
+            }
             console.error(error);
             return message.channel.send(`Error: ${error.message ? error.message : error}`);
-        };
+        }
 
         queue.connection.on("disconnect", () => message.client.queue.delete(message.guild.id));
 
@@ -90,11 +90,10 @@ module.exports = {
             .setDescription(`Started playing: **${song.title}**.`)
             .setFooter(message.member.displayName, message.author.displayAvatarURL({ dynamic: true }))
             .setTimestamp()
-
         var playingMessage = await queue.textChannel.send(playingEmbed);
 
         if (PRUNING && playingMessage && !playingMessage.deleted) {
             playingMessage.delete({ timeout: 30000 }).catch(console.error);
-        };
+        }
     },
 };

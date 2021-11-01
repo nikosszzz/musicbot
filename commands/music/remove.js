@@ -6,36 +6,37 @@ const
 module.exports = {
     config: {
         name: "remove",
+        category: 'music',
         aliases: ["rm"],
         description: "Removes a track from the queue.",
     },
     execute: (message, args) => {
         const queue = message.client.queue.get(message.guild.id);
 
-        let nothingRemove = new MessageEmbed()
+        let nothingToRemove = new MessageEmbed()
             .setColor('#000000')
             .setTitle(`Track Player`)
             .setDescription(`There is nothing in the queue to remove.`)
             .setFooter(message.member.displayName, message.author.displayAvatarURL({ dynamic: true }))
             .setTimestamp()
 
-        let usagevc1 = new MessageEmbed()
+        let cmdUsage = new MessageEmbed()
             .setColor('#000000')
             .setTitle(`Track Player`)
             .setDescription(`Usage: ${message.client.prefix}${module.exports.config.name} <Queue Number>.`)
             .setFooter(message.member.displayName, message.author.displayAvatarURL({ dynamic: true }))
             .setTimestamp()
 
-        let joinVCF = new MessageEmbed()
+        let notInBotChannel = new MessageEmbed()
             .setColor('#000000')
             .setTitle(`Track Player`)
             .setDescription(`You need to join the voice channel the bot is in.`)
             .setFooter(message.member.displayName, message.author.displayAvatarURL({ dynamic: true }))
             .setTimestamp()
 
-        if (!canModifyQueue(message.member)) return message.channel.send(joinVCF);    
-        if (!queue) return message.channel.send(nothingRemove);
-        if (!args.length) return message.channel.send(usagevc1);
+        if (!canModifyQueue(message.member)) return message.channel.send(notInBotChannel);    
+        if (!queue) return message.channel.send(nothingToRemove);
+        if (!args.length) return message.channel.send(cmdUsage);
 
         const argsong = args.join("");
         const songs = argsong.split(",").map((arg) => parseInt(arg));
@@ -53,7 +54,6 @@ module.exports = {
                 .setDescription(`${message.author} removed **${removed.map((song) => song.title).join("\n")}** from the queue.`)
                 .setFooter(message.member.displayName, message.author.displayAvatarURL({ dynamic: true }))
                 .setTimestamp()
-
             queue.textChannel.send(removeEmbed1);
         } else if (!isNaN(args[0]) && args[0] >= 1 && args[0] <= queue.songs.length) {
             let removeEmbed2 = new MessageEmbed()

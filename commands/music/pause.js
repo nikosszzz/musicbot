@@ -5,6 +5,7 @@ const
 module.exports = {
     config: {
         name: "pause",
+        category: 'music',
         description: "Pauses the queue.",
     },
     execute: async function (message) {
@@ -17,14 +18,14 @@ module.exports = {
             .setFooter(message.member.displayName, message.author.displayAvatarURL({ dynamic: true }))
             .setTimestamp()
 
-        let joinVCF = new MessageEmbed()
+        let notInBotChannel = new MessageEmbed()
             .setColor('#000000')
             .setTitle(`Track Player`)
             .setDescription(`You need to join the voice channel the bot is in.`)
             .setFooter(message.member.displayName, message.author.displayAvatarURL({ dynamic: true }))
             .setTimestamp()
 
-        if (!canModifyQueue(message.member)) return message.channel.send(joinVCF);    
+        if (!canModifyQueue(message.member)) return message.channel.send(notInBotChannel);    
         if (!queue) return message.channel.send(nothingPlaying);
 
         if (queue.playing) {
@@ -38,7 +39,6 @@ module.exports = {
                 .setDescription(`${message.author} paused the queue.`)
                 .setFooter(message.member.displayName, message.author.displayAvatarURL({ dynamic: true }))
                 .setTimestamp()
-
             return queue.textChannel.send(pauseEmbed);
         };
     },

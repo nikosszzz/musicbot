@@ -5,6 +5,7 @@ const
 module.exports = {
     config: {
         name: "resume",
+        category: 'music',
         aliases: ["r"],
         description: "Resumes the currently non-playing track.",
     },
@@ -18,14 +19,14 @@ module.exports = {
             .setFooter(message.member.displayName, message.author.displayAvatarURL({ dynamic: true }))
             .setTimestamp()
 
-        let joinVCF = new MessageEmbed()
+        let notInBotChannel = new MessageEmbed()
             .setColor('#000000')
             .setTitle(`Track Player`)
             .setDescription(`You need to join the voice channel the bot is in.`)
             .setFooter(message.member.displayName, message.author.displayAvatarURL({ dynamic: true }))
             .setTimestamp()
 
-        if (!canModifyQueue(message.member)) return message.channel.send(joinVCF);    
+        if (!canModifyQueue(message.member)) return message.channel.send(notInBotChannel);    
         if (!queue) return message.channel.send(nothingPlaying);
 
         if (!queue.playing) {
@@ -39,17 +40,15 @@ module.exports = {
                 .setDescription(`${message.author} resumed the queue.`)
                 .setFooter(message.member.displayName, message.author.displayAvatarURL({ dynamic: true }))
                 .setTimestamp()
-
             return queue.textChannel.send(resumeEmbed);
         }
 
-        let notpausedEmbed = new MessageEmbed()
+        let notPaused = new MessageEmbed()
             .setColor('#000000')
             .setTitle(`Track Player`)
             .setDescription(`The queue is not paused.`)
             .setFooter(message.member.displayName, message.author.displayAvatarURL({ dynamic: true }))
             .setTimestamp()
-
-        message.channel.send(notpausedEmbed);
+        return message.channel.send(notPaused);
     },
 };

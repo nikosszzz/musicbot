@@ -10,7 +10,7 @@ module.exports = {
         var permissions = [];
         var acknowledgements = 'None.';
         let member;
-
+        
         if (!args.length) {
             member = message.guild.member(message.author);
         } else {
@@ -18,8 +18,10 @@ module.exports = {
 
             if (!member) {
                 return message.channel.send(`Could not fetch a user with the ID: **${args[0]}**.`);
-            };
-        };
+            }
+        }
+
+        /* Permission checks */
 
         if (member.hasPermission("KICK_MEMBERS")) {
             permissions.push("Kick Members");
@@ -65,6 +67,8 @@ module.exports = {
             permissions.push("No Key Permissions Found.");
         }
 
+        /* Acknowledgments checks */
+
         if (member.user.id == message.guild.ownerID) {
             acknowledgements = 'Server Owner';
         }
@@ -81,10 +85,14 @@ module.exports = {
             acknowledgements = 'Server Moderator';
         }
 
+        /* Role checks */
+
         let rolemap = member.roles.cache.filter(r => r.id !== message.guild.id).map(roles => `<@&${roles.id}>`).join(", ");
 
         if (rolemap.length > 1024) rolemap = "Too many roles to display.";
         if (!rolemap) rolemap = "No roles.";
+
+        /* Bot User checks */
 
         if (member.user.bot === true) {
             bot = "Yes";
@@ -92,14 +100,18 @@ module.exports = {
             bot = "No";
         };
 
+        /* Presence checks */
+
         if (member.presence.status === 'dnd')
-            status = 'Do Not Disturb';
+            presence = 'Do Not Disturb';
         if (member.presence.status === 'idle')
-            status = 'Idle';
+            presence = 'Idle';
         if (member.presence.status === 'online')
-            status = 'Online';
+            presence = 'Online';
         if (member.presence.status === 'offline')
-            status = 'Offline';
+            presence = 'Offline';
+
+        /* Extra information checks */
 
         let registered = new Date(member.user.createdTimestamp).toDateString();
         let joined = `${member.joinedAt.toDateString()} at ${member.joinedAt.toTimeString()}`;
@@ -111,14 +123,13 @@ module.exports = {
             .setThumbnail(member.user.avatarURL())
             .addField(`Joined ${message.guild.name}`, joined)
             .addField(`Registered on Discord`, registered)
-            .addField(`Status`, status)
+            .addField(`Status`, presence)
             .addField(`Bot User`, bot)
             .addField(`User Permissions`, userpermissions)
             .addField(`User Roles`, rolemap)
             .addField(`Acknowledgmenets`, acknowledgements)
             .setTimestamp()
             .setFooter(`Member ID: ${member.id}`)
-
-        return message.channel.send(infoEmbed).catch(console.error);
+        return await message.channel.send(infoEmbed).catch(console.error);
     },
 };

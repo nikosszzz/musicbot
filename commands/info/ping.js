@@ -13,11 +13,10 @@ module.exports = {
             .setColor('#000000')
             .setTitle(`Info | Latency`)
             .setAuthor(`Measures the bot's ping and API latency.`)
-            .addField(`Bot Latency`, `${botlatency}ms`)
-            .addField(`API Latency`, `${apilatency}ms`)
+            .addField(`Bot Latency`, `${botlatency}ms`, true)
+            .addField(`API Latency`, `${apilatency}ms`, true)
             .setFooter(message.member.displayName, message.author.displayAvatarURL({ dynamic: true }))
             .setTimestamp()
-
-        message.channel.send(pingEmbed).catch(console.error);
+        return message.channel.send(pingEmbed).catch(console.error);
     },
 };

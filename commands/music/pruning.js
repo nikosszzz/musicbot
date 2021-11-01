@@ -13,6 +13,7 @@ try {
 module.exports = {
     config: {
         name: "pruning",
+        category: 'music',
         description: "Toggles pruning of bot messages.",
     },
     execute: (message) => {
@@ -25,14 +26,13 @@ module.exports = {
                 return message.channel.send("There was an error writing to the file.");
             }
 
-            let pruningEmbed = new MessageEmbed()
+            let pruneEmbed = new MessageEmbed()
                 .setColor('#000000')
                 .setTitle(`Track Player`)
                 .setDescription(`Message pruning ${config.PRUNING ? "**enabled**." : "**disabled**."}`)
                 .setFooter(message.member.displayName, message.author.displayAvatarURL({ dynamic: true }))
                 .setTimestamp()
-
-            return message.channel.send(pruningEmbed);
+            return message.channel.send(pruneEmbed);
         });
     },
 };

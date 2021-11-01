@@ -11,32 +11,7 @@ module.exports = {
         let shardinfo = message.guild.shardID;
         let owner = message.guild.owner.user.tag;
 
-        if (message.guild.region === 'europe')
-            region = 'Europe';
-        if (message.guild.region === 'brazil')
-            region = 'Brazil';
-        if (message.guild.region === 'india')
-            region = 'India';
-        if (message.guild.region === 'hongkong')
-            region = 'Hong Kong';
-        if (message.guild.region === 'japan')
-            region = 'Japan';
-        if (message.guild.region === 'russia')
-            region = 'Russia';
-        if (message.guild.region === 'singapore')
-            region = 'Singapore';
-        if (message.guild.region === 'southafrica')
-            region = 'South Africa';
-        if (message.guild.region === 'sydney')
-            region = 'Sydney';
-        if (message.guild.region === 'us-central')
-            region = 'US Central';
-        if (message.guild.region === 'us-east')
-            region = 'US East';
-        if (message.guild.region === 'us-south')
-            region = 'US South';
-        if (message.guild.region === 'us-west')
-            region = 'US West';
+        /* Verification level checks */
 
         if (message.guild.verificationLevel === 'NONE')
             verification = 'No level set.';
@@ -53,16 +28,14 @@ module.exports = {
             .setColor(`#000000`)
             .setTitle(`Info | ${message.guild.name}`)
             .setThumbnail(serverIcon)
-            .addField("Owner", owner)
-            .addField("Member Count", `${message.guild.memberCount} members.`)
-            .addField("Emoji Count", `${message.guild.emojis.cache.size} emojis.`)
-            .addField("Roles Count", `${message.guild.roles.cache.size} roles.`)
-            .addField("Region", region)
-            .addField("Verification Level", verification)
-            .addField("On Shard", `Shard ${shardinfo}`)
+            .addField("Owner", owner, true)
+            .addField("Member Count", `${message.guild.memberCount} members.`, true)
+            .addField("Emoji Count", `${message.guild.emojis.cache.size} emojis.`, true)
+            .addField("Roles Count", `${message.guild.roles.cache.size} roles.`, true)
+            .addField("Verification Level", verification, true)
+            .addField("On Shard", `Shard ${shardinfo}`, true)
             .setFooter(message.member.displayName, message.author.displayAvatarURL({ dynamic: true }))
             .setTimestamp()
-
-        await message.channel.send(serverEmbed).catch(console.error);
+        return await message.channel.send(serverEmbed).catch(console.error);
     }
 }

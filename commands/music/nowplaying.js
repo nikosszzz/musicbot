@@ -3,6 +3,7 @@ const { MessageEmbed } = require("discord.js");
 module.exports = {
     config: {
         name: "nowplaying",
+        category: 'music',
         aliases: ['np'],
         description: "Shows the current playing song.",
     },
@@ -15,7 +16,6 @@ module.exports = {
             .setDescription(`There is nothing playing in the queue currently.`)
             .setFooter(message.member.displayName, message.author.displayAvatarURL({ dynamic: true }))
             .setTimestamp()
-
         if (!queue) return message.channel.send(nothingPlaying);
 
         const song = queue.songs[0];
@@ -37,7 +37,7 @@ module.exports = {
             }
             return message.channel.send(nowPlaying);
         } catch (error) {
-            message.channel.send(`An error has occured. {ConsoleErrorLog}`);
+            message.channel.send(`An error has occured. Error has been reported.`);
             return console.log(error);
         }
     },

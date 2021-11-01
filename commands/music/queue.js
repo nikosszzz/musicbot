@@ -3,22 +3,21 @@ const { MessageEmbed } = require("discord.js");
 module.exports = {
     config: {
         name: "queue",
+        category: 'music',
         aliases: ["q"],
         description: "Shows the bot queue and what is currently playing.",
     },
     execute: async (message) => {
+        const queue = message.client.queue.get(message.guild.id);
         const permissions = message.channel.permissionsFor(message.client.user);
 
-        let missingperms = new MessageEmbed()
+        let botNoPermissions = new MessageEmbed()
             .setColor('#000000')
             .setTitle(`Track Player`)
             .setDescription(`I am missing permissions to manage messages or add reactions.`)
             .setFooter(message.member.displayName, message.author.displayAvatarURL({ dynamic: true }))
             .setTimestamp()
-
-        if (!permissions.has(["MANAGE_MESSAGES", "ADD_REACTIONS"])) return message.channel.send(missingperms);
-
-        const queue = message.client.queue.get(message.guild.id);
+        if (!permissions.has(["MANAGE_MESSAGES", "ADD_REACTIONS"])) return message.channel.send(botNoPermissions);
 
         let nothingPlaying = new MessageEmbed()
             .setColor('#000000')
@@ -26,7 +25,6 @@ module.exports = {
             .setDescription(`There is nothing playing in the queue currently.`)
             .setFooter(message.member.displayName, message.author.displayAvatarURL({ dynamic: true }))
             .setTimestamp()
-
         if (!queue) return message.channel.send(nothingPlaying);
 
         let currentPage = 0;
@@ -35,7 +33,7 @@ module.exports = {
         const queueEmbed = await message.channel.send(
             `**Current Page - ${currentPage + 1}/${embeds.length}**`,
             embeds[currentPage]
-        );
+        )
 
         try {
             await queueEmbed.react("⬅️");
@@ -64,12 +62,12 @@ module.exports = {
                 } else {
                     collector.stop();
                     reaction.message.reactions.removeAll();
-                };
+                }
                 await reaction.users.remove(message.author.id);
             } catch (error) {
                 console.error(error);
                 return message.channel.send(error.message);
-            };
+            }
         });
     },
 };
@@ -86,7 +84,7 @@ function generateQueueEmbed(message, queue) {
         const info = current.map((track) => `${++j} - [${track.title}](${track.url} - Requested by ${track.req}`).join("\n");
         const { channel } = message.member.voice;
 
-        const queueEmbed = new MessageEmbed()
+        let queueEmbed = new MessageEmbed()
             .setTitle("Track Queue")
             .setThumbnail(message.guild.iconURL())
             .setColor("#000000")
@@ -94,7 +92,6 @@ function generateQueueEmbed(message, queue) {
             .addField("Voice Channel", channel)
             .setFooter(message.member.displayName, message.author.displayAvatarURL({ dynamic: true }))
             .setTimestamp()
-
         embeds.push(queueEmbed);
     };
     return embeds;

@@ -7,26 +7,23 @@ module.exports = {
         name: 'info',
         description: 'Displays information about Music Bot.',
     },
-    execute: async (message) => {
-
-        let djsversion = DiscordJSversion;
-
+    execute: (message) => {
         let infoEmbed = new MessageEmbed()
             .setColor('#000000')
             .setTitle(`Info | About the bot`)
             .addFields({
-                name: "** **",
+                name: "About",
                 value: `Music Bot is a general purpose music bot.`
             }, {
                 name: 'Developer',
                 value: `𝕟𝕚𝕜𝕠𝕤𝕫𝕫#1275`
             }, {
                 name: 'Version',
-                value: `${message.client.botversion} (${message.client.botbranch}) running on Discord.JS v${djsversion}`
+                value: `${message.client.botversion} running on Discord.JS v${DiscordJSversion}`
             })
             .setFooter(message.member.displayName, message.author.displayAvatarURL({ dynamic: true }))
             .setTimestamp()
 
-        await message.channel.send(infoEmbed).catch(console.error);
+        return message.channel.send(infoEmbed).catch(console.error);
     },
 };
