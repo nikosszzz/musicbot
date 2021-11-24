@@ -34,7 +34,7 @@
         "spotify-uri": "^2.2.0",
         "spotify-url-info": "^2.2.3",
         "tar": "^6.1.11",
-        "ws": "^8.2.3",
+        "ws": "^8.3.0",
         "youtube-sr": "^4.1.9",
         "ytdl-core": "^4.9.1",
         "ytdl-core-discord": "^1.3.1",
