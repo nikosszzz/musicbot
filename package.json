@@ -18,7 +18,7 @@
         "discord-streaming": "^3.0.1",
         "discord.js": "^12.5.3",
         "esm": "^3.2.25",
-        "ffmpeg-static": "^4.4.0",
+        "ffmpeg-static": "^4.4.1",
         "fuse.js": "^6.4.6",
         "har-schema": "^2.0.0",
         "lodash": "^4.17.21",
