@@ -1,6 +1,6 @@
 const
     { MessageEmbed } = require("discord.js"),
-    { STAY_TIME, SOUNDCLOUD_CLIENT_ID, PRUNING } = require("../services/config"),
+    { STAY_TIME, SOUNDCLOUD_CLIENT_ID, PRUNING } = require("../handlers/config"),
     ytdl = require("ytdl-core-discord"),
     scdl = require("soundcloud-downloader").default;
 
