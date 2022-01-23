@@ -1,6 +1,6 @@
 const
     { MessageEmbed } = require("discord.js"),
-    { STAY_TIME, SOUNDCLOUD_CLIENT_ID, PRUNING } = require("../handlers/config"),
+    { STAY_TIME, SOUNDCLOUD_CLIENT_ID, PRUNING } = require("../services/config"),
     ytdl = require("ytdl-core-discord"),
     scdl = require("soundcloud-downloader").default;
 
@@ -65,11 +65,11 @@ module.exports = {
 
                 queue.connection.removeAllListeners("disconnect");
 
-                if (queue.loop) {
+                if (queue.loop && queue.songs.length > 0) {
                     // if loop is on, push the song back at the end of the queue
                     let lastSong = queue.songs.shift();
                     queue.songs.push(lastSong);
-                    module.exports.play(queue.songs[0], message);
+                    module.exports.play(queue.songs[0], message, queue.songs[0].url == lastSong.url);
                 } else {
                     // Recursively play the next song
                     queue.songs.shift();

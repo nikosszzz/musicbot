@@ -17,7 +17,7 @@ client.config = config;
 client.commands = new Collection();
 client.queue = new Map();
 client.prefix = DEFAULTPREFIX;
-client.botversion = '2.0.0';
+client.botversion = '2.0.1';
 
 /* ---------- IMPORT ALL COMMANDS ---------- */
 var walk = (dir, done) => {

@@ -65,7 +65,7 @@ module.exports = {
 
             return queue.textChannel.send(removeEmbed2);
         } else {
-            return message.channel.send(usagevc1);
+            return message.channel.send(cmdUsage);
         }
     },
 };

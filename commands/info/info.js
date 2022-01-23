@@ -10,16 +10,18 @@ module.exports = {
     execute: (message) => {
         let infoEmbed = new MessageEmbed()
             .setColor('#000000')
-            .setTitle(`Info | About the bot`)
+            .setTitle(`Info | Music Bot`)
             .addFields({
-                name: "About",
+                name: "**About/Purpose**",
                 value: `Music Bot is a general purpose music bot.`
             }, {
                 name: 'Developer',
-                value: `𝕟𝕚𝕜𝕠𝕤𝕫𝕫#1275`
+                value: `! nikos#4922`,
+                inline: true
             }, {
                 name: 'Version',
-                value: `${message.client.botversion} running on Discord.JS v${DiscordJSversion}`
+                value: `${message.client.botversion} running on Discord.JS v${DiscordJSversion}`,
+                inline: true
             })
             .setFooter(message.member.displayName, message.author.displayAvatarURL({ dynamic: true }))
             .setTimestamp()

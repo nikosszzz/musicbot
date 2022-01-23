@@ -1,6 +1,6 @@
-const mongoose = require('mongoose');
-
-const blacklistSchema = new mongoose.Schema({
+const
+    mongoose = require('mongoose'),
+    blacklistSchema = new mongoose.Schema({
 
     id: String,
     name: String,

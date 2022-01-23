@@ -3,6 +3,7 @@ const { MessageEmbed } = require('discord.js');
 module.exports = {
     config: {
         name: "userinfo",
+        category: 'info',
         aliases: [`user`, `whois`],
         description: "Displays information about provider user.",
     },
@@ -10,7 +11,7 @@ module.exports = {
         var permissions = [];
         var acknowledgements = 'None.';
         let member;
-        
+
         if (!args.length) {
             member = message.guild.member(message.author);
         } else {
@@ -130,6 +131,7 @@ module.exports = {
             .addField(`Acknowledgmenets`, acknowledgements)
             .setTimestamp()
             .setFooter(`Member ID: ${member.id}`)
+
         return await message.channel.send(infoEmbed).catch(console.error);
     },
 };

@@ -5,8 +5,9 @@ const
 module.exports = {
     config: {
         name: 'guildsettings',
+        category: 'info',
         aliases: ['gs', 'settings'],
-        description: 'Displays settings for the guild the command is ran in.',
+        description: 'Displays information about AL Bot.',
     },
     execute: async (message, args) => {
         let guildPrefs = await guildModel.findOne({ GuildID: message.guild.id }).catch(err => console.log(err));
@@ -16,12 +17,10 @@ module.exports = {
             switch (type) {
                 case "prefix":
                     {
-                        const prefix = args[1];
-
-                        if (!prefix) {
+                        if (!args[1]) {
                             let unspecifiedPrefix = new MessageEmbed()
                                 .setColor('#000000')
-                                .setTitle('Server | Settings')
+                                .setTitle('Info | Server Settings')
                                 .setDescription(`Usage: ${message.client.prefix}${module.exports.config.name} <Setting> <Value>`)
                                 .setFooter(message.member.displayName, message.author.displayAvatarURL({ dynamic: true }))
                                 .setTimestamp()
@@ -29,13 +28,13 @@ module.exports = {
                         }
 
                         let PrefixUpdated = new MessageEmbed()
-                        .setColor('#000000')
-                        .setTitle('Server | Settings')
-                        .setDescription(`Successfully set this server's prefix to **__${prefix}__**. (Old prefix: ${guildPrefs.Prefix})`)
-                        .setFooter(message.member.displayName, message.author.displayAvatarURL({ dynamic: true }))
-                        .setTimestamp()
+                            .setColor('#000000')
+                            .setTitle('Info | Server Settings')
+                            .setDescription(`Successfully set this server's prefix to **__${args[1]}__**. (Old prefix: ${guildPrefs.Prefix})`)
+                            .setFooter(message.member.displayName, message.author.displayAvatarURL({ dynamic: true }))
+                            .setTimestamp()
 
-                        await guildModel.findOneAndUpdate({ GuildID: message.guild.id, }, { Prefix: prefix }, { upsert: true, useFindAndModify: false })
+                        await guildModel.findOneAndUpdate({ GuildID: message.guild.id, }, { Prefix: args[1] }, { upsert: true, useFindAndModify: false })
                         message.channel.send(PrefixUpdated);
                     }
                 default:
@@ -45,7 +44,7 @@ module.exports = {
                         }
                         let serversettings = new MessageEmbed()
                             .setColor('#000000')
-                            .setTitle('Server | Settings')
+                            .setTitle('Info | Server Settings')
                             .setDescription(`Displaying server settings for ${message.guild.name} (${message.guild.id})`)
                             .addField(`Prefix`, `${guildPrefs.Prefix}`, true)
                             .addField(`Guild ID`, `${guildPrefs.GuildID}`, true)

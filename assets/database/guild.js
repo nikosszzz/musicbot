@@ -1,6 +1,6 @@
-const mongoose = require('mongoose');
-
-const guildSchema = new mongoose.Schema({
+const
+    mongoose = require('mongoose'),
+    guildSchema = new mongoose.Schema({
 
     GuildID: String,
     Prefix: String,
