@@ -22,7 +22,7 @@
     "soundcloud-downloader": "^1.0.0",
     "spotify-uri": "^2.2.0",
     "spotify-url-info": "^2.2.3",
-    "string-width": "^5.1.0",
+    "string-width": "^5.1.1",
     "strip-ansi": "^7.0.1",
     "tar": "^6.1.11",
     "ws": "^8.4.2",
