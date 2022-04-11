@@ -20,7 +20,7 @@
     "request": "^2.88.2",
     "simple-youtube-api": "^5.2.1",
     "soundcloud-downloader": "^1.0.0",
-    "spotify-uri": "^2.2.0",
+    "spotify-uri": "^3.0.2",
     "spotify-url-info": "^2.2.3",
     "string-width": "^5.1.0",
     "strip-ansi": "^7.0.1",
