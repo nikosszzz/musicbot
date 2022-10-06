@@ -1,6 +1,5 @@
-﻿.vs
-.github
 .vscode
+.idea
 .gitignore
 .node-version
 .prettierrc
@@ -9,3 +8,5 @@ CODE_OF_CONDUCT.md
 config.json.example
 CONTRIBUTING.md
 /node_modules
+/.vs
+/dist

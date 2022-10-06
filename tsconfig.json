@@ -1,0 +1,41 @@
+{
+  "ts-node": {
+    "swc": true,
+    "require": ["tsconfig-paths/register"]
+  },
+    "compilerOptions": {
+      "strict": true,
+      "outDir": "./dist",
+      "rootDir": ".",
+      "baseUrl": ".",
+      "module": "CommonJS",
+      "target": "ESNext",
+      "newLine": "LF",
+      "moduleResolution": "NodeNext",
+      "resolveJsonModule": true,
+      "useUnknownInCatchVariables": true,
+      "allowUnreachableCode": false,
+      "noUnusedLocals": true,
+      "noUnusedParameters": true,
+      "esModuleInterop": true,
+      "skipLibCheck": true,
+      "sourceMap": true,
+      "strictPropertyInitialization": false,
+      "incremental": true,
+      "isolatedModules": true,
+      "paths": {
+        "@manager": [
+          "manager/manager"
+        ],
+        "@interface/*": [
+          "interface/*"
+        ],
+        "@utils/*": [
+          "utils/*"
+        ],
+        "@bot": [
+          "bot"
+        ]
+      }
+    }
+  }

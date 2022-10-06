@@ -1,48 +1,55 @@
 {
-  "author": "NikosProGamer <19nikospap@gmail.com>",
-  "bugs": "https://github.com/NikosProGamer/musicbot/issues",
-  "dependencies": {
-    "@discordjs/opus": "^0.7.0",
-    "ansi-regex": "^6.0.1",
-    "array-move": "^3.0.1",
-    "axios": "^0.25.0",
-    "discord-error-handler": "1.3",
-    "discord.js": "^12.5.3",
-    "ffmpeg-static": "^4.4.1",
-    "har-schema": "^2.0.0",
-    "lodash": "^4.17.21",
-    "lyrics-finder": "^21.7.0",
-    "mongoose": "^6.1.7",
-    "ms": "^2.1.3",
-    "node-spotify-api": "^1.1.1",
-    "one-liner-joke": "^1.2.2",
-    "prism-media": "^1.3.2",
-    "request": "^2.88.2",
-    "simple-youtube-api": "^5.2.1",
-    "soundcloud-downloader": "^1.0.0",
-    "spotify-uri": "^2.2.0",
-    "spotify-url-info": "^2.2.3",
-    "string-width": "^5.1.0",
-    "strip-ansi": "^7.0.1",
-    "tar": "^6.1.11",
-    "ws": "^8.4.2",
-    "youtube-sr": "^4.1.12",
-    "ytdl-core": "^4.10.0",
-    "ytdl-core-discord": "^1.3.1",
-    "ytsr": "^3.6.0"
+  "name": "music-bot",
+  "version": "2.0.0",
+  "description": "A general music Discord bot.",
+  "main": "bot.ts",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/NikosProGamer/musicbot.git"
   },
-  "description": "A general music bot.",
-  "engines": {
-    "node": ">=14.0.0"
+  "author": "nikosszzz <19nikospap@gmail.com>",
+  "bugs": {
+    "url": "https://github.com/NikosProGamer/musicbot/issues"
   },
   "homepage": "https://github.com/NikosProGamer/musicbot#readme",
-  "main": "bot.js",
-  "name": "music-bot",
-  "private": true,
-  "repository": "https://github.com/NikosProGamer/musicbot.git",
-  "scripts": {
-    "start": "node bot.js",
-    "shardedstart": "node shardingManager.js"
+  "engines": {
+    "node": ">=16.11.0"
   },
-  "version": "1.0.0"
+  "dependencies": {
+    "@discordjs/rest": "^1.2.0",
+    "@discordjs/voice": "^0.11.0",
+    "@typescript-eslint/eslint-plugin": "^5.39.0",
+    "array-move": "^3.0.1",
+    "chalk": "^4.1.2",
+    "discord-api-types": "^0.37.11",
+    "discord.js": "^14.5.0",
+    "ffmpeg-static": "^5.1.0",
+    "lyrics-finder": "^21.7.0",
+    "node-spotify-api": "^1.1.1",
+    "simple-youtube-api": "^5.2.1",
+    "soundcloud-downloader": "^1.0.0",
+    "spotify-uri": "^3.0.3",
+    "string-progressbar": "^1.0.4",
+    "ts-node": "^10.9.1",
+    "tsconfig-paths": "^4.1.0",
+    "youtube-sr": "^4.3.4",
+    "ytdl-core": "^4.11.2",
+    "ytdl-core-discord": "^1.3.1",
+    "ytsr": "^3.8.0"
+  },
+  "devDependencies": {
+    "@swc/core": "^1.3.4",
+    "@types/node": "^18.8.2"
+  },
+  "optionalDependencies": {
+    "@discordjs/opus": "^0.8.0",
+    "libsodium-wrappers": "^0.7.10",
+    "opusscript": "^0.0.8"
+  },
+  "scripts": {
+    "start": "ts-node bot.ts",
+    "lint": "eslint . --fix"
+  },
+  "keywords": [],
+  "license": "GPL-3.0"
 }

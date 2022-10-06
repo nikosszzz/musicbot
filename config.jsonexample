@@ -1,0 +1,13 @@
+{
+    "TOKEN": "",
+    "DEVTOKEN": "",
+    "DEVID": "",
+    "SOUNDCLOUD_CLIENT_ID": "",
+    "SPOTIFY_CLIENT_ID": "",
+    "SPOTIFY_SECRET_ID": "",
+    "CLIENT_ID": "",
+    "MAX_PLAYLIST_SIZE": 20,
+    "PRUNING": true,
+    "STAY_TIME": 30,
+    "DEFAULT_VOLUME": 50
+}
