@@ -20,7 +20,7 @@
     "@discordjs/voice": "^0.11.0",
     "@typescript-eslint/eslint-plugin": "^5.39.0",
     "array-move": "^3.0.1",
-    "chalk": "^4.1.2",
+    "chalk": "^5.1.0",
     "discord-api-types": "^0.37.11",
     "discord.js": "^14.5.0",
     "ffmpeg-static": "^5.1.0",
