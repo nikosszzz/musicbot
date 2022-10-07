@@ -3,7 +3,7 @@ import { ChatInputCommandInteraction, GuildMember, EmbedBuilder, SlashCommandBui
 import { bot } from "@bot";
 import { MusicQueue } from "@utils/MusicQueue";
 import { Song } from "@utils/Song";
-import { playlistCheck } from "@utils/patterns";
+import { playlistCheck, spotifyPlaylistPattern } from "@utils/patterns";
 import { Logger } from "@utils/Logger";
 
 export default {
@@ -42,13 +42,13 @@ export default {
 
         if (!permissions?.has([PermissionFlagsBits.Connect, PermissionFlagsBits.Speak])) return interaction.reply({ embeds: [botNoPermissions], ephemeral: true });
 
-        if (playlistCheck.test(url)) {
+        if (playlistCheck.test(url) || spotifyPlaylistPattern.test(url)) {
             return bot.commands.get("playlist")?.execute(interaction, url);
         }
 
         interaction.reply({ content: "⏳ Loading..." });
 
-        let song: any;
+        let song!: Song;
         try {
             song = await Song.from({ url, search: url, interaction });
         } catch (err: any) {
@@ -83,6 +83,6 @@ export default {
         });
 
         bot.queues.set(interaction.guild?.id as string, newQueue);
-        newQueue.enqueue({ songs: [song] });
+        return newQueue.enqueue({ songs: [song] });
     }
 };

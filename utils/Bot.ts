@@ -10,7 +10,7 @@ export class Bot {
     public readonly devtoken: string = config.DEVTOKEN;
     public readonly token: string = config.TOKEN;
     public readonly debug = new Boolean;
-    public readonly version: string = "2.0.0";
+    public readonly version: string = "2.1.0";
     public readonly branch = new String;
 
     public constructor(private client: Client) {

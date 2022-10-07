@@ -13,7 +13,7 @@ export async function importer({ client }: { client: Client; }): Promise<void> {
     const commands: string[] = [];
 
     const commandCategories = readdirSync(dir);
-    commandCategories.forEach(async (cat) => {
+    commandCategories.forEach(async (cat): Promise<void> => {
         const commandFiles = readdirSync(join(dir, cat)).filter(files => files.endsWith(".ts"));
 
         commandFiles.forEach(async (file): Promise<void> => {

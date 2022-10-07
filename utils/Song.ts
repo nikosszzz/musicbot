@@ -1,6 +1,6 @@
 import { AudioResource, createAudioResource, StreamType } from "@discordjs/voice";
 import youtube from "youtube-sr";
-import { getInfo } from "ytdl-core";
+import { getInfo, videoInfo } from "ytdl-core";
 import { parse, Track } from "spotify-uri";
 //@ts-ignore
 import Spotify from "node-spotify-api";
@@ -8,6 +8,8 @@ import ytdl from "ytdl-core-discord";
 import { ChatInputCommandInteraction, CommandInteraction, EmbedBuilder } from "discord.js";
 import { videoPattern, spotifyPattern } from "@utils/patterns";
 import { config } from "@utils/config";
+import internal from "stream";
+import { Logger } from "./Logger";
 
 const spotify = new Spotify({
     id: config.SPOTIFY_CLIENT_ID,
@@ -39,12 +41,15 @@ export class Song {
     public static async from({ url = "", search = "", interaction }: { url: string; search: string; interaction: CommandInteraction | ChatInputCommandInteraction; }): Promise<Song> {
         const isYoutubeUrl = videoPattern.test(url);
         const isSpotifyUrl = spotifyPattern.test(url);
+        //const isSoundCloudUrl = scRegex.test(url);
+        //const isMobileSCUrl = mobileScRegex.test(url);
 
-        let songInfo;
+        let songInfo: videoInfo;
         let spotifyTitle: string, spotifyArtist: string;
         if (isSpotifyUrl) {
             const spotifyTrackID = (parse(url) as Track).id;
             const spotifyInfo = await spotify.request(`https://api.spotify.com/v1/tracks/${spotifyTrackID}`).catch((err: any) => {
+                Logger.error({ type: "MUSIC/SPOTIFYSTACK", err: err });
                 return interaction.reply("There was a error with the Spotify Stack: ```" + err + "```");
             });
             spotifyTitle = spotifyInfo.name;
@@ -52,6 +57,7 @@ export class Song {
 
             const spotifyresult = await youtube.searchOne(`${spotifyArtist} - ${spotifyTitle}`);
             songInfo = await getInfo(spotifyresult.url);
+
             return new this({
                 title: songInfo.videoDetails.title,
                 url: songInfo.videoDetails.video_url,
@@ -84,7 +90,7 @@ export class Song {
     }
 
     public async makeResource(): Promise<AudioResource<Song> | void> {
-        let stream;
+        let stream!: internal.Readable;
 
         const type = this.url.includes("youtube.com") ? StreamType.Opus : StreamType.OggOpus;
 

@@ -11,7 +11,8 @@ export default {
         `;
 
         const whatsnew = `- Move to TypeScript and Discord.JS 14.5!
-        - Rewrote the entire Music system!`;
+        - Rewrote the entire Music system!
+        - Added Spotify Playlist support!`;
 
         const UpdateEmbed = new EmbedBuilder()
             .setColor("#000000")

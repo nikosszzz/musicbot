@@ -20,7 +20,6 @@ export default {
         const url: string = interaction.options.getString("query") as string;
 
         /* Embeds for music */
-
         const notInVC = new EmbedBuilder()
             .setColor("#000000")
             .setTitle("Track Player")
@@ -42,8 +41,8 @@ export default {
 
         if (!permissions?.has([PermissionFlagsBits.Connect, PermissionFlagsBits.Speak])) return interaction.reply({ embeds: [botNoPermissions], ephemeral: true });
 
-        let playlist: any;
-
+        interaction.deferReply();
+        let playlist!: Playlist;
         try {
             playlist = await Playlist.from({ url, search: url, interaction });
         } catch (err: any) {
@@ -78,14 +77,14 @@ export default {
             .setDescription("The following playlist has been added to the queue:")
             .addFields(
                 {
-                    name: playlist.data?.title, value: "** **"
+                    name: playlist.data.title ? playlist.data.title : "Spotify Playlist", value: "** **"
                 })
-            .setURL(playlist.data?.url);
+            .setURL(playlist.data.url as string);
 
         if ((playlistEmbed.data.description?.length as number) >= 2048)
             playlistEmbed.data.description =
                 playlistEmbed.data.description?.substr(0, 2007) as string;
 
-        return interaction.reply({ embeds: [playlistEmbed] }).catch((err: any) => Logger.error({ type: "MUSICCMDS", err }));
+        return interaction.editReply({ embeds: [playlistEmbed] }).catch((err: any) => Logger.error({ type: "MUSICCMDS", err }));
     },
 };

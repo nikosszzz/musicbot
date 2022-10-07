@@ -7,7 +7,7 @@ export async function presence({ client }: { client: Client; }): Promise<void> {
     /* Automatic presence  */
     let state = Number(0);
 
-    client.on("ready", async () => {
+    client.on("ready", async (): Promise<void> => {
         Logger.log({ type: "STARTUP", msg: "Music Bot is online." });
         setInterval(() => {
             const presences: [{ type: ActivityType.Watching, message: string }, { type: ActivityType.Playing, message: string }] = [
