@@ -44,7 +44,7 @@
     "@types/node": "^18.8.3"
   },
   "optionalDependencies": {
-    "@discordjs/opus": "^0.8.0",
+    "@discordjs/opus": "^0.9.0",
     "libsodium-wrappers": "^0.7.10",
     "opusscript": "^0.0.8"
   },
