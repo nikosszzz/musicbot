@@ -41,7 +41,7 @@
   },
   "devDependencies": {
     "@swc/core": "^1.3.4",
-    "@types/node": "^18.8.3"
+    "@types/node": "^18.11.4"
   },
   "optionalDependencies": {
     "@discordjs/opus": "^0.8.0",
