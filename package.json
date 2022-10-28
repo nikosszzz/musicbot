@@ -33,7 +33,7 @@
     "string-progressbar": "^1.0.4",
     "ts-node": "^10.9.1",
     "tsconfig-paths": "^4.1.0",
-    "undici": "^5.11.0",
+    "undici": "^5.12.0",
     "youtube-sr": "^4.3.4",
     "ytdl-core": "^4.11.2",
     "ytdl-core-discord": "^1.3.1",
