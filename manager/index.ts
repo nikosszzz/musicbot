@@ -2,7 +2,7 @@ import { Client } from "discord.js";
 import { presence } from "./modules/presence";
 import { importer } from "./modules/importer";
 import { commands } from "./modules/commands";
-import { Logger } from "@utils/Logger";
+import { Logger } from "@components/Logger";
 
 /**
  * 
@@ -16,9 +16,13 @@ export class Manager {
      * @param client
      */
     private async load({ client }: { client: Client; }): Promise<void> {
-        await importer({ client });
-        await presence({ client });
-        await commands({ client });
+        try {
+            await importer({ client });
+            await presence({ client });
+            await commands({ client });
+        } catch (e: any) {
+            Logger.error({ type: "MANAGER", err: e });
+        }
     }
     public constructor({ client }: { client: Client; }) {
         this.load({ client }).finally(() => Logger.log({ type: "MANAGER", msg: "All modules have been loaded." }));

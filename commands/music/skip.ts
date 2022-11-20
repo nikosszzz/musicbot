@@ -1,7 +1,7 @@
 import { CommandInteraction, GuildMember, EmbedBuilder, SlashCommandBuilder } from "discord.js";
 import { bot } from "@bot";
-import { canModifyQueue } from "@utils/queue";
-import { MusicQueue } from "@utils/MusicQueue";
+import { canModifyQueue } from "@components/QueueUtils";
+import { MusicQueue } from "@components/MusicQueue";
 
 export default {
     data: new SlashCommandBuilder()
@@ -20,7 +20,7 @@ export default {
             .setTitle("Track Player")
             .setDescription("You need to join the voice channel the bot is in.");
 
-        if (!canModifyQueue({ member: (interaction.member as GuildMember )})) return interaction.reply({ embeds: [notInBotChannel], ephemeral: true });
+        if (!canModifyQueue({ member: (interaction.member as GuildMember) })) return interaction.reply({ embeds: [notInBotChannel], ephemeral: true });
         if (!queue) return interaction.reply({ embeds: [nothingPlaying], ephemeral: true });
 
         queue.player.stop(true);

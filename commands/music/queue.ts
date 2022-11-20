@@ -1,8 +1,8 @@
 import { EmbedBuilder, CommandInteraction, ActionRowBuilder, ButtonBuilder, SlashCommandBuilder, ButtonStyle } from "discord.js";
 import { bot } from "@bot";
-import { Logger } from "@utils/Logger";
-import { Song } from "@utils/Song";
-import { MusicQueue } from "@utils/MusicQueue";
+import { Logger } from "@components/Logger";
+import { Song } from "@components/Song";
+import { MusicQueue } from "@components/MusicQueue";
 
 let currentPage: number = 0 as number;
 
@@ -44,7 +44,7 @@ export default {
         });
         const collector = interaction.channel?.createMessageComponentCollector({ time: 60000 });
 
-        collector?.on("collect", async (i) => {
+        collector?.on("collect", async (i): Promise<void> => {
             try {
                 if (i.customId === "next") {
                     await i.deferUpdate();
@@ -73,7 +73,7 @@ export default {
     },
 };
 
-function generateQueueEmbed(interaction: CommandInteraction, songs: Song[]) {
+function generateQueueEmbed(interaction: CommandInteraction, songs: Song[]): EmbedBuilder[] {
     const embeds = [];
     let k = 10;
 
@@ -87,11 +87,10 @@ function generateQueueEmbed(interaction: CommandInteraction, songs: Song[]) {
         const queueEmbed = new EmbedBuilder()
             .setColor("#000000")
             .setAuthor({ name: "Track Queue" })
-            .setTitle(`Current Song - [${songs[0].title}](${songs[0].url})`)
+            .setTitle(`Current Song - ${songs[0].title}`)
             .setURL(songs[0].url)
             .setThumbnail(interaction.guild?.iconURL() as string)
-            .setDescription(`**Displaying the queue list below:**\n\n${info}`)
-            .setFooter({ text: `Current Page - ${currentPage + 1}/${embeds.length}` });
+            .setDescription(`**Displaying the queue list below:**\n\n${info}`);
 
         embeds.push(queueEmbed);
     }

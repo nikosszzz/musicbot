@@ -1,8 +1,8 @@
 import { EmbedBuilder, CommandInteraction, SlashCommandBuilder } from "discord.js";
 import { splitBar } from "string-progressbar";
 import { bot } from "@bot";
-import { Logger } from "@utils/Logger";
-import { MusicQueue } from "@utils/MusicQueue";
+import { Logger } from "@components/Logger";
+import { MusicQueue } from "@components/MusicQueue";
 
 export default {
     data: new SlashCommandBuilder()

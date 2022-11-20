@@ -1,10 +1,10 @@
 import { Client, Routes } from "discord.js";
 import { readdirSync } from "node:fs";
-import { config } from "@utils/config";
+import { config } from "@components/config";
 import { join } from "node:path";
 import { bot } from "@bot";
 import { REST } from "@discordjs/rest";
-import { Logger } from "@utils/Logger";
+import { Logger } from "@components/Logger";
 
 let auth: { TOKEN: string, CLIENT_ID: string };
 

@@ -1,9 +1,9 @@
 import { DiscordGatewayAdapterCreator, joinVoiceChannel } from "@discordjs/voice";
 import { ChatInputCommandInteraction, GuildMember, EmbedBuilder, SlashCommandBuilder, PermissionFlagsBits, VoiceState } from "discord.js";
 import { bot } from "@bot";
-import { Logger } from "@utils/Logger";
-import { MusicQueue } from "@utils/MusicQueue";
-import { Playlist } from "@utils/Playlist";
+import { Logger } from "@components/Logger";
+import { MusicQueue } from "@components/MusicQueue";
+import { Playlist } from "@components/Playlist";
 
 export default {
     data: new SlashCommandBuilder()
@@ -17,7 +17,7 @@ export default {
     async execute(interaction: ChatInputCommandInteraction) {
         const { channel }: VoiceState = (interaction.member as GuildMember).voice;
         const queue: MusicQueue = bot.queues.get(interaction.guild?.id as string) as MusicQueue;
-        const url: string = interaction.options.getString("query") as string;
+        const url = interaction.options.getString("query") as string;
 
         /* Embeds for music */
         const notInVC = new EmbedBuilder()
@@ -46,15 +46,16 @@ export default {
         try {
             playlist = await Playlist.from({ url, search: url, interaction });
         } catch (err: any) {
-            Logger.error({ type: "INTERNAL:PLAYLIST", err: err });
+            Logger.error({ type: "INTERNAL:PLAYLIST", err: err.stack });
 
-            return interaction.reply({ content: "Playlist not found.", ephemeral: true }).catch(console.error);
+            console.log(url);
+            return interaction.editReply({ content: "Playlist not found." }).catch(console.error);
         }
 
         if (queue) {
             queue.songs.push(...playlist.videos);
         } else {
-            const newQueue = new MusicQueue({
+            const newQueue = await new MusicQueue({
                 options: {
                     interaction,
                     connection: joinVoiceChannel({
@@ -68,7 +69,7 @@ export default {
             bot.queues.set(interaction.guild?.id as string, newQueue);
             newQueue.songs.push(...playlist.videos);
 
-            newQueue.enqueue({ songs: [playlist.videos[0]] });
+            await newQueue.enqueue({ songs: [playlist.videos[0]] });
         }
 
         const playlistEmbed = new EmbedBuilder()

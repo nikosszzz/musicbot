@@ -1,8 +1,8 @@
 import { ChatInputCommandInteraction, GuildMember, EmbedBuilder, SlashCommandBuilder } from "discord.js";
-import { canModifyQueue } from "@utils/queue";
+import { canModifyQueue } from "@components/QueueUtils";
 import { bot } from "@bot";
 import move from "array-move";
-import { MusicQueue } from "@utils/MusicQueue";
+import { MusicQueue } from "@components/MusicQueue";
 
 export default {
     data: new SlashCommandBuilder()

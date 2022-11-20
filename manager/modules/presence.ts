@@ -1,6 +1,6 @@
 import { ActivityType, Client } from "discord.js";
 import { bot } from "@bot";
-import { Logger } from "@utils/Logger";
+import { Logger } from "@components/Logger";
 
 export async function presence({ client }: { client: Client; }): Promise<void> {
 

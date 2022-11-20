@@ -1,5 +1,5 @@
-import { Config } from "@interface/Config";
-import { Logger } from "./Logger";
+import { Config } from "@common/types";
+import { Logger } from "@components/Logger";
 
 let config: Config;
 
@@ -16,6 +16,7 @@ try {
         MAX_PLAYLIST_SIZE: Number(process.env.MAX_PLAYLIST_SIZE) || Number(20),
         SPOTIFY_CLIENT_ID: process.env.SPOTIFY_CLIENT_ID || "",
         SPOTIFY_SECRET_ID: process.env.SPOTIFY_SECRET_ID || "",
+        SPOTIFY_REFRESH_TOKEN: process.env.SPOTIFY_REFRESH_TOKEN || "",
         CLIENT_ID: process.env.CLIENT_ID || "",
         PRUNING: process.env.PRUNING === "true" ? true : false,
         STAY_TIME: Number(process.env.STAY_TIME) || Number(30),

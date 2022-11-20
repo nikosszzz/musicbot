@@ -1,41 +1,49 @@
 {
   "ts-node": {
     "swc": true,
-    "require": ["tsconfig-paths/register"]
+    "require": [
+      "tsconfig-paths/register"
+    ]
   },
-    "compilerOptions": {
-      "strict": true,
-      "outDir": "./dist",
-      "rootDir": ".",
-      "baseUrl": ".",
-      "module": "CommonJS",
-      "target": "ESNext",
-      "newLine": "LF",
-      "moduleResolution": "NodeNext",
-      "resolveJsonModule": true,
-      "useUnknownInCatchVariables": true,
-      "allowUnreachableCode": false,
-      "noUnusedLocals": true,
-      "noUnusedParameters": true,
-      "esModuleInterop": true,
-      "skipLibCheck": true,
-      "sourceMap": true,
-      "strictPropertyInitialization": false,
-      "incremental": true,
-      "isolatedModules": true,
-      "paths": {
-        "@manager": [
-          "manager/manager"
-        ],
-        "@interface/*": [
-          "interface/*"
-        ],
-        "@utils/*": [
-          "utils/*"
-        ],
-        "@bot": [
-          "bot"
-        ]
-      }
+  "compilerOptions": {
+    "strict": true,
+    "alwaysStrict": true,
+    "outDir": "./dist",
+    "rootDir": ".",
+    "baseUrl": ".",
+    "module": "CommonJS",
+    "target": "ESNext",
+    "moduleResolution": "NodeNext",
+    "resolveJsonModule": true,
+    "isolatedModules": true,
+    "esModuleInterop": true,
+    "allowUnreachableCode": false,
+    "noUnusedLocals": true,
+    "noUnusedParameters": true,
+    "strictPropertyInitialization": true,
+    "incremental": true,
+    "skipDefaultLibCheck": true,
+    "skipLibCheck": true,
+    "newLine": "LF",
+    "paths": {
+      "@manager": [
+        "manager/index"
+      ],
+      "@common/*": [
+        "common/*"
+      ],
+      "@assets/*": [
+        "assets/*"
+      ],
+      "@utils/*": [
+        "utils/*"
+      ],
+      "@components/*": [
+        "components/*"
+      ],
+      "@bot": [
+        "bot"
+      ]
     }
   }
+}

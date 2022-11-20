@@ -5,6 +5,7 @@
     "SOUNDCLOUD_CLIENT_ID": "",
     "SPOTIFY_CLIENT_ID": "",
     "SPOTIFY_SECRET_ID": "",
+    "SPOTIFY_REFRESH_TOKEN": "",
     "CLIENT_ID": "",
     "MAX_PLAYLIST_SIZE": 20,
     "PRUNING": true,

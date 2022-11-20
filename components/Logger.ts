@@ -1,8 +1,8 @@
 import chalk from "chalk";
 
 /**
- * @name Music Bot Logger
- * @description The Music Bot Logger System.
+ * @name Infinium Logger
+ * @description The Infinium Logger System.
  * @methods error, log, info, debug
  */
 export class Logger {

@@ -1,7 +1,7 @@
 import { EmbedBuilder, CommandInteraction, SlashCommandBuilder } from "discord.js";
-import { Config } from "@interface/Config";
+import { Config } from "@common/types";
 import { writeFile } from "node:fs";
-import { Logger } from "@utils/Logger";
+import { Logger } from "@components/Logger";
 
 export default {
     data: new SlashCommandBuilder()

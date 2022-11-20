@@ -10,3 +10,4 @@ CONTRIBUTING.md
 /node_modules
 /.vs
 /dist
+config.json

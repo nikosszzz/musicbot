@@ -3,8 +3,8 @@ import { EmbedBuilder, CommandInteraction } from "discord.js";
 import { bot } from "@bot";
 // @ts-ignore
 import lyricsFinder from "lyrics-finder";
-import { Logger } from "@utils/Logger";
-import { MusicQueue } from "@utils/MusicQueue";
+import { Logger } from "@components/Logger";
+import { MusicQueue } from "@components/MusicQueue";
 
 export default {
     data: new SlashCommandBuilder()

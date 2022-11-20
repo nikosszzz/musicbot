@@ -1,10 +1,10 @@
 import { DiscordGatewayAdapterCreator, joinVoiceChannel } from "@discordjs/voice";
 import { ChatInputCommandInteraction, GuildMember, EmbedBuilder, SlashCommandBuilder, PermissionFlagsBits, VoiceState } from "discord.js";
 import { bot } from "@bot";
-import { MusicQueue } from "@utils/MusicQueue";
-import { Song } from "@utils/Song";
-import { playlistCheck, spotifyPlaylistPattern } from "@utils/patterns";
-import { Logger } from "@utils/Logger";
+import { MusicQueue } from "@components/MusicQueue";
+import { Song } from "@components/Song";
+import { Logger } from "@components/Logger";
+import play from "play-dl";
 
 export default {
     data: new SlashCommandBuilder()
@@ -42,17 +42,18 @@ export default {
 
         if (!permissions?.has([PermissionFlagsBits.Connect, PermissionFlagsBits.Speak])) return interaction.reply({ embeds: [botNoPermissions], ephemeral: true });
 
-        if (playlistCheck.test(url) || spotifyPlaylistPattern.test(url)) {
+        if (play.yt_validate(url) === "playlist" || await play.so_validate(url) === "playlist" || play.sp_validate(url) === "album" || play.sp_validate(url) === "playlist") {
             return bot.commands.get("playlist")?.execute(interaction, url);
         }
 
-        interaction.reply({ content: "⏳ Loading..." });
+        await interaction.reply({ content: "⏳ Loading..." });
 
         let song!: Song;
         try {
             song = await Song.from({ url, search: url, interaction });
         } catch (err: any) {
-            Logger.error({ type: "CMDS/PLAY", err: err });
+            interaction.editReply({ content: "An error occured in the Music system! Song was not added." });
+            return Logger.error({ type: "CMDS/PLAY", err: err });
         } finally {
             if (queue) {
                 queue.songs.push(song);
@@ -64,10 +65,10 @@ export default {
                     .setThumbnail(song.thumbnail);
 
                 // eslint-disable-next-line no-unsafe-finally
-                return interaction.editReply({ content: " ", embeds: [songAdd] }).catch(err => Logger.error({ type: "MUSICCMDS", err }));
+                return await interaction.editReply({ content: " ", embeds: [songAdd] }).catch(err => Logger.error({ type: "MUSICCMDS", err }));
             } else {
                 // eslint-disable-next-line no-unsafe-finally
-                interaction.deleteReply();
+                await interaction.deleteReply();
             }
         }
 
@@ -83,6 +84,6 @@ export default {
         });
 
         bot.queues.set(interaction.guild?.id as string, newQueue);
-        return newQueue.enqueue({ songs: [song] });
+        return await newQueue.enqueue({ songs: [song] });
     }
 };

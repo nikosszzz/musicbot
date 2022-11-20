@@ -1,5 +1,5 @@
 import { ChatInputCommandInteraction, EmbedBuilder, SlashCommandBuilder, PermissionFlagsBits, GuildMember, User, Role } from "discord.js";
-import { Logger } from "@utils/Logger";
+import { Logger } from "@components/Logger";
 
 export default {
     data: new SlashCommandBuilder()

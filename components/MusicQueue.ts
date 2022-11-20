@@ -14,26 +14,26 @@ import {
 import { ChatInputCommandInteraction, CommandInteraction, Message, TextChannel } from "discord.js";
 import { promisify } from "node:util";
 import { bot } from "@bot";
-import { QueueOptions } from "@interface/QueueOptions";
-import { config } from "@utils//config";
-import { Logger } from "@utils//Logger";
-import { Song } from "@utils/Song";
+import { QueueOptions } from "common/types";
+import { config } from "@components/config";
+import { Logger } from "@components/Logger";
+import { Song } from "@components/Song";
 
 const wait = promisify(setTimeout);
 
 export class MusicQueue {
-    public readonly interaction: CommandInteraction | ChatInputCommandInteraction;
-    public readonly connection: VoiceConnection;
+    public readonly interaction!: CommandInteraction | ChatInputCommandInteraction;
+    public readonly connection!: VoiceConnection;
     public readonly player: AudioPlayer;
     public readonly textChannel: TextChannel;
     public readonly bot = bot;
 
-    public resource: AudioResource;
+    public resource!: AudioResource;
     public songs: Song[] = [];
     public volume = config.DEFAULT_VOLUME || 100;
     public loop = false;
     public muted = false;
-    public waitTimeout: NodeJS.Timeout;
+    public waitTimeout!: NodeJS.Timeout;
     private queueLock = false;
     private readyLock = false;
 
@@ -58,7 +58,11 @@ export class MusicQueue {
                     this.connection.rejoin();
                 } else {
                     this.connection.destroy();
+                    bot.queues.delete(this.interaction.guild?.id as string);
                 }
+            } else if (newState.status == VoiceConnectionStatus.Ready) {
+                //Unsure why it reports Ready when it leaves the voice channel.
+                bot.queues.delete(this.interaction.guild?.id as string);
             } else if (
                 !this.readyLock &&
                 (newState.status === VoiceConnectionStatus.Connecting || newState.status === VoiceConnectionStatus.Signalling)
@@ -105,10 +109,10 @@ export class MusicQueue {
         });
     }
 
-    public enqueue({ songs = [] }: { songs?: Song[]; } = {}): void {
-        if (typeof this.waitTimeout !== "undefined") clearTimeout(this.waitTimeout);
+    public async enqueue({ songs = [] }: { songs?: Song[]; } = {}): Promise<void> {
+        if (typeof this.waitTimeout !== undefined) clearTimeout(this.waitTimeout);
         this.songs = this.songs.concat(songs);
-        this.processQueue();
+        await this.processQueue();
     }
 
     public stop(): void {
@@ -117,11 +121,17 @@ export class MusicQueue {
         this.player.stop();
 
         !config.PRUNING && this.textChannel.send("Queue ended.").catch(console.error);
+        bot.queues.delete(this.interaction.guild?.id as string);
 
         this.waitTimeout = setTimeout((): void => {
+            if (this.player.state.status === AudioPlayerStatus.Playing && this.songs.length > 0) return;
 
-            if (this.connection.state.status !== VoiceConnectionStatus.Destroyed) this.connection.destroy();
-            bot.queues.delete(this.interaction.guild?.id as string);
+            if (this.connection.state.status !== VoiceConnectionStatus.Destroyed) {
+                try {
+                    this.connection.destroy();
+                // eslint-disable-next-line no-empty
+                } catch { }
+            }
 
             this.textChannel.send("Left channel due to inactivity.");
         }, config.STAY_TIME * 1000);

@@ -8,11 +8,10 @@ export default {
     async execute(interaction: CommandInteraction) {
 
         const bugfixes = `- bot: General fixes
-        `;
+        `.replaceAll("    ", "");
 
-        const whatsnew = `- Move to TypeScript and Discord.JS 14.5!
-        - Rewrote the entire Music system!
-        - Added Spotify Playlist support!`;
+        const whatsnew = `- Added SoundCloud support!
+        - Music improvements!`.replaceAll("    ", "");
 
         const UpdateEmbed = new EmbedBuilder()
             .setColor("#000000")

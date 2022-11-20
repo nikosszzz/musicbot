@@ -1,6 +1,6 @@
 import { Client } from "discord.js";
-import { Bot } from "@utils/Bot";
-import { Logger } from "@utils/Logger";
+import { Bot } from "@components/Bot";
+import { Logger } from "@components/Logger";
 
 Logger.log({ type: "STARTUP", msg: "Music Bot is initializing..." });
 

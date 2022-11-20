@@ -1,7 +1,7 @@
 import { Client, CommandInteraction, EmbedBuilder, SlashCommandBuilder, version as djsVersion } from "discord.js";
 import { bot } from "@bot";
-import { Logger } from "@utils/Logger";
-import { timeConverter } from "../../utils/timeConverter";
+import { Logger } from "@components/Logger";
+import { timeConverter } from "@utils/timeConverter";
 import { hash } from "@utils/hash";
 
 export default {
