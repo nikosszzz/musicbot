@@ -2,7 +2,7 @@ import { execSync } from "node:child_process";
 
 /**
  * @name hash
- * @description Returns the latest Git Hash of Infinium branch that is used.
+ * @description Returns the latest Git Hash of Music Bot branch that is used.
  */
 export function hash(): string {
     try {
