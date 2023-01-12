@@ -27,7 +27,7 @@
     "string-progressbar": "^1.0.4",
     "ts-node": "^10.9.1",
     "tsconfig-paths": "^4.1.0",
-    "undici": "^5.12.0",
+    "undici": "^5.15.0",
     "youtube-sr": "^4.3.4"
   },
   "devDependencies": {
