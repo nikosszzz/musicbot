@@ -1,50 +1,52 @@
 {
   "name": "music-bot",
-  "version": "2.0.0",
+  "version": "3.0.0",
   "description": "A general music Discord bot.",
-  "main": "bot.ts",
+  "main": "./src/bot.ts",
   "repository": {
     "type": "git",
-    "url": "https://github.com/NikosProGamer/musicbot.git"
+    "url": "https://github.com/nikosszzz/musicbot.git"
   },
   "author": "nikosszzz <19nikospap@gmail.com>",
   "bugs": {
-    "url": "https://github.com/NikosProGamer/musicbot/issues"
+    "url": "https://github.com/nikosszzz/musicbot/issues"
   },
-  "homepage": "https://github.com/NikosProGamer/musicbot#readme",
+  "homepage": "https://github.com/nikosszzz/musicbot#readme",
   "engines": {
-    "node": ">=16.11.0"
+    "node": ">=20.0.0"
   },
   "dependencies": {
-    "@discordjs/rest": "^1.3.0",
-    "@discordjs/voice": "^0.13.0",
+    "@discordjs/voice": "^0.16.1",
     "array-move": "^3.0.1",
+    "bufferutil": "^4.0.8",
     "chalk": "^4.1.2",
-    "discord.js": "^14.6.0",
+    "discord.js": "^14.14.1",
+    "ffmpeg-static": "^5.2.0",
     "lyrics-finder": "^21.7.0",
-    "play-dl": "^1.9.6",
-    "spotify-url-info": "^3.1.9",
+    "opusscript": "^0.1.1",
+    "play-dl": "^1.9.7",
+    "sodium-native": "^4.0.10",
+    "spotify-url-info": "^3.2.13",
     "string-progressbar": "^1.0.4",
-    "ts-node": "^10.9.1",
-    "tsconfig-paths": "^4.1.0",
     "undici": "^5.12.0",
-    "youtube-sr": "^4.3.4"
+    "utf-8-validate": "^6.0.3",
+    "youtube-sr": "^4.3.10"
   },
   "devDependencies": {
-    "@swc/core": "1.3.14",
-    "@types/node": "^18.11.9",
-    "@typescript-eslint/eslint-plugin": "^5.42.1"
-  },
-  "optionalDependencies": {
-    "@discordjs/opus": "^0.9.0",
-    "libsodium-wrappers": "^0.7.10",
-    "opusscript": "^0.0.8",
-    "sodium-native": "^3.4.1",
-    "tweetnacl": "^1.0.3"
+    "@rollup/plugin-typescript": "^11.1.6",
+    "@types/node": "^20.10.4",
+    "esbuild": "^0.20.1",
+    "rollup": "^4.12.0",
+    "rollup-plugin-esbuild": "^6.1.1",
+    "rollup-plugin-typescript-paths": "^1.5.0",
+    "tslib": "^2.6.2",
+    "typescript": "^5.3.3"
   },
   "scripts": {
-    "start": "ts-node bot.ts",
-    "lint": "eslint . --fix"
+    "start": "node ./dist/bundle.js",
+    "startb": "rollup -c --configPlugin @rollup/plugin-typescript && node ./dist/bundle.js",
+    "lint": "eslint . --fix",
+    "build": "rollup -c --configPlugin @rollup/plugin-typescript"
   },
   "keywords": [],
   "license": "GPL-3.0"

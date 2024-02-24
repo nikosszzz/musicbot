@@ -32,6 +32,7 @@
         "@typescript-eslint/ban-ts-comment": "off",
         "@typescript-eslint/no-unused-vars": "error",
         "@typescript-eslint/no-useless-constructor": "error",
-        "eol-last": "error"
+        "eol-last": "error",
+        "no-unsafe-finally": "off"
     }
 }
