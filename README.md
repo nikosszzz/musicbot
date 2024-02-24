@@ -13,9 +13,9 @@ Patches from time to time to ensure bot is performing efficiently.
 
 ## How to run
 
-1 - Install the bot's dependencies (pnpm, npm or whatever you use)
-2 - run the `build` script
-3 - run the `bundle.js` output file in the `dist` folder
+- Install the bot's dependencies (pnpm, npm or whatever you use)
+- Run the `build` script
+- Run the `bundle.js` output file in the `dist` folder
 
 ### Support the development
 
