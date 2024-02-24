@@ -1,13 +1,13 @@
-# <center> Music Bot </center>
-<center>🎵⚡ A fast and easy to use Discord.JS 14 music bot that supports YouTube, Spotify and SoundCloud sources to play music off! ⚡🎵</center>
+<h1 align="center"> Music Bot </h1>
+<div align="center">🎵⚡ A fast and easy to use Discord.JS 14 music bot that supports YouTube, Spotify and SoundCloud sources to play music off! ⚡🎵</div>
 <br>
 
-<center> 
+<div align="center"> 
     <img alt="GitHub Repo stars" src="https://img.shields.io/github/stars/nikosszzz/musicbot?style=flat-square&label=🌟 Stars&labelColor=3c3836&color=1d2021">
     <img alt="GitHub forks" src="https://img.shields.io/github/forks/nikosszzz/musicbot?style=flat-square&label=🔗 Forks&labelColor=3c3836&color=1d2021">
     <img alt="GitHub Issues" src="https://img.shields.io/github/issues/nikosszzz/musicbot?style=flat-square&label=⚠️ Issues&labelColor=3c3836&color=1d2021">
     <img alt="GitHub commit activity (branch)" src="https://img.shields.io/github/commit-activity/t/nikosszzz/musicbot/main?style=flat-square&label=🧾 Commits&labelColor=3c3836&color=1d2021">
-</center>
+</div>
 
 <hr>
 
