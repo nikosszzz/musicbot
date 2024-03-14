@@ -28,7 +28,7 @@
     "sodium-native": "^4.0.10",
     "spotify-url-info": "^3.2.13",
     "string-progressbar": "^1.0.4",
-    "undici": "^6.6.2",
+    "undici": "^6.8.0",
     "utf-8-validate": "^6.0.3",
     "youtube-sr": "^4.3.10"
   },
