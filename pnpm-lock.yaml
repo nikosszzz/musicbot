@@ -33,8 +33,8 @@ dependencies:
     specifier: ^1.9.7
     version: 1.9.7
   sodium-native:
-    specifier: ^4.0.10
-    version: 4.0.10
+    specifier: ^4.1.0
+    version: 4.1.0
   spotify-url-info:
     specifier: ^3.2.13
     version: 3.2.13
@@ -1059,8 +1059,8 @@ packages:
     resolution: {integrity: sha512-YZo3K82SD7Riyi0E1EQPojLz7kpepnSQI9IyPbHHg1XXXevb5dJI7tpyN2ADxGcQbHG7vcyRHk0cbwqcQriUtg==}
     dev: false
 
-  /sodium-native@4.0.10:
-    resolution: {integrity: sha512-vrJQt4gASntDbnltRRk9vN4rks1SehjM12HkqQtu250JtWT+/lo8oEOa1HvSq3+8hzJdYcCJuLR5qRGxoRDjAg==}
+  /sodium-native@4.1.0:
+    resolution: {integrity: sha512-GcAVR0fQKAiHN/7tbMYb6P98kFYdHz6Gf4ZCeVDcs4egbkwrGNebmpwsE7gRdKtrbHHlO2PKQNzDsfIteh7abw==}
     requiresBuild: true
     dependencies:
       node-gyp-build: 4.8.0
