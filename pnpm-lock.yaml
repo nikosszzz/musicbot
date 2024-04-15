@@ -42,8 +42,8 @@ dependencies:
     specifier: ^1.0.4
     version: 1.0.4
   undici:
-    specifier: ^6.6.2
-    version: 6.6.2
+    specifier: ^6.13.0
+    version: 6.13.0
   utf-8-validate:
     specifier: ^6.0.3
     version: 6.0.3
@@ -1132,11 +1132,9 @@ packages:
       '@fastify/busboy': 2.1.0
     dev: false
 
-  /undici@6.6.2:
-    resolution: {integrity: sha512-vSqvUE5skSxQJ5sztTZ/CdeJb1Wq0Hf44hlYMciqHghvz+K88U0l7D6u1VsndoFgskDcnU+nG3gYmMzJVzd9Qg==}
+  /undici@6.13.0:
+    resolution: {integrity: sha512-Q2rtqmZWrbP8nePMq7mOJIN98M0fYvSgV89vwl/BQRT4mDOeY2GXZngfGpcBBhtky3woM7G24wZV3Q304Bv6cw==}
     engines: {node: '>=18.0'}
-    dependencies:
-      '@fastify/busboy': 2.1.0
     dev: false
 
   /utf-8-validate@6.0.3:
