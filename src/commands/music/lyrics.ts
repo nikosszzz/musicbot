@@ -1,4 +1,4 @@
-import { EmbedBuilder, type CommandInteraction, SlashCommandBuilder } from "discord.js";
+import { EmbedBuilder, SlashCommandBuilder } from "discord.js";
 // @ts-ignore
 import lyricsFinder from "lyrics-finder";
 import { Logger } from "@components/Logger";
@@ -8,8 +8,8 @@ export default {
     data: new SlashCommandBuilder()
         .setName("lyrics")
         .setDescription("Fetch lyrics for the currently playing song."),
-    async execute(interaction: CommandInteraction, client) {
-        const queue = client.queues.get(interaction.guild?.id as string);
+    async execute(interaction) {
+        const queue = interaction.client.queues.get(interaction.guild?.id as string);
 
         const nothingPlaying = new EmbedBuilder()
             .setColor("NotQuiteBlack")

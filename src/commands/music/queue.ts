@@ -1,4 +1,4 @@
-import { EmbedBuilder, type CommandInteraction, ActionRowBuilder, ButtonBuilder, SlashCommandBuilder, ButtonStyle, type CollectedInteraction } from "discord.js";
+import { EmbedBuilder, ActionRowBuilder, ButtonBuilder, SlashCommandBuilder, ButtonStyle, type CollectedInteraction, type CacheType, type ChatInputCommandInteraction } from "discord.js";
 import { Logger } from "@components/Logger";
 import type { Song } from "@components/Song";
 import type { Command } from "@common/types";
@@ -9,14 +9,14 @@ export default {
     data: new SlashCommandBuilder()
         .setName("queue")
         .setDescription("Shows the bot queue and what is currently playing."),
-    async execute(interaction: CommandInteraction, client) {
-        const queue = client.queues.get(interaction.guild?.id as string);
+    async execute(interaction) {
+        const queue = interaction.client.queues.get(interaction.guild?.id as string);
 
         const nothingPlaying = new EmbedBuilder()
             .setColor("NotQuiteBlack")
             .setTitle("Track Player")
             .setDescription("There is nothing playing in the queue currently.");
-        if (!queue || !queue.songs || !queue.songs.length ) return interaction.reply({ embeds: [nothingPlaying], ephemeral: true });
+        if (!queue || !queue.songs || !queue.songs.length) return interaction.reply({ embeds: [nothingPlaying], ephemeral: true });
 
 
         const embeds = generateQueueEmbed(interaction, queue.songs);
@@ -73,7 +73,7 @@ export default {
     },
 } as Command;
 
-function generateQueueEmbed(interaction: CommandInteraction, songs: Song[]): EmbedBuilder[] {
+function generateQueueEmbed(interaction: ChatInputCommandInteraction<CacheType>, songs: Song[]): EmbedBuilder[] {
     const embeds = [];
     let k = 10;
 

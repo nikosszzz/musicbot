@@ -1,7 +1,7 @@
 import { Playlist as youtubePlaylist, type Thumbnail, type Video, YouTube as youtube } from "youtube-sr";
 import { config } from "@components/config";
 import { Song } from "@components/Song";
-import type { ChatInputCommandInteraction, CommandInteraction } from "discord.js";
+import type { CacheType, ChatInputCommandInteraction } from "discord.js";
 //@ts-expect-error
 import SpotifyUrlInfo, { Tracks } from "spotify-url-info";
 import { fetch } from "undici";
@@ -11,7 +11,7 @@ export class Playlist {
     public readonly data: youtubePlaylist;
     public readonly videos: Song[];
 
-    public constructor({ playlist, interaction }: { playlist: youtubePlaylist; interaction: CommandInteraction | ChatInputCommandInteraction; }) {
+    public constructor({ playlist, interaction }: { playlist: youtubePlaylist; interaction: ChatInputCommandInteraction<CacheType>; }) {
         this.data = playlist;
 
         this.videos = this.data.videos
@@ -26,7 +26,7 @@ export class Playlist {
             }));
     }
 
-    public static async from({ url = "", search = "", interaction }: { url: string; search: string; interaction: CommandInteraction | ChatInputCommandInteraction; }): Promise<Playlist> {
+    public static async from({ url = "", search = "", interaction }: { url: string; search: string; interaction: ChatInputCommandInteraction<CacheType> }): Promise<Playlist> {
         const isYoutubeUrl = play.yt_validate(url) === "playlist";
         const isSpotifyUrl = ["playlist", "album"].includes(play.sp_validate(url) as string);
         const isSoundCloudUrl = await play.so_validate(url) === "playlist";

@@ -1,4 +1,4 @@
-import { type CommandInteraction, type GuildMember, EmbedBuilder, SlashCommandBuilder } from "discord.js";
+import { type GuildMember, EmbedBuilder, SlashCommandBuilder } from "discord.js";
 import { canModifyQueue } from "@components/QueueUtils";
 import type { Command } from "@common/types";
 
@@ -6,8 +6,8 @@ export default {
     data: new SlashCommandBuilder()
         .setName("pause")
         .setDescription("Pauses the queue."),
-    execute(interaction: CommandInteraction, client) {
-        const queue = client.queues.get(interaction.guild?.id as string);
+    execute(interaction) {
+        const queue = interaction.client.queues.get(interaction.guild?.id as string);
 
         const nothingPlaying = new EmbedBuilder()
             .setColor("NotQuiteBlack")

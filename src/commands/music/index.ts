@@ -1,4 +1,3 @@
-import type { Command } from "@common/types";
 import loop from "./loop";
 import lyrics from "./lyrics";
 import move from "./move";
@@ -16,7 +15,7 @@ import skipto from "./skipto";
 import stop from "./stop";
 import volume from "./volume";
 
-export const commands: Command[] = [
+export const commands = [
     loop,
     lyrics,
     move,

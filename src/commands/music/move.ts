@@ -1,4 +1,4 @@
-import { type ChatInputCommandInteraction, type GuildMember, EmbedBuilder, SlashCommandBuilder } from "discord.js";
+import { type GuildMember, EmbedBuilder, SlashCommandBuilder } from "discord.js";
 import { canModifyQueue } from "@components/QueueUtils";
 import move from "array-move";
 import type { Command } from "@common/types";
@@ -19,8 +19,8 @@ export default {
                 .setDescription("Position to move the song to.")
                 .setRequired(true)
         ),
-    execute(interaction: ChatInputCommandInteraction, client) {
-        const queue = client.queues.get(interaction.guild?.id as string);
+    execute(interaction) {
+        const queue = interaction.client.queues.get(interaction.guild?.id as string);
         const firstPos: number = interaction.options.getNumber("first_position") as number;
         const secondPos: number = interaction.options.getNumber("second_position") as number;
 

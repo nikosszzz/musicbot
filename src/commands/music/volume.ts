@@ -1,4 +1,4 @@
-import { type ChatInputCommandInteraction, type GuildMember, EmbedBuilder, SlashCommandBuilder } from "discord.js";
+import { type GuildMember, EmbedBuilder, SlashCommandBuilder } from "discord.js";
 import { canModifyQueue } from "@components/QueueUtils";
 import type { Command } from "@common/types";
 
@@ -11,8 +11,8 @@ export default {
                 .setName("level")
                 .setDescription("The volume level to set the music to.")
         ),
-    execute(interaction: ChatInputCommandInteraction, client) {
-        const queue = client.queues.get(interaction.guild?.id as string);
+    execute(interaction) {
+        const queue = interaction.client.queues.get(interaction.guild?.id as string);
         const volTarget: number = interaction.options.getNumber("level") as number;
 
         const notInVC = new EmbedBuilder()

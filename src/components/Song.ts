@@ -1,6 +1,6 @@
 import { type AudioResource, createAudioResource } from "@discordjs/voice";
 import play, { video_basic_info, stream, type InfoData as videoInfo, type SoundCloud, type SoundCloudTrack, type Spotify, type SpotifyTrack } from "play-dl";
-import { type ChatInputCommandInteraction, type CommandInteraction, EmbedBuilder } from "discord.js";
+import { type ChatInputCommandInteraction, EmbedBuilder, type CacheType } from "discord.js";
 
 export type SongData = {
     url: string;
@@ -25,7 +25,7 @@ export class Song {
         this.req = req;
     }
 
-    public static async from({ url = "", search = "", interaction }: { url: string; search: string; interaction: CommandInteraction | ChatInputCommandInteraction; }): Promise<Song> {
+    public static async from({ url = "", search = "", interaction }: { url: string; search: string; interaction: ChatInputCommandInteraction<CacheType>; }): Promise<Song> {
         const isYoutubeUrl = play.yt_validate(url) === "video";
         const isSpotifyUrl = play.sp_validate(url) === "track";
         const isSoundCloudUrl = await play.so_validate(url) === "track";

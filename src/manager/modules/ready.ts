@@ -12,7 +12,7 @@ export async function ready(client: Bot): Promise<void> {
         Logger.log({ type: "STARTUP", msg: "Music Bot has initialized." });
 
         await registerCommands();
-        setupAutomaticPresence(client);
+        setupAutomaticPresence();
     });
 
     async function registerCommands(): Promise<void> {
@@ -39,7 +39,7 @@ export async function ready(client: Bot): Promise<void> {
         }
     }
 
-    function setupAutomaticPresence(client: Bot): void {
+    function setupAutomaticPresence(): void {
         let state = 0;
 
         setInterval(async () => {

@@ -1,4 +1,4 @@
-import { EmbedBuilder, type CommandInteraction, type GuildMember, SlashCommandBuilder } from "discord.js";
+import { EmbedBuilder, type GuildMember, SlashCommandBuilder } from "discord.js";
 import { canModifyQueue } from "@components/QueueUtils";
 import type { Command } from "@common/types";
 
@@ -6,8 +6,8 @@ export default {
     data: new SlashCommandBuilder()
         .setName("resume")
         .setDescription("Resumes the currently non-playing track."),
-    async execute(interaction: CommandInteraction, client) {
-        const queue = client.queues.get(interaction.guild?.id as string);
+    async execute(interaction) {
+        const queue = interaction.client.queues.get(interaction.guild?.id as string);
 
         const nothingPlaying = new EmbedBuilder()
             .setColor("NotQuiteBlack")

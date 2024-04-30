@@ -1,4 +1,4 @@
-import { type ChatInputCommandInteraction, type GuildMember, EmbedBuilder, SlashCommandBuilder } from "discord.js";
+import { type GuildMember, EmbedBuilder, SlashCommandBuilder } from "discord.js";
 import { canModifyQueue } from "@components/QueueUtils";
 import type { Song } from "@components/Song";
 import type { Command } from "@common/types";
@@ -13,8 +13,8 @@ export default {
                 .setDescription("The queue number to skip to.")
                 .setRequired(true)
         ),
-    execute(interaction: ChatInputCommandInteraction, client) {
-        const queue = client.queues.get(interaction.guild?.id as string);
+    execute(interaction) {
+        const queue = interaction.client.queues.get(interaction.guild?.id as string);
         const skipNum: number = interaction.options.getNumber("queue_number") as number;
 
         const nothingPlaying = new EmbedBuilder()

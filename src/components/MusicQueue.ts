@@ -10,9 +10,9 @@ import {
     VoiceConnectionDisconnectReason,
     type VoiceConnectionState,
     VoiceConnectionStatus,
-    AudioPlayerPlayingState
+    type AudioPlayerPlayingState
 } from "@discordjs/voice";
-import type { ChatInputCommandInteraction, CommandInteraction, Message, TextChannel } from "discord.js";
+import type { CacheType, ChatInputCommandInteraction, Message, TextChannel } from "discord.js";
 import { promisify } from "node:util";
 import type { QueueOptions } from "common";
 import { config } from "@components/config";
@@ -28,7 +28,7 @@ const wait = promisify(setTimeout);
  * 
  */
 export class MusicQueue {
-    public readonly interaction!: CommandInteraction | ChatInputCommandInteraction;
+    public readonly interaction!: ChatInputCommandInteraction<CacheType>;
     public readonly connection!: VoiceConnection;
     public readonly player: AudioPlayer;
     public readonly textChannel: TextChannel;

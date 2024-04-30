@@ -1,4 +1,4 @@
-import { EmbedBuilder, type CommandInteraction, SlashCommandBuilder } from "discord.js";
+import { EmbedBuilder, SlashCommandBuilder } from "discord.js";
 import type { Command } from "@common/types";
 import { config } from "@components/config";
 
@@ -6,7 +6,7 @@ export default {
     data: new SlashCommandBuilder()
         .setName("pruning")
         .setDescription("Toggles pruning of bot messages."),
-    async execute(interaction: CommandInteraction) {
+    async execute(interaction) {
         config.PRUNING = !config.PRUNING;
 
         const pruneEmbed = new EmbedBuilder()

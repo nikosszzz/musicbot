@@ -1,4 +1,4 @@
-import { EmbedBuilder, type CommandInteraction, SlashCommandBuilder } from "discord.js";
+import { EmbedBuilder, SlashCommandBuilder } from "discord.js";
 import { splitBar } from "string-progressbar";
 import { Logger } from "@components/Logger";
 import type { Command } from "@common/types";
@@ -7,8 +7,8 @@ export default {
     data: new SlashCommandBuilder()
         .setName("nowplaying")
         .setDescription("Shows the current playing song."),
-    execute(interaction: CommandInteraction, client) {
-        const queue = client.queues.get(interaction.guild?.id as string);
+    execute(interaction) {
+        const queue = interaction.client.queues.get(interaction.guild?.id as string);
 
         const nothingPlaying = new EmbedBuilder()
             .setColor("NotQuiteBlack")

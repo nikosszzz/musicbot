@@ -7,10 +7,10 @@ import play from "play-dl";
 import { Logger } from "@components/Logger";
 
 export class Bot extends Client {
-    public commands: Collection<string, Command> = new Collection<string, Command>();
-    public queues: Collection<string, MusicQueue> = new Collection<string, MusicQueue>();
+    public commands = new Collection<string, Command>();
+    public queues = new Collection<string, MusicQueue>();
     public readonly debug: boolean = false;
-    public readonly version: string = "3.1.0";
+    public readonly version: string = "3.1.1";
     public readonly branch: string;
 
     constructor(options: ClientOptions) {

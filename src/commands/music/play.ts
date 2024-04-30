@@ -1,5 +1,5 @@
 import { type DiscordGatewayAdapterCreator, joinVoiceChannel } from "@discordjs/voice";
-import { type ChatInputCommandInteraction, type GuildMember, EmbedBuilder, SlashCommandBuilder, PermissionFlagsBits } from "discord.js";
+import { type GuildMember, EmbedBuilder, SlashCommandBuilder, PermissionFlagsBits } from "discord.js";
 import { MusicQueue } from "@components/MusicQueue";
 import { Song } from "@components/Song";
 import { Logger } from "@components/Logger";
@@ -16,9 +16,9 @@ export default {
                 .setDescription("The query to search for.")
                 .setRequired(true)
         ),
-    async execute(interaction: ChatInputCommandInteraction, client) {
+    async execute(interaction) {
         const { channel } = (interaction.member as GuildMember).voice;
-        const queue = client.queues.get(interaction.guild?.id as string);
+        const queue = interaction.client.queues.get(interaction.guild?.id as string);
         const url: string = interaction.options.getString("query") as string;
 
         const notInVC = new EmbedBuilder()
@@ -82,7 +82,7 @@ export default {
                 });
 
                 await interaction.deleteReply();
-                client.queues.set(interaction.guild?.id as string, newQueue);
+                interaction.client.queues.set(interaction.guild?.id as string, newQueue);
 
                 return await newQueue.enqueue({ songs: [song] });
             }

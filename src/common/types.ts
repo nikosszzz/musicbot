@@ -1,4 +1,4 @@
-import type { CacheType, ChatInputCommandInteraction, Collection, CommandInteraction, SlashCommandBuilder, SlashCommandOptionsOnlyBuilder, SlashCommandSubcommandBuilder, SlashCommandSubcommandsOnlyBuilder } from "discord.js";
+import type { CacheType, ChatInputCommandInteraction, Collection, SlashCommandBuilder, SlashCommandOptionsOnlyBuilder, SlashCommandSubcommandBuilder, SlashCommandSubcommandsOnlyBuilder } from "discord.js";
 import type { VoiceConnection } from "@discordjs/voice";
 import type { MusicQueue } from "@components/MusicQueue";
 
@@ -39,7 +39,7 @@ export type Command = {
 
 export type QueueOptions = {
     connection: VoiceConnection;
-    interaction: CommandInteraction | ChatInputCommandInteraction;
+    interaction: ChatInputCommandInteraction<CacheType>;
 }
 
 export { };

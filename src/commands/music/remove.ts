@@ -1,4 +1,4 @@
-import { EmbedBuilder, type ChatInputCommandInteraction, type GuildMember, SlashCommandBuilder } from "discord.js";
+import { EmbedBuilder, type GuildMember, SlashCommandBuilder } from "discord.js";
 import { canModifyQueue } from "@components/QueueUtils";
 import type { Command } from "@common/types";
 
@@ -12,8 +12,8 @@ export default {
                 .setDescription("The number of the track that you want to remove.")
                 .setRequired(true)
         ),
-    execute(interaction: ChatInputCommandInteraction, client) {
-        const queue = client.queues.get(interaction.guild?.id as string);
+    execute(interaction) {
+        const queue = interaction.client.queues.get(interaction.guild?.id as string);
         const removeArgs: number = interaction.options.getNumber("tracks") as number;
 
         const nothingToRemove = new EmbedBuilder()
