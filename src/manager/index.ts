@@ -22,7 +22,7 @@ export class Manager {
     private async loadModules(client: Bot): Promise<void> {
         const modules = [
             { fn: commands, name: "Commands Handler" },
-            { fn: ready, name: "Errors Handler" },
+            { fn: ready, name: "Ready" },
         ];
 
         const promises = modules.map(({ fn, name }) => this.loadModule(client, fn, name));
