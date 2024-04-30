@@ -1,6 +1,6 @@
 import { Logger } from "@components/Logger";
 import type { Bot } from "@components/Bot";
-import { InteractionType, type CommandInteraction } from "discord.js";
+import type { CacheType, ChatInputCommandInteraction, Interaction } from "discord.js";
 
 export async function commands(client: Bot): Promise<void> {
     client.on("interactionCreate", async (interaction) => {
@@ -11,19 +11,18 @@ export async function commands(client: Bot): Promise<void> {
         if (!command) return;
 
         try {
-            await command.execute(interaction, client);
-        } catch (err: any | Error) {
+            await command.execute(interaction);
+        } catch (err: any) {
             Logger.error({ type: "INTERNALS/CMDHANDLER", err: err.stack });
             await interaction.reply({ content: "An error occurred while executing this command.", ephemeral: true });
         }
     });
 }
 
-function isCommandInteraction(interaction: any): interaction is CommandInteraction {
+function isCommandInteraction(interaction: Interaction<CacheType>): interaction is ChatInputCommandInteraction {
     return (
-        interaction.type === InteractionType.ApplicationCommand &&
+        interaction.isChatInputCommand() &&
         !interaction.user.bot &&
-        interaction.guild &&
-        interaction.channel?.type !== "DM"
+        interaction.inGuild()
     );
 }

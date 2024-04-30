@@ -1,6 +1,5 @@
-import type { ChatInputCommandInteraction, Collection, CommandInteraction, SlashCommandBuilder, SlashCommandOptionsOnlyBuilder, SlashCommandSubcommandBuilder, SlashCommandSubcommandsOnlyBuilder } from "discord.js";
+import type { CacheType, ChatInputCommandInteraction, Collection, CommandInteraction, SlashCommandBuilder, SlashCommandOptionsOnlyBuilder, SlashCommandSubcommandBuilder, SlashCommandSubcommandsOnlyBuilder } from "discord.js";
 import type { VoiceConnection } from "@discordjs/voice";
-import type { Bot } from "@components/Bot";
 import type { MusicQueue } from "@components/MusicQueue";
 
 declare module "discord.js" {
@@ -34,10 +33,9 @@ export type Config = {
 }
 
 export type Command = {
-    data: SlashCommandBuilder | SlashCommandSubcommandsOnlyBuilder | SlashCommandOptionsOnlyBuilder | SlashCommandSubcommandBuilder;
-    execute(interaction: CommandInteraction | ChatInputCommandInteraction): Promise<any> | any;
-    execute(interaction: CommandInteraction | ChatInputCommandInteraction, client: Bot): Promise<any> | any;
-};
+    data: SlashCommandBuilder | SlashCommandSubcommandsOnlyBuilder | SlashCommandOptionsOnlyBuilder | SlashCommandSubcommandBuilder | Omit<SlashCommandBuilder, "addSubcommand" | "addSubcommandGroup">;
+    execute(interaction: ChatInputCommandInteraction<CacheType>): Promise<any> | any;
+}
 
 export type QueueOptions = {
     connection: VoiceConnection;

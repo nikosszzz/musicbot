@@ -1,4 +1,4 @@
-import { type CommandInteraction, EmbedBuilder, SlashCommandBuilder, version as djsVersion } from "discord.js";
+import { EmbedBuilder, SlashCommandBuilder, version as djsVersion } from "discord.js";
 import { Logger } from "@components/Logger";
 import { timeConverter } from "@utils/timeConverter";
 import { hash } from "@utils/hash";
@@ -9,14 +9,14 @@ export default {
     data: new SlashCommandBuilder()
         .setName("info")
         .setDescription("Displays information about the bot."),
-    async execute(interaction: CommandInteraction, client) {
+    async execute(interaction) {
         const infoEmbed = new EmbedBuilder()
             .setColor("NotQuiteBlack")
-            .setAuthor({ name: "Music Bot", iconURL: client.user?.avatarURL() as string })
+            .setAuthor({ name: "Music Bot", iconURL: interaction.client.user.avatarURL() ?? undefined })
             .addFields(
                 {
                     name: "Version",
-                    value: `${client.version} ${client.branch}`,
+                    value: `${interaction.client.version} ${interaction.client.branch}`,
                     inline: true
                 },
                 {
@@ -31,12 +31,7 @@ export default {
                 },
                 {
                     name: "Servers",
-                    value: `${client?.guilds.cache.size}`,
-                    inline: true
-                },
-                {
-                    name: "Users",
-                    value: `${client?.users.cache.size}`,
+                    value: `${interaction.client.guilds.cache.size}`,
                     inline: true
                 },
                 {

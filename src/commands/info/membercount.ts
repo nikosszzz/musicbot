@@ -1,19 +1,18 @@
-import { type CommandInteraction, EmbedBuilder, SlashCommandBuilder } from "discord.js";
-import { Logger } from "@components/Logger";
 import type { Command } from "@common/types";
+import { EmbedBuilder, SlashCommandBuilder } from "discord.js";
 
 export default {
     data: new SlashCommandBuilder()
         .setName("membercount")
-        .setDescription("Displays the number of members in the server."),
-    execute(interaction: CommandInteraction) {
-        const serverEmbed = new EmbedBuilder()
+        .setDescription("Displays the number of members in the guild."),
+    execute(interaction) {
+        const guild = interaction.guild!
+        const countEmbed = new EmbedBuilder()
             .setColor("NotQuiteBlack")
             .setTitle("Info | Member Count")
-            .addFields(
-                {
-                    name: `${interaction.guild?.name} Members`, value: `**${interaction.guild?.memberCount}**`
-                });
-        return interaction.reply({ embeds: [serverEmbed] }).catch(err => Logger.error({ type: "INFOCMDS", err }));
+            .addFields({
+                name: `${guild.name} Members`, value: `**${guild.memberCount}**`
+            });
+        return interaction.reply({ embeds: [countEmbed] });
     },
 } as Command;

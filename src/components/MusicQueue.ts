@@ -9,7 +9,8 @@ import {
     type VoiceConnection,
     VoiceConnectionDisconnectReason,
     type VoiceConnectionState,
-    VoiceConnectionStatus
+    VoiceConnectionStatus,
+    AudioPlayerPlayingState
 } from "@discordjs/voice";
 import type { ChatInputCommandInteraction, CommandInteraction, Message, TextChannel } from "discord.js";
 import { promisify } from "node:util";
@@ -171,7 +172,7 @@ export class MusicQueue {
         }
     }
 
-    private async sendPlayingMessage({ newState }: { newState: any; }): Promise<void> {
+    private async sendPlayingMessage({ newState }: { newState: AudioPlayerPlayingState; }): Promise<void> {
         let playingMessage: Message<boolean>;
 
         try {

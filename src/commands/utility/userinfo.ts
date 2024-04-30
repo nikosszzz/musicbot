@@ -1,4 +1,4 @@
-import { type ChatInputCommandInteraction, EmbedBuilder, SlashCommandBuilder, PermissionFlagsBits, type GuildMember, type User, type PresenceStatus } from "discord.js";
+import { EmbedBuilder, SlashCommandBuilder, PermissionFlagsBits, type GuildMember } from "discord.js";
 import { Logger } from "@components/Logger";
 import type { Command } from "@common/types";
 
@@ -12,23 +12,13 @@ export default {
                 .setDescription("Select a User from this Guild.")
                 .setRequired(false)
         ),
-    async execute(interaction: ChatInputCommandInteraction) {
+    async execute(interaction) {
         await interaction.deferReply();
 
-        const presences = {
-            idle: "Idle",
-            online: "Online",
-            dnd: "Do Not Disturb",
-            offline: "Offline",
-            invisible: "Invisible"
-        };
+        const user = interaction.options.getUser("user");
+        const member = user ? interaction.guild?.members.resolve(user) : interaction.member as GuildMember;
 
-        const user = interaction.options.getUser("user") as User;
-        const member = user ? (interaction.guild?.members.resolve(user) as GuildMember) : (interaction.member as GuildMember);
-
-        if (!member) {
-            return interaction.reply("Could not resolve the provided user.");
-        }
+        if (!member) return interaction.editReply("Could not resolve the provided user.");
 
         const desiredPermissions = [
             "KickMembers",
@@ -56,27 +46,21 @@ export default {
                         ? "Server Moderator"
                         : "Unknown.";
 
-        let rolemap = member.roles.cache.map(roles => `<@&${roles.id}>`).join(", ");
-        rolemap = rolemap.length > 1024 ? "Too many roles to display." : rolemap || "No roles.";
+        let rolemap = member.roles.cache.filter(r => r.name !== "@everyone").map(r => r).join(", ");
 
         const infoEmbed = new EmbedBuilder()
             .setColor("NotQuiteBlack")
-            .setAuthor({ name: member.user.tag, iconURL: member.user.avatarURL() as string })
-            .setThumbnail(member?.user?.avatarURL())
+            .setAuthor({ name: member.user.tag, iconURL: member.user.avatarURL() ?? undefined })
+            .setThumbnail(member.user.avatarURL())
             .addFields(
                 {
                     name: "Joined " + interaction.guild?.name,
-                    value: member.joinedAt?.toLocaleString() as string,
+                    value: member.joinedAt!.toLocaleString(),
                     inline: true,
                 },
                 {
                     name: "Registered on Discord",
-                    value: member.user.createdAt.toLocaleString() as string,
-                    inline: true,
-                },
-                {
-                    name: "Status",
-                    value: presences[member.presence?.status as PresenceStatus],
+                    value: member.user.createdAt.toLocaleString(),
                     inline: true,
                 },
                 {
@@ -91,7 +75,7 @@ export default {
                 },
                 {
                     name: "User Roles",
-                    value: rolemap,
+                    value: rolemap.length > 1024 ? "Too many roles to display." : rolemap || "No roles.",
                     inline: true,
                 },
                 {
@@ -102,6 +86,6 @@ export default {
             )
             .setFooter({ text: `Member ID: ${member.id}` });
 
-        return await interaction.reply({ embeds: [infoEmbed] }).catch(err => Logger.error({ type: "UTILITYCMDS", err: err }));
+        return await interaction.editReply({ embeds: [infoEmbed] }).catch(err => Logger.error({ type: "UTILITYCMDS", err: err }));
     }
 } as Command;

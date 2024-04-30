@@ -1,24 +1,25 @@
 import type { Command } from "@common/types";
-import { type CommandInteraction, EmbedBuilder, SlashCommandBuilder } from "discord.js";
+import { EmbedBuilder, SlashCommandBuilder } from "discord.js";
 
 export default {
     data: new SlashCommandBuilder()
         .setName("changelogs")
         .setDescription("Displays information about the latest Music Bot update."),
-    async execute(interaction: CommandInteraction, client) {
+    async execute(interaction) {
 
         const bugfixes = `- bot: General fixes
+        - types: Typings fixes
         `;
 
         const whatsnew = `- bot: Updated and upgraded`;
 
         const UpdateEmbed = new EmbedBuilder()
             .setColor("NotQuiteBlack")
-            .setTitle("Update Changelogs")
-            .setDescription("Changelogs for the latest Music Bot update.")
+            .setTitle("Changelogs")
+            .setDescription("Check out what's new and fixes implemented in the latest Music Bot update!")
             .addFields(
                 {
-                    name: "Version", value: client!.version
+                    name: "Version", value: interaction.client.version
                 },
                 {
                     name: "**Bug Fixes**", value: bugfixes.replaceAll("  ", "")

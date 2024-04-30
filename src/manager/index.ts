@@ -13,7 +13,7 @@ export class Manager {
     private async loadModule(client: Bot, moduleFn: (client: Bot) => Promise<void>, moduleName: string): Promise<void> {
         try {
             await moduleFn(client);
-            Logger.log({ type: "MANAGER", msg: `${moduleName} module has been loaded.` });
+            Logger.log({ type: "MANAGER", msg: `${moduleName} module has been initialized.` });
         } catch (err: any | Error) {
             Logger.error({ type: "MANAGER", err });
         }
@@ -31,6 +31,6 @@ export class Manager {
     }
 
     public constructor(client: Bot) {
-        this.loadModules(client).then(() => Logger.log({ type: "MANAGER", msg: "All modules have been loaded." }));
+        this.loadModules(client).then(() => Logger.log({ type: "MANAGER", msg: "All modules have been initialized." }));
     }
 }
