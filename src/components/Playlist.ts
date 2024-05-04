@@ -15,9 +15,9 @@ export class Playlist {
         this.data = playlist;
 
         this.videos = this.data.videos
-            .filter((video: Video) => !["Private video", "Deleted video"].includes(video.title!))
+            .filter((video) => !["Private video", "Deleted video"].includes(video.title!))
             .slice(0, config.MAX_PLAYLIST_SIZE)
-            .map((video: Video): Song => new Song({
+            .map((video) => new Song({
                 title: video.title as string,
                 url: video.url,
                 duration: video.duration / 1000,
@@ -38,7 +38,7 @@ export class Playlist {
             const spotifyPl = Promise.all(limitedPlaylistTrack.map(async (track: Tracks): Promise<Video> => await youtube.searchOne(`${track.name} - ${track.artists ? track.artists[0].name : ""}`, "video")));
             playlist = new youtubePlaylist({ videos: (await spotifyPl).filter((song: Video) => song.title !== undefined || song.duration !== undefined) });
         } else if (isYoutubeUrl) {
-            playlist = await youtube.getPlaylist(url);
+            playlist = await youtube.getPlaylist(url); 
         } else if (isSoundCloudUrl) {
             const scPl = await play.soundcloud(url) as SoundCloudPlaylist;
             const scPlTracks = (await scPl.all_tracks()).map((track) => ({

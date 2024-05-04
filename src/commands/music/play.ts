@@ -48,44 +48,43 @@ export default {
 
         await interaction.reply({ content: "⏳ Loading..." });
 
-        let song!: Song;
+        let song: Song;
         try {
             song = await Song.from({ url, search: url, interaction });
         } catch (err: any | Error) {
             interaction.editReply({ content: "An error occured in the Music system! Song was not added." });
             return Logger.error({ type: "CMDS/PLAY", err: err });
-        } finally {
-            if (queue) {
-                if (!queue.songs.length) {
-                    return queue.enqueue({ songs: [song] });
-                } else {
-                    queue.songs.push(song);
-                }
+        }
 
-                const songAdd = new EmbedBuilder()
-                    .setColor("NotQuiteBlack")
-                    .setTitle("Track Player")
-                    .setDescription(`**${song.title}** has been added to the queue by ${interaction.user}.`)
-                    .setThumbnail(song.thumbnail);
-
-                return await interaction.editReply({ content: " ", embeds: [songAdd] }).catch(err => Logger.error({ type: "MUSICCMDS", err }));
+        if (queue) {
+            if (!queue.songs.length) {
+                return queue.enqueue({ songs: [song] });
             } else {
-                const newQueue = new MusicQueue({
-                    options: {
-                        interaction,
-                        connection: joinVoiceChannel({
-                            channelId: channel.id,
-                            guildId: channel.guild.id,
-                            adapterCreator: channel.guild.voiceAdapterCreator as DiscordGatewayAdapterCreator
-                        })
-                    }
-                });
-
-                await interaction.deleteReply();
-                interaction.client.queues.set(interaction.guild?.id as string, newQueue);
-
-                return await newQueue.enqueue({ songs: [song] });
+                queue.songs.push(song);
             }
+
+            const songAdd = new EmbedBuilder()
+                .setColor("NotQuiteBlack")
+                .setTitle("Track Player")
+                .setDescription(`**${song.title}** has been added to the queue by ${interaction.user}.`)
+                .setThumbnail(song.thumbnail);
+
+            return await interaction.editReply({ content: " ", embeds: [songAdd] }).catch(err => Logger.error({ type: "MUSICCMDS", err }));
+        } else {
+            const newQueue = new MusicQueue({
+                options: {
+                    interaction,
+                    connection: joinVoiceChannel({
+                        channelId: channel.id,
+                        guildId: channel.guild.id,
+                        adapterCreator: channel.guild.voiceAdapterCreator as DiscordGatewayAdapterCreator
+                    })
+                }
+            });
+
+            interaction.client.queues.set(interaction.guild?.id as string, newQueue);
+
+            return await newQueue.enqueue({ songs: [song] });
         }
     }
 } as Command;

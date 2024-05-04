@@ -42,18 +42,17 @@ export default {
         if (!permissions?.has([PermissionFlagsBits.Connect, PermissionFlagsBits.Speak])) return interaction.reply({ embeds: [botNoPermissions], ephemeral: true });
 
         if (!interaction.deferred) interaction.deferReply();
-        let playlist!: Playlist;
+
+        let playlist: Playlist;
         try {
             playlist = await Playlist.from({ url, search: url, interaction });
         } catch (err: any | Error) {
             Logger.error({ type: "INTERNAL:PLAYLIST", err: err });
-
             return interaction.editReply({ content: "Playlist not found." }).catch((err) => Logger.error({ type: "MUSICCMDS", err: err }));
         }
 
         if (queue) {
             if (!queue.songs.length) {
-                queue.songs.push(...playlist.videos);
                 const playlistEmbed = new EmbedBuilder()
                     .setColor("NotQuiteBlack")
                     .setTitle("Track Player")
@@ -65,7 +64,7 @@ export default {
                     .setURL(playlist.data.url as string);
 
                 interaction.editReply({ embeds: [playlistEmbed] }).catch((err: Error) => Logger.error({ type: "MUSICCMDS", err }));
-                return queue.enqueue({ songs: [playlist.videos[0]] });
+                return queue.enqueue({ songs: playlist.videos });
             } else {
                 queue.songs.push(...playlist.videos);
 
@@ -94,9 +93,8 @@ export default {
             });
 
             interaction.client.queues.set(interaction.guild?.id as string, newQueue);
-            newQueue.songs.push(...playlist.videos);
 
-            await newQueue.enqueue({ songs: [playlist.videos[0]] });
+            await newQueue.enqueue({ songs: playlist.videos });
         }
 
         const playlistEmbed = new EmbedBuilder()

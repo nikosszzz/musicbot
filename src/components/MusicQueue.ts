@@ -36,7 +36,7 @@ export class MusicQueue {
 
     public resource!: AudioResource;
     public songs: Song[] = [];
-    public volume = config.DEFAULT_VOLUME || 100;
+    public volume = config.DEFAULT_VOLUME || 50;
     public loop = false;
     public muted = false;
     public waitTimeout!: NodeJS.Timeout | null;
@@ -176,7 +176,7 @@ export class MusicQueue {
         let playingMessage: Message<boolean>;
 
         try {
-            playingMessage = await this.textChannel.send((newState.resource as AudioResource<Song>).metadata.startMessage());
+            playingMessage = this.interaction.replied || this.interaction.deferred ? await this.interaction.editReply((newState.resource as AudioResource<Song>).metadata.startMessage()) : await this.textChannel.send((newState.resource as AudioResource<Song>).metadata.startMessage());
         } catch (err: any | Error) {
             Logger.error({ type: "INTERNAL:MUSIC", err: err });
         }
