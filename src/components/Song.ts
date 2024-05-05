@@ -1,5 +1,5 @@
 import { type AudioResource, createAudioResource } from "@discordjs/voice";
-import play, { video_basic_info, stream, type InfoData as videoInfo, type SoundCloud, type SoundCloudTrack, type Spotify, type SpotifyTrack } from "play-dl";
+import { yt_validate, sp_validate, so_validate, video_basic_info, stream, spotify, soundcloud, search as playSearch, type InfoData as videoInfo, type SoundCloud, type SoundCloudTrack, type Spotify, type SpotifyTrack } from "play-dl";
 import { type ChatInputCommandInteraction, EmbedBuilder, type CacheType } from "discord.js";
 
 export type SongData = {
@@ -26,19 +26,19 @@ export class Song {
     }
 
     public static async from({ url = "", search = "", interaction }: { url: string; search: string; interaction: ChatInputCommandInteraction<CacheType>; }): Promise<Song> {
-        const isYoutubeUrl = play.yt_validate(url) === "video";
-        const isSpotifyUrl = play.sp_validate(url) === "track";
-        const isSoundCloudUrl = await play.so_validate(url) === "track";
+        const isYoutubeUrl = yt_validate(url) === "video";
+        const isSpotifyUrl = sp_validate(url) === "track";
+        const isSoundCloudUrl = await so_validate(url) === "track";
 
         let songInfo: videoInfo | SoundCloud | Spotify;
         if (isSpotifyUrl) {
             let spotifyTitle: string, spotifyArtist: string;
 
-            const spotifyInfo = await play.spotify(url) as SpotifyTrack;
+            const spotifyInfo = await spotify(url) as SpotifyTrack;
             spotifyTitle = spotifyInfo.name;
             spotifyArtist = spotifyInfo.artists[0].name;
 
-            const spotifyresult = await play.search(`${spotifyArtist} - ${spotifyTitle}`, { limit: 1 });
+            const spotifyresult = await playSearch(`${spotifyArtist} - ${spotifyTitle}`, { limit: 1 });
             songInfo = await video_basic_info(spotifyresult[0].url);
 
             return new this({
@@ -49,7 +49,7 @@ export class Song {
                 req: interaction.user.tag
             });
         } else if (isSoundCloudUrl) {
-            const scSong = await play.soundcloud(url) as SoundCloudTrack;
+            const scSong = await soundcloud(url) as SoundCloudTrack;
             return new this({
                 title: scSong.name as string,
                 url: scSong.permalink,
@@ -68,7 +68,7 @@ export class Song {
                 req: interaction.user.tag
             });
         } else {
-            const result = await play.search(search, { limit: 1 });
+            const result = await playSearch(search, { limit: 1 });
             songInfo = await video_basic_info(result[0].url);
 
             return new this({

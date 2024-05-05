@@ -5,7 +5,7 @@ import type { CacheType, ChatInputCommandInteraction } from "discord.js";
 //@ts-expect-error
 import SpotifyUrlInfo, { Tracks } from "spotify-url-info";
 import { fetch } from "undici";
-import play, { type SoundCloudPlaylist } from "play-dl";
+import { sp_validate, so_validate, yt_validate, search as playSearch, soundcloud, type SoundCloudPlaylist } from "play-dl";
 
 export class Playlist {
     public readonly data: youtubePlaylist;
@@ -27,9 +27,9 @@ export class Playlist {
     }
 
     public static async from({ url = "", search = "", interaction }: { url: string; search: string; interaction: ChatInputCommandInteraction<CacheType> }): Promise<Playlist> {
-        const isYoutubeUrl = play.yt_validate(url) === "playlist";
-        const isSpotifyUrl = ["playlist", "album"].includes(play.sp_validate(url) as string);
-        const isSoundCloudUrl = await play.so_validate(url) === "playlist";
+        const isYoutubeUrl = yt_validate(url) === "playlist";
+        const isSpotifyUrl = ["playlist", "album"].includes(sp_validate(url) as string);
+        const isSoundCloudUrl = await so_validate(url) === "playlist";
 
         let playlist: youtubePlaylist;
         if (isSpotifyUrl) {
@@ -40,7 +40,7 @@ export class Playlist {
         } else if (isYoutubeUrl) {
             playlist = await youtube.getPlaylist(url); 
         } else if (isSoundCloudUrl) {
-            const scPl = await play.soundcloud(url) as SoundCloudPlaylist;
+            const scPl = await soundcloud(url) as SoundCloudPlaylist;
             const scPlTracks = (await scPl.all_tracks()).map((track) => ({
                 title: track.name,
                 url: track.permalink,
@@ -52,7 +52,7 @@ export class Playlist {
             }));
             playlist = new youtubePlaylist({ videos: scPlTracks, title: scPl.name, url: scPl.url });
         } else {
-            const result = await play.search(search, {
+            const result = await playSearch(search, {
                 source: {
                     youtube: "playlist"
                 },

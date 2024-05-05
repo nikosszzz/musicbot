@@ -3,14 +3,14 @@ import type { Command } from "@common/types";
 import { config } from "@components/config";
 import { Manager } from "@manager";
 import type { MusicQueue } from "@components/MusicQueue";
-import play from "play-dl";
+import { setToken } from "play-dl";
 import { Logger } from "@components/Logger";
 
 export class Bot extends Client {
     public commands = new Collection<string, Command>();
     public queues = new Collection<string, MusicQueue>();
     public readonly debug: boolean = false;
-    public readonly version: string = "3.1.2";
+    public readonly version: string = "3.1.3";
     public readonly branch: string;
 
     constructor(options: ClientOptions) {
@@ -20,7 +20,7 @@ export class Bot extends Client {
         this.branch = this.debug ? "development" : "stable";
 
         /* Music Authentication */
-        play.setToken({
+        setToken({
             soundcloud: {
                 client_id: config.SOUNDCLOUD_CLIENT_ID
             },

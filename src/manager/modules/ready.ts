@@ -4,7 +4,6 @@ import { commands as musicCmds } from "commands/music";
 import { commands as infoCmds } from "commands/info";
 import { commands as utilCmds } from "commands/utility";
 import { config } from "@components/config";
-import { AuthTypes } from "@common/types";
 import { Bot } from "@components/Bot";
 
 export async function ready(client: Bot): Promise<void> {
@@ -17,7 +16,7 @@ export async function ready(client: Bot): Promise<void> {
 
     async function registerCommands(): Promise<void> {
         const commands = [...musicCmds, ...infoCmds, ...utilCmds];
-        const auth: AuthTypes = {
+        const auth = {
             TOKEN: client.debug ? config.DEVTOKEN : config.TOKEN,
             CLIENT_ID: client.debug ? config.DEVID : config.CLIENT_ID,
         };
@@ -43,7 +42,7 @@ export async function ready(client: Bot): Promise<void> {
         let state = 0;
 
         setInterval(async () => {
-            const presences: [{ type: ActivityType.Listening, message: string }] = [
+            const presences: [{ type: ActivityType, message: string }] = [
                 { type: ActivityType.Listening, message: `music.` },
             ];
 

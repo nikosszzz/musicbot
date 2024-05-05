@@ -12,11 +12,6 @@ declare module "discord.js" {
     }
 }
 
-export type AuthTypes = {
-    TOKEN: string;
-    CLIENT_ID: string;
-};
-
 export type Config = {
     TOKEN: string;
     DEVTOKEN: string;

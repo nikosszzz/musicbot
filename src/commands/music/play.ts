@@ -3,7 +3,7 @@ import { type GuildMember, EmbedBuilder, SlashCommandBuilder, PermissionFlagsBit
 import { MusicQueue } from "@components/MusicQueue";
 import { Song } from "@components/Song";
 import { Logger } from "@components/Logger";
-import play from "play-dl";
+import { sp_validate, so_validate, yt_validate } from "play-dl";
 import type { Command } from "@common/types";
 
 export default {
@@ -42,7 +42,7 @@ export default {
 
         if (!permissions?.has([PermissionFlagsBits.Connect, PermissionFlagsBits.Speak])) return interaction.reply({ embeds: [botNoPermissions], ephemeral: true });
 
-        if (play.yt_validate(url) === "playlist" || await play.so_validate(url) === "playlist" || play.sp_validate(url) === "album" || play.sp_validate(url) === "playlist") {
+        if (yt_validate(url) === "playlist" || await so_validate(url) === "playlist" || sp_validate(url) === "album" || sp_validate(url) === "playlist") {
             return interaction.reply({ content: "Playlist was provided, please use the `playlist` command.", ephemeral: true });
         }
 

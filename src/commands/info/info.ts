@@ -10,6 +10,7 @@ export default {
         .setName("info")
         .setDescription("Displays information about the bot."),
     async execute(interaction) {
+
         const infoEmbed = new EmbedBuilder()
             .setColor("NotQuiteBlack")
             .setAuthor({ name: "Music Bot", iconURL: interaction.client.user.avatarURL() ?? undefined })
