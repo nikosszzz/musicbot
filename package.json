@@ -35,7 +35,7 @@
   "devDependencies": {
     "@rollup/plugin-typescript": "^11.1.6",
     "@types/node": "^20.12.8",
-    "esbuild": "^0.20.2",
+    "esbuild": "^0.21.0",
     "rollup": "^4.17.2",
     "rollup-plugin-esbuild": "^6.1.1",
     "rollup-plugin-typescript-paths": "^1.5.0",
