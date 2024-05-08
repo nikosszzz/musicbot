@@ -26,7 +26,7 @@
     "opusscript": "^0.1.1",
     "play-dl": "^1.9.7",
     "sodium-native": "^4.1.1",
-    "spotify-url-info": "^3.2.13",
+    "spotify-url-info": "^3.2.14",
     "string-progressbar": "^1.0.4",
     "undici": "^6.15.0",
     "utf-8-validate": "^6.0.3",
