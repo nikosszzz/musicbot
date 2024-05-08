@@ -82,7 +82,7 @@ function generateQueueEmbed(interaction: ChatInputCommandInteraction<CacheType>,
         let j = i;
         k += 10;
 
-        const info = current.map(track => `${++j} - [${track.title}](${track.url}) - Requested by ${track.req}`).join("\n");
+        const info = current.map(track => `${++j} - [${track.title}](${track.url}) ${track.durationRaw ? `\`${track.durationRaw}\`` : ""} - Requested by ${track.req}`).join("\n");
 
         const queueEmbed = new EmbedBuilder()
             .setColor("NotQuiteBlack")

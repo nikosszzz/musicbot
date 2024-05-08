@@ -19,7 +19,7 @@ export default {
 
         const song = queue.songs[0];
         const seek = queue.resource.playbackDuration / 1000;
-        const left = song.duration - seek;
+        const left = song.duration - seek
 
         try {
             const nowPlaying = new EmbedBuilder()

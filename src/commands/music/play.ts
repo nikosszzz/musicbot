@@ -50,7 +50,7 @@ export default {
 
         let song: Song;
         try {
-            song = await Song.from({ url, search: url, interaction });
+            song = await Song.from({ search: url, interaction });
         } catch (err: any | Error) {
             interaction.editReply({ content: "An error occured in the Music system! Song was not added." });
             return Logger.error({ type: "CMDS/PLAY", err: err });

@@ -4,6 +4,7 @@ import { Logger } from "@components/Logger";
 import { MusicQueue } from "@components/MusicQueue";
 import { Playlist } from "@components/Playlist";
 import type { Command } from "@common/types";
+import { SoundCloudPlaylist, SpotifyPlaylist } from "play-dl";
 
 export default {
     data: new SlashCommandBuilder()
@@ -45,7 +46,7 @@ export default {
 
         let playlist: Playlist;
         try {
-            playlist = await Playlist.from({ url, search: url, interaction });
+            playlist = await Playlist.from({ search: url, interaction });
         } catch (err: any | Error) {
             Logger.error({ type: "INTERNAL:PLAYLIST", err: err });
             return interaction.editReply({ content: "Playlist not found." }).catch((err) => Logger.error({ type: "MUSICCMDS", err: err }));
@@ -59,7 +60,7 @@ export default {
                     .setDescription("The following playlist is now playing:")
                     .addFields(
                         {
-                            name: playlist.data.title ? playlist.data.title : "Spotify Playlist", value: "** **"
+                            name: playlist.data instanceof SpotifyPlaylist || playlist.data instanceof SoundCloudPlaylist ? playlist.data.name : playlist.data.title!, value: "** **"
                         })
                     .setURL(playlist.data.url as string);
 
@@ -74,7 +75,7 @@ export default {
                     .setDescription("The following playlist has been added to the queue:")
                     .addFields(
                         {
-                            name: playlist.data.title ? playlist.data.title : "Spotify Playlist", value: "** **"
+                            name: playlist.data instanceof SpotifyPlaylist || playlist.data instanceof SoundCloudPlaylist ? playlist.data.name : playlist.data.title!, value: "** **"
                         })
                     .setURL(playlist.data.url as string);
 
@@ -103,7 +104,7 @@ export default {
             .setDescription("The following playlist is now playing:")
             .addFields(
                 {
-                    name: playlist.data.title ? playlist.data.title : "Spotify Playlist", value: "** **"
+                    name: playlist.data instanceof SpotifyPlaylist || playlist.data instanceof SoundCloudPlaylist ? playlist.data.name : playlist.data.title!, value: "** **"
                 })
             .setURL(playlist.data.url as string);
 

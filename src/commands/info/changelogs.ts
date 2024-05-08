@@ -11,7 +11,8 @@ export default {
         - types: Typings fixes
         `;
 
-        const whatsnew = `- bot: Updated and upgraded`;
+        const whatsnew = `- bot: Updated and upgraded
+        - internals(music): Rewritten to some extent and more efficient.`;
 
         const UpdateEmbed = new EmbedBuilder()
             .setColor("NotQuiteBlack")
