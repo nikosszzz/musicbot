@@ -22,7 +22,7 @@ export default {
         if (!canModifyQueue({ member: interaction.member as GuildMember })) return interaction.reply({ embeds: [notInBotChannel], ephemeral: true });
         if (!queue) return interaction.reply({ embeds: [nothingPlaying], ephemeral: true });
 
-        queue.stop();
+        queue.player.stop(true);
 
         const stopEmbed = new EmbedBuilder()
             .setColor("NotQuiteBlack")

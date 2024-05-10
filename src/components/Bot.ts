@@ -10,7 +10,7 @@ export class Bot extends Client {
     public commands = new Collection<string, Command>();
     public queues = new Collection<string, MusicQueue>();
     public readonly debug: boolean = false;
-    public readonly version: string = "3.2.0";
+    public readonly version: string = "3.2.1";
     public readonly branch: string;
 
     constructor(options: ClientOptions) {

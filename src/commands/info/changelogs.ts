@@ -7,12 +7,10 @@ export default {
         .setDescription("Displays information about the latest Music Bot update."),
     async execute(interaction) {
 
-        const bugfixes = `- bot: General fixes
-        - types: Typings fixes
-        `;
+        const bugfixes = `- queue: Fix double \`Queue ended.\` message from the /stop command
+        - queue: Fix an issue where the \`Loading...\` message was not edited to the Now Playing embed.`;
 
-        const whatsnew = `- bot: Updated and upgraded
-        - internals(music): Rewritten to some extent and more efficient.`;
+        const whatsnew = `- bot: Updated and upgraded`;
 
         const UpdateEmbed = new EmbedBuilder()
             .setColor("NotQuiteBlack")

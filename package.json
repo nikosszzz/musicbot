@@ -1,6 +1,6 @@
 {
   "name": "music-bot",
-  "version": "3.2.0",
+  "version": "3.2.1",
   "description": "A general music Discord bot.",
   "main": "./src/bot.ts",
   "repository": {
@@ -31,8 +31,8 @@
   },
   "devDependencies": {
     "@rollup/plugin-typescript": "^11.1.6",
-    "@types/node": "^20.12.8",
-    "esbuild": "^0.20.2",
+    "@types/node": "^20.12.11",
+    "esbuild": "^0.21.1",
     "rollup": "^4.17.2",
     "rollup-plugin-esbuild": "^6.1.1",
     "rollup-plugin-typescript-paths": "^1.5.0",

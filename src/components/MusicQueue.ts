@@ -99,7 +99,7 @@ export class MusicQueue {
                     this.songs.shift();
                 }
 
-                this.songs.length || this.resource ? this.processQueue() : this.stop();
+                this.songs.length && this.resource ? this.processQueue() : this.stop()
             } else if (oldState.status === AudioPlayerStatus.Buffering && newState.status === AudioPlayerStatus.Playing) {
                 this.sendPlayingMessage({ newState });
             }

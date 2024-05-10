@@ -1,6 +1,6 @@
 import { type AudioResource, createAudioResource } from "@discordjs/voice";
 import { yt_validate, sp_validate, so_validate, video_basic_info, stream, spotify, soundcloud, search as playSearch, type SoundCloud, type SoundCloudTrack, type Spotify, type SpotifyTrack, YouTubeVideo, is_expired, refreshToken } from "play-dl";
-import { type ChatInputCommandInteraction, EmbedBuilder, type CacheType } from "discord.js";
+import { type ChatInputCommandInteraction, EmbedBuilder, type CacheType, type MessagePayload, type MessageCreateOptions } from "discord.js";
 
 export type SongData = {
     url: string;
@@ -90,7 +90,7 @@ export class Song {
         return createAudioResource(playStream.stream, { metadata: this, inputType: playStream.type, inlineVolume: true });
     }
 
-    public startMessage(): { embeds: EmbedBuilder[]; } {
+    public startMessage(): MessagePayload | MessageCreateOptions {
         const playingEmbed = new EmbedBuilder()
             .setColor("NotQuiteBlack")
             .setTitle("Track Player")
@@ -98,6 +98,6 @@ export class Song {
             .setThumbnail(this.thumbnail || null)
             .setDescription(`Started playing: **${this.title}**.`);
 
-        return { embeds: [playingEmbed] };
+        return { content: "** **", embeds: [playingEmbed] };
     }
 }
