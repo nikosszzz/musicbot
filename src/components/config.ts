@@ -1,4 +1,4 @@
-import { Config } from "@common/types";
+import { Config } from "@common";
 
 export const config: Config = {
     TOKEN: process.env.TOKEN || "",

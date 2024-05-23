@@ -1,7 +1,7 @@
 import { EmbedBuilder, ActionRowBuilder, ButtonBuilder, SlashCommandBuilder, ButtonStyle, type CollectedInteraction, type CacheType, type ChatInputCommandInteraction } from "discord.js";
 import { Logger } from "@components/Logger";
 import type { Song } from "@components/Song";
-import type { Command } from "@common/types";
+import type { Command } from "@common";
 
 let currentPage: number = 0 as number;
 

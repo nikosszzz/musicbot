@@ -14,7 +14,7 @@ import {
 } from "@discordjs/voice";
 import type { CacheType, ChatInputCommandInteraction, Message, TextChannel } from "discord.js";
 import { promisify } from "node:util";
-import type { QueueOptions } from "common";
+import type { QueueOptions } from "@common";
 import { config } from "@components/config";
 import type { Song } from "@components/Song";
 import type { Bot } from "@components/Bot";

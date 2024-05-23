@@ -1,10 +1,10 @@
 import { ActivityType, Routes } from "discord.js";
 import { Logger } from "@components/Logger";
-import { commands as musicCmds } from "commands/music";
-import { commands as infoCmds } from "commands/info";
-import { commands as utilCmds } from "commands/utility";
+import { commands as musicCmds } from "commands/music/index.js";
+import { commands as infoCmds } from "commands/info/index.js";
+import { commands as utilCmds } from "commands/utility/index.js";
 import { config } from "@components/config";
-import { Bot } from "@components/Bot";
+import type { Bot } from "@components/Bot";
 
 export async function ready(client: Bot): Promise<void> {
     client.once("ready", async (): Promise<void> => {
@@ -41,7 +41,7 @@ export async function ready(client: Bot): Promise<void> {
     function setupAutomaticPresence(): void {
         let state = 0;
 
-        setInterval(async () => {
+        setInterval(() => {
             const presences: [{ type: ActivityType, message: string }] = [
                 { type: ActivityType.Listening, message: `music.` },
             ];

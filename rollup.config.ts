@@ -1,7 +1,7 @@
 import { defineConfig } from "rollup";
-import { typescriptPaths as paths } from "rollup-plugin-typescript-paths";
+import { typescriptPaths } from "rollup-plugin-typescript-paths";
 import { execSync } from "node:child_process";
-import version from "typescript";
+import ts from "typescript";
 import esbuild from 'rollup-plugin-esbuild';
 
 function hash(): string {
@@ -24,12 +24,12 @@ export default defineConfig([{
         inlineDynamicImports: true,
         minifyInternalExports: true,
         compact: true,
-        format: "cjs",
+        format: "esm",
         strict: true,
         sourcemap: false,
     },
     plugins: [
-        paths({ preserveExtensions: true, nonRelative: true }),
+        typescriptPaths({ preserveExtensions: true, nonRelative: true }),
         esbuild({
             platform: "node",
             target: "esnext",
@@ -41,7 +41,7 @@ export default defineConfig([{
             ignoreAnnotations: true,
             define: {
                 __VERSION__: `"${hash()}"`,
-                __TYPESCRIPTVERSION__: `"${version.version}"`
+                __TYPESCRIPTVERSION__: `"${ts.version}"`
             },
             treeShaking: true
         })

@@ -1,8 +1,7 @@
 import { EmbedBuilder, SlashCommandBuilder, version as djsVersion } from "discord.js";
 import { Logger } from "@components/Logger";
-import { timeConverter } from "@utils/timeConverter";
-import { hash } from "@utils/hash";
-import type { Command } from "@common/types";
+import { timeConverter, hash } from "@utils";
+import type { Command } from "@common";
 import { version } from "node:process";
 
 export default {

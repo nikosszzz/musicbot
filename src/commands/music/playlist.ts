@@ -3,7 +3,7 @@ import { type GuildMember, EmbedBuilder, SlashCommandBuilder, PermissionFlagsBit
 import { Logger } from "@components/Logger";
 import { MusicQueue } from "@components/MusicQueue";
 import { Playlist } from "@components/Playlist";
-import type { Command } from "@common/types";
+import type { Command } from "@common";
 import { SoundCloudPlaylist, SpotifyPlaylist } from "play-dl";
 
 export default {

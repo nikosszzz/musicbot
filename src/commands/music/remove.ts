@@ -1,6 +1,6 @@
 import { EmbedBuilder, type GuildMember, SlashCommandBuilder } from "discord.js";
 import { canModifyQueue } from "@components/QueueUtils";
-import type { Command } from "@common/types";
+import type { Command } from "@common";
 
 export default {
     data: new SlashCommandBuilder()

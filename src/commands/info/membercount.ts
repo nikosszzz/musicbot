@@ -1,4 +1,4 @@
-import type { Command } from "@common/types";
+import type { Command } from "@common";
 import { EmbedBuilder, SlashCommandBuilder } from "discord.js";
 
 export default {

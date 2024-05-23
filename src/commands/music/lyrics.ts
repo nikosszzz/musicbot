@@ -2,7 +2,7 @@ import { EmbedBuilder, SlashCommandBuilder } from "discord.js";
 // @ts-ignore
 import lyricsFinder from "lyrics-finder";
 import { Logger } from "@components/Logger";
-import type { Command } from "@common/types";
+import type { Command } from "@common";
 
 export default {
     data: new SlashCommandBuilder()

@@ -1,4 +1,4 @@
-import type { Command } from "@common/types";
+import type { Command } from "@common";
 import { EmbedBuilder, SlashCommandBuilder } from "discord.js";
 
 export default {
@@ -7,10 +7,10 @@ export default {
         .setDescription("Displays information about the latest Music Bot update."),
     async execute(interaction) {
 
-        const bugfixes = `- queue: Fix double \`Queue ended.\` message from the /stop command
-        - queue: Fix an issue where the \`Loading...\` message was not edited to the Now Playing embed.`;
+        const bugfixes = `- None`;
 
-        const whatsnew = `- bot: Updated and upgraded`;
+        const whatsnew = `- bot: Updated and upgraded
+        - codebase: Update to ESM format`;
 
         const UpdateEmbed = new EmbedBuilder()
             .setColor("NotQuiteBlack")

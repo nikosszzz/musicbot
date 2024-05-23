@@ -1,5 +1,5 @@
 import { Client, type ClientOptions, Collection } from "discord.js";
-import type { Command } from "@common/types";
+import type { Command } from "@common";
 import { config } from "@components/config";
 import { Manager } from "@manager";
 import type { MusicQueue } from "@components/MusicQueue";

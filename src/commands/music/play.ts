@@ -4,7 +4,7 @@ import { MusicQueue } from "@components/MusicQueue";
 import { Song } from "@components/Song";
 import { Logger } from "@components/Logger";
 import { sp_validate, so_validate, yt_validate } from "play-dl";
-import type { Command } from "@common/types";
+import type { Command } from "@common";
 
 export default {
     data: new SlashCommandBuilder()

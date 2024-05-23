@@ -1,6 +1,6 @@
 import { EmbedBuilder, SlashCommandBuilder } from "discord.js";
 import { Logger } from "@components/Logger";
-import type { Command } from "@common/types";
+import type { Command } from "@common";
 
 export default {
     data: new SlashCommandBuilder()

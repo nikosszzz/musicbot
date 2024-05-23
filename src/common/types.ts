@@ -36,5 +36,3 @@ export type QueueOptions = {
     connection: VoiceConnection;
     interaction: ChatInputCommandInteraction<CacheType>;
 }
-
-export { };

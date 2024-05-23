@@ -1,19 +1,19 @@
-import loop from "./loop";
-import lyrics from "./lyrics";
-import move from "./move";
-import nowplaying from "./nowplaying";
-import pause from "./pause";
-import play from "./play";
-import playlist from "./playlist";
-import pruning from "./pruning";
-import queue from "./queue";
-import remove from "./remove";
-import resume from "./resume";
-import shuffle from "./shuffle";
-import skip from "./skip";
-import skipto from "./skipto";
-import stop from "./stop";
-import volume from "./volume";
+import loop from "./loop.js";
+import lyrics from "./lyrics.js";
+import move from "./move.js";
+import nowplaying from "./nowplaying.js";
+import pause from "./pause.js";
+import play from "./play.js";
+import playlist from "./playlist.js";
+import pruning from "./pruning.js";
+import queue from "./queue.js";
+import remove from "./remove.js";
+import resume from "./resume.js";
+import shuffle from "./shuffle.js";
+import skip from "./skip.js";
+import skipto from "./skipto.js";
+import stop from "./stop.js";
+import volume from "./volume.js";
 
 export const commands = [
     loop,

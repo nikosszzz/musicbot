@@ -1,5 +1,5 @@
-import { ready } from "./modules/ready";
-import { commands } from "./modules/commands";
+import { ready } from "./modules/ready.js";
+import { commands } from "./modules/commands.js";
 import { Logger } from "@components/Logger";
 import type { Bot } from "@components/Bot";
 

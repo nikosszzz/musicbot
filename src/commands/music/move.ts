@@ -1,7 +1,7 @@
 import { type GuildMember, EmbedBuilder, SlashCommandBuilder } from "discord.js";
 import { canModifyQueue } from "@components/QueueUtils";
-import move from "array-move";
-import type { Command } from "@common/types";
+import { arrayMoveImmutable } from "array-move";
+import type { Command } from "@common";
 
 export default {
     data: new SlashCommandBuilder()
@@ -39,7 +39,7 @@ export default {
         if (firstPos <= 1) return interaction.reply({ content: "Provide valid position numbers.", ephemeral: true });
 
         const song = queue.songs[firstPos - 1];
-        queue.songs = move(queue.songs, firstPos - 1, secondPos == 1 ? 1 : secondPos - 1);
+        queue.songs = arrayMoveImmutable(queue.songs, firstPos - 1, secondPos == 1 ? 1 : secondPos - 1);
 
         const moveEmbed = new EmbedBuilder()
             .setColor("NotQuiteBlack")

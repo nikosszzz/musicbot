@@ -5,37 +5,36 @@
     "outDir": "./dist",
     "rootDir": ".",
     "baseUrl": "./src",
-    "module": "ESNext",
+    "module": "NodeNext",
     "target": "ESNext",
-    "moduleResolution": "Node",
+    "moduleResolution": "NodeNext",
     "resolveJsonModule": true,
     "allowUnreachableCode": false,
     "noUnusedLocals": true,
     "esModuleInterop": true,
     "noUnusedParameters": true,
-    "strictPropertyInitialization": true,
+    "isolatedModules": true,
+    "allowSyntheticDefaultImports": true,
     "skipDefaultLibCheck": true,
     "skipLibCheck": true,
     "noImplicitAny": true,
     "newLine": "LF",
+    "allowJs": true,
     "paths": {
       "@manager": [
-        "manager/index"
+        "manager/index.js"
       ],
-      "@common/*": [
-        "common/*"
+      "@common": [
+        "common/index.js"
       ],
-      "@utils/*": [
-        "utils/*"
+      "@utils": [
+        "utils/index.js"
       ],
       "@components/*": [
-        "components/*"
-      ],
-      "@components": [
-        "components/index"
+        "components/*.js"
       ],
       "@bot": [
-        "bot"
+        "index.js"
       ]
     }
   }
