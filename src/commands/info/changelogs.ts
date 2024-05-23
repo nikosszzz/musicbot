@@ -10,7 +10,8 @@ export default {
         const bugfixes = `- None`;
 
         const whatsnew = `- bot: Updated and upgraded
-        - codebase: Update to ESM format`;
+        - codebase: Update to ESM format
+        - lyrics: New package used for lyrics`;
 
         const UpdateEmbed = new EmbedBuilder()
             .setColor("NotQuiteBlack")

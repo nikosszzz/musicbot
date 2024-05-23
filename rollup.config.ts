@@ -15,7 +15,7 @@ function hash(): string {
 export default defineConfig([{
     input: "src/index.ts",
     treeshake: true,
-    external: ["discord.js", "play-dl", "lyrics-finder", "array-move", "string-progressbar", "@discordjs/voice", "chalk", "typescript", "node:util", "node:os", "node:process"],
+    external: ["discord.js", "play-dl", "lyrics-finder", "array-move", "string-progressbar", "@discordjs/voice", "chalk", "typescript", "node:util", "node:os", "node:process", "@joehoel/lyric-finder"],
     cache: true,
     output: {
         name: "bundle.js",
