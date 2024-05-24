@@ -47,7 +47,7 @@ export default {
         }
 
         await interaction.reply({ content: "⏳ Loading..." });
-
+  
         let song: Song;
         try {
             song = await Song.from({ search: url, interaction });
@@ -83,6 +83,7 @@ export default {
             });
 
             interaction.client.queues.set(interaction.guild?.id as string, newQueue);
+            await interaction.deleteReply();
 
             return await newQueue.enqueue({ songs: [song] });
         }

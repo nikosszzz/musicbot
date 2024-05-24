@@ -7,11 +7,12 @@ export default {
         .setDescription("Displays information about the latest Music Bot update."),
     async execute(interaction) {
 
-        const bugfixes = `- None`;
+        const bugfixes = `- handlers(command): Fix crash when replying to a already replied and/or deferred interaction
+        - lyrics: Fix possible crash`;
 
         const whatsnew = `- bot: Updated and upgraded
-        - codebase: Update to ESM format
-        - lyrics: New package used for lyrics`;
+        - playlist: Removed unnecessary similar code for the playlist message
+        - music(internals): Added one check in the inactivity leave`;
 
         const UpdateEmbed = new EmbedBuilder()
             .setColor("NotQuiteBlack")

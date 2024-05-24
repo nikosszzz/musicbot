@@ -54,7 +54,7 @@ export class Playlist {
 
             pl = { data: playlist, tracks: await playlist.all_tracks() };
         } else {
-            const playlist = await playlist_info(search as string, { incomplete: true });
+            const playlist = await playlist_info((await playSearch(search, { source: { youtube: "playlist" } }))[0].url!, { incomplete: true });
 
             pl = { data: playlist, tracks: await playlist.all_videos() };
         }

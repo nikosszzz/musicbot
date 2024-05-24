@@ -35,20 +35,20 @@ export default {
         await interaction.reply({ embeds: [lyricsFetch], ephemeral: true });
 
         try {
-            lyricsSearch = await lyrics.default(queue.songs[0].title);
-            if (!lyricsSearch.lyrics) return interaction.editReply({ embeds: [lyricsNotFound] });
+            lyricsSearch = await lyrics.default(title);
+            if (!lyricsSearch?.lyrics) return interaction.editReply({ embeds: [lyricsNotFound] });
+
+            const lyricsEmbed = new EmbedBuilder()
+                .setColor("NotQuiteBlack")
+                .setTitle(`${queue.songs[0].title} - Lyrics`)
+                .setDescription(lyricsSearch.lyrics);
+
+            if ((lyricsEmbed.data.description?.length as number) >= 2048)
+                lyricsEmbed.data.description = lyricsEmbed.data.description?.substring(0, 2045) + "...";
+            return interaction.editReply({ embeds: [lyricsEmbed] });
         } catch (err: any) {
             Logger.error({ type: "MUSICCMDS", err: err });
             return interaction.editReply({ embeds: [lyricsNotFound] });
         }
-
-        const lyricsEmbed = new EmbedBuilder()
-            .setColor("NotQuiteBlack")
-            .setTitle(`${queue.songs[0].title} - Lyrics`)
-            .setDescription(lyricsSearch.lyrics);
-
-        if ((lyricsEmbed.data.description?.length as number) >= 2048)
-            lyricsEmbed.data.description = lyricsEmbed.data.description?.substr(0, 2045) + "..." as string;
-        return interaction.editReply({ embeds: [lyricsEmbed] });
     },
 } as Command;

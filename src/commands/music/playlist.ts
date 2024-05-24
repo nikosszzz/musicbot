@@ -17,7 +17,7 @@ export default {
         ),
     async execute(interaction) {
         const { channel } = (interaction.member as GuildMember).voice;
-        const queue = interaction.client.queues.get(interaction.guild?.id as string);
+        let queue = interaction.client.queues.get(interaction.guild?.id as string);
         const url = interaction.options.getString("query") as string;
 
         /* Embeds for music */
@@ -54,35 +54,12 @@ export default {
 
         if (queue) {
             if (!queue.songs.length) {
-                const playlistEmbed = new EmbedBuilder()
-                    .setColor("NotQuiteBlack")
-                    .setTitle("Track Player")
-                    .setDescription("The following playlist is now playing:")
-                    .addFields(
-                        {
-                            name: playlist.data instanceof SpotifyPlaylist || playlist.data instanceof SoundCloudPlaylist ? playlist.data.name : playlist.data.title!, value: "** **"
-                        })
-                    .setURL(playlist.data.url as string);
-
-                interaction.editReply({ embeds: [playlistEmbed] }).catch((err: Error) => Logger.error({ type: "MUSICCMDS", err }));
-                return queue.enqueue({ songs: playlist.videos });
-            } else {
+                queue.enqueue({ songs: playlist.videos });
+            } else {        
                 queue.songs.push(...playlist.videos);
-
-                const playlistEmbed = new EmbedBuilder()
-                    .setColor("NotQuiteBlack")
-                    .setTitle("Track Player")
-                    .setDescription("The following playlist has been added to the queue:")
-                    .addFields(
-                        {
-                            name: playlist.data instanceof SpotifyPlaylist || playlist.data instanceof SoundCloudPlaylist ? playlist.data.name : playlist.data.title!, value: "** **"
-                        })
-                    .setURL(playlist.data.url as string);
-
-                return interaction.editReply({ embeds: [playlistEmbed] }).catch((err: Error) => Logger.error({ type: "MUSICCMDS", err }));
             }
         } else {
-            const newQueue = new MusicQueue({
+            queue = new MusicQueue({
                 options: {
                     interaction,
                     connection: joinVoiceChannel({
@@ -92,16 +69,14 @@ export default {
                     })
                 }
             });
+            interaction.client.queues.set(interaction.guild?.id as string, queue);
 
-            interaction.client.queues.set(interaction.guild?.id as string, newQueue);
-
-            await newQueue.enqueue({ songs: playlist.videos });
+            await queue.enqueue({ songs: playlist.videos });
         }
-
         const playlistEmbed = new EmbedBuilder()
             .setColor("NotQuiteBlack")
             .setTitle("Track Player")
-            .setDescription("The following playlist is now playing:")
+            .setDescription("The following playlist has been queued")
             .addFields(
                 {
                     name: playlist.data instanceof SpotifyPlaylist || playlist.data instanceof SoundCloudPlaylist ? playlist.data.name : playlist.data.title!, value: "** **"

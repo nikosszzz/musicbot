@@ -13,8 +13,8 @@ export async function commands(client: Bot): Promise<void> {
         try {
             await command.execute(interaction);
         } catch (err: any) {
-            Logger.error({ type: "INTERNALS/CMDHANDLER", err: err.stack });
-            await interaction.reply({ content: "An error occurred while executing this command.", ephemeral: true });
+            Logger.error({ type: "INTERNALS/CMDHANDLER", err: err });
+            interaction.replied || interaction.deferred ? await interaction.editReply({ content: "An error occurred while executing this command.", embeds: [] }) : await interaction.reply({ content: "An error occurred while executing this command.", embeds: [], ephemeral: true });
         }
     });
 }

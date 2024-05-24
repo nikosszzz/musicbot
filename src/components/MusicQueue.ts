@@ -12,7 +12,7 @@ import {
     VoiceConnectionStatus,
     type AudioPlayerPlayingState
 } from "@discordjs/voice";
-import type { CacheType, ChatInputCommandInteraction, Message, TextChannel } from "discord.js";
+import type { CacheType, ChatInputCommandInteraction, GuildTextBasedChannel } from "discord.js";
 import { promisify } from "node:util";
 import type { QueueOptions } from "@common";
 import { config } from "@components/config";
@@ -31,7 +31,7 @@ export class MusicQueue {
     public readonly interaction!: ChatInputCommandInteraction<CacheType>;
     public readonly connection!: VoiceConnection;
     public readonly player: AudioPlayer;
-    public readonly textChannel: TextChannel;
+    public readonly textChannel: GuildTextBasedChannel;
     public readonly bot: Bot;
 
     public resource!: AudioResource;
@@ -47,7 +47,7 @@ export class MusicQueue {
         Object.assign(this, options);
 
         this.bot = options.interaction.client;
-        this.textChannel = options.interaction.channel as TextChannel;
+        this.textChannel = options.interaction.channel as GuildTextBasedChannel;
         this.player = createAudioPlayer({ behaviors: { noSubscriber: NoSubscriberBehavior.Play } });
 
         options.connection.subscribe(this.player);
@@ -139,6 +139,8 @@ export class MusicQueue {
                 } catch { }
             }
 
+            if (this.player.state.status == AudioPlayerStatus.Playing || this.songs.length) return;
+
             this.bot.queues.delete(this.interaction.guild?.id as string);
             this.textChannel.send("Left channel due to inactivity.");
         }, config.STAY_TIME * 1000);
@@ -173,16 +175,14 @@ export class MusicQueue {
     }
 
     private async sendPlayingMessage({ newState }: { newState: AudioPlayerPlayingState; }): Promise<void> {
-        let playingMessage: Message<boolean>;
-
         try {
-            playingMessage = this.interaction.replied || this.interaction.deferred ? await this.interaction.editReply((newState.resource as AudioResource<Song>).metadata.startMessage()) : await this.textChannel.send((newState.resource as AudioResource<Song>).metadata.startMessage());
+            const playingMessage = await this.textChannel.send((newState.resource as AudioResource<Song>).metadata.startMessage());
+
+            if (config.PRUNING) setTimeout((): void => {
+                playingMessage.delete().catch();
+            }, 3000);
         } catch (err: any | Error) {
             Logger.error({ type: "INTERNAL:MUSIC", err: err });
         }
-
-        if (config.PRUNING) setTimeout((): void => {
-            playingMessage.delete().catch();
-        }, 3000);
     }
 }
