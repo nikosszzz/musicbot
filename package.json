@@ -22,7 +22,7 @@
     "array-move": "^4.0.0",
     "bufferutil": "^4.0.8",
     "chalk": "^5.3.0",
-    "discord.js": "^14.15.2",
+    "discord.js": "^14.15.3",
     "ffmpeg-static": "^5.2.0",
     "opusscript": "^0.1.1",
     "play-dl": "^1.9.7",
