@@ -142,7 +142,7 @@ export class MusicQueue {
 
             if (this.player.state.status == AudioPlayerStatus.Playing || this.songs.length) return;
 
-            this.bot.queues.delete(this.interaction.guild!.id as string);
+            this.bot.queues.delete(this.interaction.guild!.id);
             this.textChannel.send("Left channel due to inactivity.");
         }, config.STAY_TIME * 1000);
     }

@@ -16,7 +16,7 @@ export default {
             .setDescription("There is nothing playing in the queue currently.");
         if (!queue || !queue.songs || !queue.songs.length) return await interaction.reply({ embeds: [nothingPlaying], ephemeral: true });
 
-        let currentPage: number = 0 as number;
+        let currentPage = 0;
 
         const embeds = generateQueueEmbed(interaction, queue.songs);
         const queueButtons = new ActionRowBuilder<ButtonBuilder>()
@@ -88,7 +88,7 @@ function generateQueueEmbed(interaction: ChatInputCommandInteraction<CacheType>,
             .setAuthor({ name: "Track Queue" })
             .setTitle(`Current Song - ${songs[0].title}`)
             .setURL(songs[0].url)
-            .setThumbnail(interaction.guild!.iconURL() as string)
+            .setThumbnail(interaction.guild!.iconURL())
             .setDescription(`**Displaying the queue list below:**\n\n${info}`)
             .setFooter({ text: `${songs.length} tracks.` });
 

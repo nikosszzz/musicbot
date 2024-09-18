@@ -70,7 +70,7 @@ export default {
                     })
                 }
             });
-            interaction.client.queues.set(interaction.guild!.id as string, queue);
+            interaction.client.queues.set(interaction.guild!.id, queue);
 
             await queue.enqueue({ songs: playlist.videos });
         }
@@ -82,7 +82,7 @@ export default {
                 {
                     name: playlist.data instanceof SpotifyPlaylist || playlist.data instanceof SoundCloudPlaylist ? playlist.data.name : playlist.data.title!, value: "** **"
                 })
-            .setURL(playlist.data.url as string);
+            .setURL(playlist.data.url ?? null);
 
         return await interaction.editReply({ embeds: [playlistEmbed] }).catch((err: Error) => Logger.error({ type: "MUSICCMDS", err }));
     },

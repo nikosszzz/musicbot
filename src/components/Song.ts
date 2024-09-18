@@ -52,7 +52,7 @@ export class Song {
         } else if (isSoundCloudUrl) {
             const scSong = await soundcloud(search) as SoundCloudTrack;
             return new this({
-                title: scSong.name as string,
+                title: scSong.name,
                 url: scSong.permalink,
                 duration: scSong.durationInSec,
                 durationRaw: undefined,

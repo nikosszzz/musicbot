@@ -12,7 +12,7 @@ export default {
                 .setDescription("The volume level to set the music to.")
         ),
     async execute(interaction) {
-        const queue = interaction.client.queues.get(interaction.guild!.id as string);
+        const queue = interaction.client.queues.get(interaction.guild!.id);
         const volTarget = interaction.options.getNumber("level") as number;
 
         const notInVC = new EmbedBuilder()
