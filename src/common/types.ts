@@ -15,21 +15,18 @@ declare module "discord.js" {
 export type Config = {
     TOKEN: string;
     DEVTOKEN: string;
-    DEVID: string;
-    CLIENT_ID: string;
     MAX_PLAYLIST_SIZE: number;
     SOUNDCLOUD_CLIENT_ID: string;
     SPOTIFY_SECRET_ID: string;
     SPOTIFY_CLIENT_ID: string;
     SPOTIFY_REFRESH_TOKEN: string;
-    PRUNING: boolean;
     STAY_TIME: number;
     DEFAULT_VOLUME: number;
 }
 
 export type Command = {
     data: SlashCommandBuilder | SlashCommandSubcommandsOnlyBuilder | SlashCommandOptionsOnlyBuilder | SlashCommandSubcommandBuilder | Omit<SlashCommandBuilder, "addSubcommand" | "addSubcommandGroup">;
-    execute(interaction: ChatInputCommandInteraction<CacheType>): Promise<any> | any;
+    execute(interaction: ChatInputCommandInteraction<CacheType>): Promise<any>;
 }
 
 export type QueueOptions = {

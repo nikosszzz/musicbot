@@ -8,7 +8,7 @@ export default {
         .setDescription("Displays information about the guild."),
     async execute(interaction) {
         const guild = interaction.guild!;
-        const owner = await guild.fetchOwner();
+        const owner = await guild.fetchOwner({ cache: true });
         const verificationLevels = {
             0: "No level set.",
             1: "Low.",

@@ -6,8 +6,8 @@ export default {
     data: new SlashCommandBuilder()
         .setName("shuffle")
         .setDescription("Shuffles the queue."),
-    execute(interaction) {
-        const queue = interaction.client.queues.get(interaction.guild?.id as string);
+    async execute(interaction) {
+        const queue = interaction.client.queues.get(interaction.guild!.id);
 
         const nothingPlaying = new EmbedBuilder()
             .setColor("NotQuiteBlack")
@@ -19,8 +19,8 @@ export default {
             .setTitle("Track Player")
             .setDescription("You need to join the voice channel the bot is in.");
 
-        if (!canModifyQueue({ member: interaction.member as GuildMember })) return interaction.reply({ embeds: [notInBotChannel], ephemeral: true });
-        if (!queue) return interaction.reply({ embeds: [nothingPlaying], ephemeral: true });
+        if (!canModifyQueue({ member: interaction.member as GuildMember })) return await interaction.reply({ embeds: [notInBotChannel], ephemeral: true });
+        if (!queue) return await interaction.reply({ embeds: [nothingPlaying], ephemeral: true });
 
         const songs = queue.songs;
         for (let i = songs.length - 1; i > 1; i--) {
@@ -34,6 +34,6 @@ export default {
             .setTitle("Track Player")
             .setDescription(`${interaction.user} started queue shuffle.`);
 
-        interaction.reply({ embeds: [shuffleEmbed] });
+        return await interaction.reply({ embeds: [shuffleEmbed] });
     },
 } as Command;

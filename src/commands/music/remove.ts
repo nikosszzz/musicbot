@@ -12,9 +12,9 @@ export default {
                 .setDescription("The number of the track that you want to remove.")
                 .setRequired(true)
         ),
-    execute(interaction) {
-        const queue = interaction.client.queues.get(interaction.guild?.id as string);
-        const removeArgs: number = interaction.options.getNumber("tracks") as number;
+    async execute(interaction) {
+        const queue = interaction.client.queues.get(interaction.guild!.id);
+        const removeArgs = interaction.options.getNumber("tracks", true);
 
         const nothingToRemove = new EmbedBuilder()
             .setColor("NotQuiteBlack")
@@ -26,8 +26,8 @@ export default {
             .setTitle("Track Player")
             .setDescription("You need to join the voice channel the bot is in.");
 
-        if (!canModifyQueue({ member: interaction.member as GuildMember })) return interaction.reply({ embeds: [notInBotChannel], ephemeral: true });
-        if (!queue) return interaction.reply({ embeds: [nothingToRemove], ephemeral: true });
+        if (!canModifyQueue({ member: interaction.member as GuildMember })) return await interaction.reply({ embeds: [notInBotChannel], ephemeral: true });
+        if (!queue) return await interaction.reply({ embeds: [nothingToRemove], ephemeral: true });
 
         const song = queue.songs.splice(removeArgs - 1, 1);
         const removeEmbed1 = new EmbedBuilder()
@@ -35,6 +35,6 @@ export default {
             .setTitle("Track Player")
             .setDescription(`${interaction.user} removed **${song[0].title}** from the queue.`);
 
-        interaction.reply({ embeds: [removeEmbed1] });
+        return await interaction.reply({ embeds: [removeEmbed1] });
     }
 } as Command;

@@ -22,9 +22,10 @@
 
 - Install latest Node.JS LTS and Git.
 - Install the bot's dependencies (pnpm, npm or whatever you use).
-- Modify the `Bot.ts` and `config.ts` files in `./src/components/` for your bot's configuration.
+- Modify the `Bot.ts`files  in `./src/components/` for your bot's configuration.
+- Either make a `.env` file based off the config in `.env-example` or configure the `config.ts` in `./src/components/` for your bot.
 - Run the `build` script.
-- Run the `bundle.js` output file in the `dist` folder.
+- Run the `bundle.js` output file in the `dist` folder or the `start` script.
 
 ## 🛠️ Contributions
 

@@ -1,23 +1,22 @@
-import { EmbedBuilder, ActionRowBuilder, ButtonBuilder, SlashCommandBuilder, ButtonStyle, type CollectedInteraction, type CacheType, type ChatInputCommandInteraction } from "discord.js";
+import { EmbedBuilder, ActionRowBuilder, ButtonBuilder, SlashCommandBuilder, ButtonStyle, type CollectedInteraction, type CacheType, type ChatInputCommandInteraction, type GuildTextBasedChannel } from "discord.js";
 import { Logger } from "@components/Logger";
 import type { Song } from "@components/Song";
 import type { Command } from "@common";
-
-let currentPage: number = 0 as number;
 
 export default {
     data: new SlashCommandBuilder()
         .setName("queue")
         .setDescription("Shows the bot queue and what is currently playing."),
     async execute(interaction) {
-        const queue = interaction.client.queues.get(interaction.guild?.id as string);
+        const queue = interaction.client.queues.get(interaction.guild!.id);
 
         const nothingPlaying = new EmbedBuilder()
             .setColor("NotQuiteBlack")
             .setTitle("Track Player")
             .setDescription("There is nothing playing in the queue currently.");
-        if (!queue || !queue.songs || !queue.songs.length) return interaction.reply({ embeds: [nothingPlaying], ephemeral: true });
+        if (!queue || !queue.songs || !queue.songs.length) return await interaction.reply({ embeds: [nothingPlaying], ephemeral: true });
 
+        let currentPage: number = 0 as number;
 
         const embeds = generateQueueEmbed(interaction, queue.songs);
         const queueButtons = new ActionRowBuilder<ButtonBuilder>()
@@ -41,9 +40,9 @@ export default {
             embeds: [embeds[currentPage]], components: embeds.length > 1 ? [queueButtons] : []
         });
         if (embeds.length > 1) {
-            const collector = interaction.channel?.createMessageComponentCollector({ time: 60000 });
+            const collector = (interaction.channel as GuildTextBasedChannel).createMessageComponentCollector({ time: 60000 });
 
-            collector?.on("collect", async (i: CollectedInteraction): Promise<void> => {
+            collector.on("collect", async (i: CollectedInteraction): Promise<void> => {
                 try {
                     if (i.customId === "next") {
                         await i.deferUpdate();
@@ -89,7 +88,7 @@ function generateQueueEmbed(interaction: ChatInputCommandInteraction<CacheType>,
             .setAuthor({ name: "Track Queue" })
             .setTitle(`Current Song - ${songs[0].title}`)
             .setURL(songs[0].url)
-            .setThumbnail(interaction.guild?.iconURL() as string)
+            .setThumbnail(interaction.guild!.iconURL() as string)
             .setDescription(`**Displaying the queue list below:**\n\n${info}`)
             .setFooter({ text: `${songs.length} tracks.` });
 

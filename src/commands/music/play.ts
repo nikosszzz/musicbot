@@ -18,8 +18,8 @@ export default {
         ),
     async execute(interaction) {
         const { channel } = (interaction.member as GuildMember).voice;
-        const queue = interaction.client.queues.get(interaction.guild?.id as string);
-        const url: string = interaction.options.getString("query") as string;
+        const queue = interaction.client.queues.get(interaction.guild!.id);
+        const url = interaction.options.getString("query", true);
 
         const notInVC = new EmbedBuilder()
             .setColor("NotQuiteBlack")
@@ -31,8 +31,8 @@ export default {
             .setTitle("Track Player")
             .setDescription(`You must be in the same channel as ${interaction.client?.user}.`);
 
-        if (!channel) return interaction.reply({ embeds: [notInVC], ephemeral: true });
-        if (queue && channel.id !== queue.connection.joinConfig.channelId) return interaction.reply({ embeds: [notInBotChannel], ephemeral: true });
+        if (!channel) return await interaction.reply({ embeds: [notInVC], ephemeral: true });
+        if (queue && channel.id !== queue.connection.joinConfig.channelId) return await interaction.reply({ embeds: [notInBotChannel], ephemeral: true });
 
         const permissions = channel.permissionsFor(interaction.client?.user);
         const botNoPermissions = new EmbedBuilder()
@@ -40,10 +40,10 @@ export default {
             .setTitle("Track Player")
             .setDescription("I am missing permissions to join your channel or speak in your voice channel.");
 
-        if (!permissions?.has([PermissionFlagsBits.Connect, PermissionFlagsBits.Speak])) return interaction.reply({ embeds: [botNoPermissions], ephemeral: true });
+        if (!permissions?.has([PermissionFlagsBits.Connect, PermissionFlagsBits.Speak])) return await interaction.reply({ embeds: [botNoPermissions], ephemeral: true });
 
         if (yt_validate(url) === "playlist" || await so_validate(url) === "playlist" || sp_validate(url) === "album" || sp_validate(url) === "playlist") {
-            return interaction.reply({ content: "Playlist was provided, please use the `playlist` command.", ephemeral: true });
+            return await interaction.reply({ content: "Playlist was provided, please use the `playlist` command.", ephemeral: true });
         }
 
         await interaction.reply({ content: "⏳ Loading..." });
@@ -82,7 +82,7 @@ export default {
                 }
             });
 
-            interaction.client.queues.set(interaction.guild?.id as string, newQueue);
+            interaction.client.queues.set(interaction.guild!.id, newQueue);
             await interaction.deleteReply();
 
             return await newQueue.enqueue({ songs: [song] });

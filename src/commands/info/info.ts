@@ -47,6 +47,6 @@ export default {
                 }
             )
             .setFooter({ text: `Uptime: ${timeConverter.formatSeconds(Math.floor(process.uptime()))} | Git Hash: ${hash}` });
-        return interaction.reply({ embeds: [infoEmbed] }).catch((err: any) => Logger.error({ type: "INFOCMDS", err }));
+        return await interaction.reply({ embeds: [infoEmbed] }).catch((err: any) => Logger.error({ type: "INFOCMDS", err }));
     },
 } as Command;

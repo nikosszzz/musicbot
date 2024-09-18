@@ -16,9 +16,9 @@ export default {
         await interaction.deferReply();
 
         const user = interaction.options.getUser("user");
-        const member = user ? interaction.guild?.members.resolve(user) : interaction.member as GuildMember;
+        const member = user ? interaction.guild!.members.resolve(user) : interaction.member as GuildMember;
 
-        if (!member) return interaction.editReply("Could not resolve the provided user.");
+        if (!member) return await interaction.editReply("Could not resolve the provided user.");
 
         const desiredPermissions = [
             "KickMembers",
@@ -34,9 +34,9 @@ export default {
             "ManageGuildExpressions",
         ];
 
-        const permissions = member.permissions.toArray().filter(permission => desiredPermissions.includes(permission)).map(perm => PermissionFlagsBits[perm]);
+        const permissions = member.permissions.toArray().filter(permission => desiredPermissions.includes(permission)).map(perm => perm);
 
-        const acknowledgements = member.user.id === interaction.guild?.ownerId
+        const acknowledgements = member.user.id === interaction.guild!.ownerId
             ? "Server Owner"
             : member.permissions.has(PermissionFlagsBits.ManageGuild)
                 ? "Server Manager"
@@ -54,7 +54,7 @@ export default {
             .setThumbnail(member.user.avatarURL())
             .addFields(
                 {
-                    name: "Joined " + interaction.guild?.name,
+                    name: "Joined " + interaction.guild!.name,
                     value: member.joinedAt!.toLocaleString(),
                     inline: true,
                 },

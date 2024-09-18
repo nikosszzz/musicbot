@@ -5,41 +5,42 @@ import chalk from "chalk";
  * @description The Music Bot Logger System.
  * @methods error, log, info, debug
  */
-export class Logger {
+export const Logger = {
     /**
      * @name error
      * @description Error logger
      * @param type 
      * @param err 
      */
-    public static error({ type, err }: { type: string; err: any; }): void {
-        return console.error(chalk.red(`${chalk.red.bold(`[${type}]`)}      Error logged! ${err}`));
-    }
+    error({ type, err }: { type: string; err: Error | string }): void {
+        const errorMessage = typeof err === "string" ? err : (err as Error).stack || String(err);
+        console.error(chalk.red(`${chalk.bold(`[${type}]`)} Error logged! ${errorMessage}`));
+    },
     /**
      * @name log
      * @description Normal Logger
      * @param type 
      * @param msg 
      */
-    public static log({ type, msg }: { type: string; msg: string; }): void {
-        return console.log(chalk.green(`${chalk.green.bold(`[${type}]`)}      ${msg}`));
-    }
+    log({ type, msg }: { type: string; msg: string }): void {
+        console.log(chalk.yellowBright(`${chalk.bold(`[${type}]`)} ${msg}`));
+    },
     /**
      * @name info
      * @description Info Logger
      * @param type 
      * @param msg 
      */
-    public static info({ type, msg }: { type: string; msg: string; }): void {
-        console.log(chalk.blueBright(`${chalk.blueBright.bold(`[${type}]`)}      ${msg}`));
-    }
+    info({ type, msg }: { type: string; msg: string }): void {
+        console.log(chalk.hex('#FFA500')(`${chalk.bold(`[${type}]`)} ${msg}`));
+    },
     /**
      * @name debug
      * @description Debug Logger
      * @param type 
      * @param msg 
      */
-    public static debug({ type, msg }: { type: string; msg: string; }): void {
-        console.debug(chalk.blueBright(`${chalk.blueBright.bold(`[${type}]`)}      ${msg}`));
+    debug({ type, msg }: { type: string; msg: string; }): void {
+        console.debug(chalk.blueBright(`${chalk.bold(`[${type}]`)} ${msg}`));
     }
-}
+};

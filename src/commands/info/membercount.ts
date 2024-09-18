@@ -5,7 +5,7 @@ export default {
     data: new SlashCommandBuilder()
         .setName("membercount")
         .setDescription("Displays the number of members in the guild."),
-    execute(interaction) {
+    async execute(interaction) {
         const guild = interaction.guild!
         const countEmbed = new EmbedBuilder()
             .setColor("NotQuiteBlack")
@@ -13,6 +13,6 @@ export default {
             .addFields({
                 name: `${guild.name} Members`, value: `**${guild.memberCount}**`
             });
-        return interaction.reply({ embeds: [countEmbed] });
+        return await interaction.reply({ embeds: [countEmbed] });
     },
 } as Command;

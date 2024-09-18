@@ -7,15 +7,15 @@ export default {
     data: new SlashCommandBuilder()
         .setName("nowplaying")
         .setDescription("Shows the current playing song."),
-    execute(interaction) {
-        const queue = interaction.client.queues.get(interaction.guild?.id as string);
+    async execute(interaction) {
+        const queue = interaction.client.queues.get(interaction.guild!.id);
 
         const nothingPlaying = new EmbedBuilder()
             .setColor("NotQuiteBlack")
             .setTitle("Track Player")
             .setDescription("There is nothing playing in the queue currently.");
 
-        if (!queue) return interaction.reply({ embeds: [nothingPlaying], ephemeral: true });
+        if (!queue) return await interaction.reply({ embeds: [nothingPlaying], ephemeral: true });
 
         const song = queue.songs[0];
         const seek = queue.resource.playbackDuration / 1000;
@@ -44,7 +44,7 @@ export default {
                 nowPlaying.setFooter({ text: "Time Remaining: " + new Date(left * 1000).toISOString().substring(11, 8) });
             }
 
-            return interaction.reply({ embeds: [nowPlaying] });
+            return await interaction.reply({ embeds: [nowPlaying] });
         } catch (err: any | Error) {
             interaction.reply("An error has occured. Error has been reported.");
             return Logger.error({ type: "MUSICCMDS", err: err });

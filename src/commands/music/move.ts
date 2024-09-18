@@ -19,10 +19,10 @@ export default {
                 .setDescription("Position to move the song to.")
                 .setRequired(true)
         ),
-    execute(interaction) {
-        const queue = interaction.client.queues.get(interaction.guild?.id as string);
-        const firstPos: number = interaction.options.getNumber("first_position") as number;
-        const secondPos: number = interaction.options.getNumber("second_position") as number;
+    async execute(interaction) {
+        const queue = interaction.client.queues.get(interaction.guild!.id);
+        const firstPos = interaction.options.getNumber("first_position", true);
+        const secondPos = interaction.options.getNumber("second_position", true);
 
         const nothingPlaying = new EmbedBuilder()
             .setColor("NotQuiteBlack")
@@ -34,9 +34,9 @@ export default {
             .setTitle("Track Player")
             .setDescription("You need to join the voice channel the bot is in.");
 
-        if (!canModifyQueue({ member: interaction.member as GuildMember })) return interaction.reply({ embeds: [notInBotChannel], ephemeral: true });
-        if (!queue) return interaction.reply({ embeds: [nothingPlaying], ephemeral: true });
-        if (firstPos <= 1) return interaction.reply({ content: "Provide valid position numbers.", ephemeral: true });
+        if (!canModifyQueue({ member: interaction.member as GuildMember })) return await interaction.reply({ embeds: [notInBotChannel], ephemeral: true });
+        if (!queue) return await interaction.reply({ embeds: [nothingPlaying], ephemeral: true });
+        if (firstPos <= 1) return await interaction.reply({ content: "Provide valid position numbers.", ephemeral: true });
 
         const song = queue.songs[firstPos - 1];
         queue.songs = arrayMoveImmutable(queue.songs, firstPos - 1, secondPos == 1 ? 1 : secondPos - 1);
@@ -46,6 +46,6 @@ export default {
             .setTitle("Track Player")
             .setDescription(`${interaction.user} moved **${song.title}** to ${secondPos} in the queue.`);
 
-        interaction.reply({ embeds: [moveEmbed] });
+        return await interaction.reply({ embeds: [moveEmbed] });
     },
 } as Command;

@@ -7,7 +7,7 @@ export default {
         .setName("resume")
         .setDescription("Resumes the currently non-playing track."),
     async execute(interaction) {
-        const queue = interaction.client.queues.get(interaction.guild?.id as string);
+        const queue = interaction.client.queues.get(interaction.guild!.id);
 
         const nothingPlaying = new EmbedBuilder()
             .setColor("NotQuiteBlack")
@@ -19,17 +19,16 @@ export default {
             .setTitle("Track Player")
             .setDescription("You need to join the voice channel the bot is in.");
 
-        if (!canModifyQueue({ member: interaction.member as GuildMember })) return interaction.reply({ embeds: [notInBotChannel], ephemeral: true });
-        if (!queue) return interaction.reply({ embeds: [nothingPlaying], ephemeral: true });
+        if (!canModifyQueue({ member: interaction.member as GuildMember })) return await interaction.reply({ embeds: [notInBotChannel], ephemeral: true });
+        if (!queue) return await interaction.reply({ embeds: [nothingPlaying], ephemeral: true });
 
         if (queue.player.unpause()) {
-
             const resumeEmbed = new EmbedBuilder()
                 .setColor("NotQuiteBlack")
                 .setTitle("Track Player")
                 .setDescription(`${interaction.user} resumed the queue.`);
 
-            interaction.reply({ embeds: [resumeEmbed] });
+            await interaction.reply({ embeds: [resumeEmbed] });
             return true;
         }
 
@@ -38,6 +37,6 @@ export default {
             .setTitle("Track Player")
             .setDescription("The queue is not paused.");
 
-        return interaction.reply({ embeds: [notPaused] });
+        return await interaction.reply({ embeds: [notPaused] });
     },
 } as Command;

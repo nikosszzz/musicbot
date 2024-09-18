@@ -14,11 +14,12 @@ export default {
             option
                 .setName("query")
                 .setDescription("The query to search for.")
+                .setRequired(true)
         ),
     async execute(interaction) {
         const { channel } = (interaction.member as GuildMember).voice;
-        let queue = interaction.client.queues.get(interaction.guild?.id as string);
-        const url = interaction.options.getString("query") as string;
+        let queue = interaction.client.queues.get(interaction.guild!.id);
+        const url = interaction.options.getString("query", true);
 
         /* Embeds for music */
         const notInVC = new EmbedBuilder()
@@ -31,8 +32,8 @@ export default {
             .setTitle("Track Player")
             .setDescription("You need to join the voice channel the bot is in.");
 
-        if (!channel) return interaction.reply({ embeds: [notInVC], ephemeral: true });
-        if (queue && channel.id !== queue.connection.joinConfig.channelId) return interaction.reply({ embeds: [notInBotChannel], ephemeral: true });
+        if (!channel) return await interaction.reply({ embeds: [notInVC], ephemeral: true });
+        if (queue && channel.id !== queue.connection.joinConfig.channelId) return await interaction.reply({ embeds: [notInBotChannel], ephemeral: true });
 
         const permissions = channel.permissionsFor(interaction.client?.user);
         const botNoPermissions = new EmbedBuilder()
@@ -40,7 +41,7 @@ export default {
             .setTitle("Track Player")
             .setDescription("I am missing permissions to join your channel or speak in your voice channel.");
 
-        if (!permissions?.has([PermissionFlagsBits.Connect, PermissionFlagsBits.Speak])) return interaction.reply({ embeds: [botNoPermissions], ephemeral: true });
+        if (!permissions?.has([PermissionFlagsBits.Connect, PermissionFlagsBits.Speak])) return await interaction.reply({ embeds: [botNoPermissions], ephemeral: true });
 
         if (!interaction.deferred) interaction.deferReply();
 
@@ -49,7 +50,7 @@ export default {
             playlist = await Playlist.from({ search: url, interaction });
         } catch (err: any | Error) {
             Logger.error({ type: "INTERNAL:PLAYLIST", err: err });
-            return interaction.editReply({ content: "Playlist not found." }).catch((err) => Logger.error({ type: "MUSICCMDS", err: err }));
+            return await interaction.editReply({ content: "Playlist not found." }).catch((err) => Logger.error({ type: "MUSICCMDS", err: err }));
         }
 
         if (queue) {
@@ -69,7 +70,7 @@ export default {
                     })
                 }
             });
-            interaction.client.queues.set(interaction.guild?.id as string, queue);
+            interaction.client.queues.set(interaction.guild!.id as string, queue);
 
             await queue.enqueue({ songs: playlist.videos });
         }
@@ -83,6 +84,6 @@ export default {
                 })
             .setURL(playlist.data.url as string);
 
-        return interaction.editReply({ embeds: [playlistEmbed] }).catch((err: Error) => Logger.error({ type: "MUSICCMDS", err }));
+        return await interaction.editReply({ embeds: [playlistEmbed] }).catch((err: Error) => Logger.error({ type: "MUSICCMDS", err }));
     },
 } as Command;

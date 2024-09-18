@@ -8,14 +8,14 @@ export default {
         .setName("lyrics")
         .setDescription("Fetch lyrics for the currently playing song."),
     async execute(interaction) {
-        const queue = interaction.client.queues.get(interaction.guild?.id as string);
+        const queue = interaction.client.queues.get(interaction.guild!.id);
 
         const nothingPlaying = new EmbedBuilder()
             .setColor("NotQuiteBlack")
             .setTitle("Track Player")
             .setDescription("There is nothing playing in the queue currently.");
 
-        if (!queue || !queue.songs || !queue.songs.length) return interaction.reply({ embeds: [nothingPlaying], ephemeral: true });
+        if (!queue || !queue.songs || !queue.songs.length) return await interaction.reply({ embeds: [nothingPlaying], ephemeral: true });
 
         let lyricsSearch = null;
         const title = queue.songs[0].title;
@@ -36,7 +36,7 @@ export default {
 
         try {
             lyricsSearch = await lyrics.default(title);
-            if (!lyricsSearch?.lyrics) return interaction.editReply({ embeds: [lyricsNotFound] });
+            if (!lyricsSearch?.lyrics) return await interaction.editReply({ embeds: [lyricsNotFound] });
 
             const lyricsEmbed = new EmbedBuilder()
                 .setColor("NotQuiteBlack")
@@ -45,10 +45,10 @@ export default {
 
             if ((lyricsEmbed.data.description?.length as number) >= 2048)
                 lyricsEmbed.data.description = lyricsEmbed.data.description?.substring(0, 2045) + "...";
-            return interaction.editReply({ embeds: [lyricsEmbed] });
+            return await interaction.editReply({ embeds: [lyricsEmbed] });
         } catch (err: any) {
             Logger.error({ type: "MUSICCMDS", err: err });
-            return interaction.editReply({ embeds: [lyricsNotFound] });
+            return await interaction.editReply({ embeds: [lyricsNotFound] });
         }
     },
 } as Command;

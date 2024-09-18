@@ -12,25 +12,30 @@ import type { Bot } from "@components/Bot";
 export class Manager {
     private async loadModule(client: Bot, moduleFn: (client: Bot) => Promise<void>, moduleName: string): Promise<void> {
         try {
+            Logger.log({ type: "MANAGER", msg: `${moduleName} module is initializing.` });
             await moduleFn(client);
             Logger.log({ type: "MANAGER", msg: `${moduleName} module has been initialized.` });
-        } catch (err: any | Error) {
+        } catch (err: any) {
             Logger.error({ type: "MANAGER", err });
         }
     }
 
     private async loadModules(client: Bot): Promise<void> {
+        Logger.log({ type: "MANAGER", msg: "Initializing modules."});
+
         const modules = [
             { fn: commands, name: "Commands Handler" },
             { fn: ready, name: "Ready" },
         ];
 
-        const promises = modules.map(({ fn, name }) => this.loadModule(client, fn, name));
+        for (const { fn, name } of modules) {
+            await this.loadModule(client, fn, name);
+        }
 
-        await Promise.all(promises);
+        Logger.log({ type: "MANAGER", msg: "All modules have been initialized." });
     }
 
     public constructor(client: Bot) {
-        this.loadModules(client).then(() => Logger.log({ type: "MANAGER", msg: "All modules have been initialized." }));
+        this.loadModules(client).finally(() => Logger.log({ type: "STARTUP", msg: "Music Bot has initialized." }));
     }
 }

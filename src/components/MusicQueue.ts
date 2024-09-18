@@ -39,6 +39,7 @@ export class MusicQueue {
     public volume = config.DEFAULT_VOLUME || 50;
     public loop = false;
     public muted = false;
+    public pruning = false;
     public waitTimeout!: NodeJS.Timeout | null;
     private queueLock = false;
     private readyLock = false;
@@ -128,7 +129,7 @@ export class MusicQueue {
         this.loop = false;
         this.player.stop();
 
-        !config.PRUNING && this.textChannel.send("Queue ended.").catch((err) => Logger.error({ type: "MUSICCMDS", err: err }));
+        !this.pruning && this.textChannel.send("Queue ended.").catch((err) => Logger.error({ type: "MUSICCMDS", err: err }));
 
         if (this.waitTimeout !== null) return;
 
@@ -141,7 +142,7 @@ export class MusicQueue {
 
             if (this.player.state.status == AudioPlayerStatus.Playing || this.songs.length) return;
 
-            this.bot.queues.delete(this.interaction.guild?.id as string);
+            this.bot.queues.delete(this.interaction.guild!.id as string);
             this.textChannel.send("Left channel due to inactivity.");
         }, config.STAY_TIME * 1000);
     }
@@ -178,7 +179,7 @@ export class MusicQueue {
         try {
             const playingMessage = await this.textChannel.send((newState.resource as AudioResource<Song>).metadata.startMessage());
 
-            if (config.PRUNING) setTimeout((): void => {
+            if (this.pruning) setTimeout((): void => {
                 playingMessage.delete().catch();
             }, 3000);
         } catch (err: any | Error) {
