@@ -15,6 +15,8 @@ declare module "discord.js" {
 export type Config = {
     TOKEN: string;
     DEVTOKEN: string;
+    CLIENT_ID: string;
+    CLIENT_ID_DEV: string;
     MAX_PLAYLIST_SIZE: number;
     SOUNDCLOUD_CLIENT_ID: string;
     SPOTIFY_SECRET_ID: string;

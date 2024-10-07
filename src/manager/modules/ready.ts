@@ -5,6 +5,7 @@ import { commands as infoCmds } from "commands/info/index.js";
 import { commands as utilCmds } from "commands/utility/index.js";
 import type { Bot } from "@components/Bot";
 import chalk from "chalk";
+import { config } from "@components/config";
 
 export async function ready(client: Bot): Promise<void> {
     await new Promise<void>(async (resolve) => {
@@ -25,7 +26,7 @@ export async function ready(client: Bot): Promise<void> {
                 if (client.debug) Logger.info({ type: "DEVELOPMENT READY/CMDS", msg: `${commands[i].data.name} has been loaded.` });
             };
 
-            await client.rest.put(Routes.applicationCommands(client.user!.id), {
+            await client.rest.put(Routes.applicationCommands(client.debug ? config.CLIENT_ID_DEV : config.CLIENT_ID), {
                 body: commands.map(cmd => cmd.data.toJSON())
             });
             Logger.log({ type: "READY/CMDS", msg: `Registered ${chalk.blueBright(commands.length)} commands on Discord.` });
