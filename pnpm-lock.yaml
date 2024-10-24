@@ -39,8 +39,8 @@ importers:
         specifier: ^1.9.7
         version: 1.9.7
       sodium-native:
-        specifier: ^4.2.0
-        version: 4.2.1
+        specifier: ^4.2.2
+        version: 4.2.2
       string-progressbar:
         specifier: ^1.0.4
         version: 1.0.4
@@ -457,8 +457,8 @@ packages:
   safe-buffer@5.2.1:
     resolution: {integrity: sha512-rp3So07KcdmmKbGvgaNxQSJr7bGVSVk5S9Eq1F+ppbRo70+YeaDxkw5Dd8NPN+GD6bjnYm2VuPuCXmpuYvmCXQ==}
 
-  sodium-native@4.2.1:
-    resolution: {integrity: sha512-48X3PfRLW+f0fgb3J7f7mkZ9eBKcGR/bD5mdXXLAx4RWwKUe3095yPQgiUUQTfh8Q29JzwhSQATitQDBIozN/w==}
+  sodium-native@4.2.2:
+    resolution: {integrity: sha512-/gYaDtIK76FRcW0oBhIKJvLCDp706rJugd8wxJUBdbutgWrDlviG4tp8k+HfIRdy0Z+MbQE32ZGr4RPu1vXSsw==}
 
   string-progressbar@1.0.4:
     resolution: {integrity: sha512-OpkcFxlFjn7kz5jTWmPGY+FFJVN21lQ9k0fkK0XS5GVvlCgS1stgDNEoMyqnkbZEcVP3Gv6IxqgG7tnD7ChBSw==}
@@ -879,7 +879,7 @@ snapshots:
 
   safe-buffer@5.2.1: {}
 
-  sodium-native@4.2.1:
+  sodium-native@4.2.2:
     dependencies:
       node-gyp-build: 4.8.0
 
