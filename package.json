@@ -27,7 +27,7 @@
     "ffmpeg-static": "^5.2.0",
     "opusscript": "^0.1.1",
     "play-dl": "^1.9.7",
-    "sodium-native": "^4.2.0",
+    "sodium-native": "^4.3.0",
     "string-progressbar": "^1.0.4",
     "utf-8-validate": "^6.0.4"
   },
