@@ -17,7 +17,7 @@
     "node": ">=20.0.0"
   },
   "dependencies": {
-    "@discordjs/voice": "^0.17.0",
+    "@discordjs/voice": "^0.18.0",
     "@joehoel/lyric-finder": "^1.0.2",
     "array-move": "^4.0.0",
     "bufferutil": "^4.0.8",
