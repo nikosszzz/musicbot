@@ -1,5 +1,4 @@
 import { Client, type ClientOptions, Collection } from "discord.js";
-import { configDotenv } from "dotenv";
 import type { Command } from "@common";
 import { config } from "@components/config";
 import { Manager } from "@manager";
@@ -11,17 +10,14 @@ import { hash } from "@utils";
 export class Bot extends Client {
     public commands = new Collection<string, Command>();
     public queues = new Collection<string, MusicQueue>();
-    public readonly debug: boolean = false;
-    public readonly version: string = `3.4.0 (${hash})`;
-    public readonly branch: string = this.debug ? "development" : "stable";
+    public readonly version = `3.5.0 (${hash})`;
+    public readonly branch: string = config.DEBUG ? "development" : "stable";
 
     constructor(options: ClientOptions) {
         try {
             super(options);
-            if (this.debug) Logger.info({ type: "DEVELOPMENT", msg: "⚠️ Debug mode is enabled. ⚠️" });
 
-            /* Read .env values if configured */
-            configDotenv();
+            if (config.DEBUG) Logger.info({ type: "DEVELOPMENT", msg: "⚠️ Debug mode is enabled. ⚠️" });
 
             Logger.log({ type: "STARTUP", msg: "Music Bot is initializing..." });
 
@@ -40,8 +36,8 @@ export class Bot extends Client {
                         refresh_token: config.SPOTIFY_REFRESH_TOKEN
                     }
                 }));
-
-            this.login(this.debug ? config.DEVTOKEN : config.TOKEN);
+            
+            this.login(config.DEBUG ? config.DEVTOKEN : config.TOKEN);
             
             new Manager(this);
         } catch (e: any) {

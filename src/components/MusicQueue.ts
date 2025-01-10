@@ -163,6 +163,8 @@ export class MusicQueue {
         try {
             const resource = await next.makeResource();
 
+            console.log(resource);
+
             this.resource = resource as AudioResource<Song>;
             this.player.play(this.resource);
             this.resource.volume?.setVolumeLogarithmic(this.volume / 100);

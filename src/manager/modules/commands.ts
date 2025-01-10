@@ -1,12 +1,12 @@
-import { Logger } from "@components/Logger";
-import type { Bot } from "@components/Bot";
 import type { CacheType, ChatInputCommandInteraction, Interaction } from "discord.js";
+import type { Bot } from "@components/Bot";
+import { Logger } from "@components/Logger";
 
 export async function commands(client: Bot): Promise<void> {
     client.on("interactionCreate", async (interaction) => {
         if (!isCommandInteraction(interaction)) return;
 
-        const command = client.commands.get(interaction.commandName);
+        const command = interaction.client.commands.get(interaction.commandName);
 
         if (!command) return;
 

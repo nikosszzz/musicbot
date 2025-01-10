@@ -6,7 +6,6 @@ declare module "discord.js" {
     interface Client {
         commands: Collection<string, Command>;
         queues: Collection<string, MusicQueue>;
-        debug: boolean;
         version: string;
         branch: string;
     }
@@ -14,6 +13,7 @@ declare module "discord.js" {
 
 export type Config = {
     TOKEN: string;
+    DEBUG: boolean;
     DEVTOKEN: string;
     CLIENT_ID: string;
     CLIENT_ID_DEV: string;

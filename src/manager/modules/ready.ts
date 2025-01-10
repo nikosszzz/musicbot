@@ -1,35 +1,36 @@
 import { ActivityType, Routes } from "discord.js";
-import { Logger } from "@components/Logger";
-import { commands as musicCmds } from "commands/music/index.js";
-import { commands as infoCmds } from "commands/info/index.js";
-import { commands as utilCmds } from "commands/utility/index.js";
 import type { Bot } from "@components/Bot";
-import chalk from "chalk";
 import { config } from "@components/config";
+import { Logger } from "@components/Logger";
+import { commands as utilCmds } from "@commands/utility/index";
+import { commands as infoCmds } from "@commands/info/index";
+import { commands as musicCmds } from "@commands/music/index";
+import { blueBright } from "yoctocolors";
 
 export async function ready(client: Bot): Promise<void> {
-    await new Promise<void>(async (resolve) => {
-        if (client.isReady() || client.once("ready", (c) => c.isReady())) {
+    await new Promise<void>((resolve) => {
+        const onReady = async () => {
             await registerCommands();
             setupAutomaticPresence();
-
             resolve();
         };
+
+        client.isReady() ? onReady() : client.once("ready", onReady);
     });
 
     async function registerCommands(): Promise<void> {
-        const commands = [...musicCmds, ...infoCmds, ...utilCmds];
+        const allCommands = [...utilCmds, ...infoCmds, ...musicCmds];
 
         try {
-            for (let i = 0; i < commands.length; i++) {
-                client.commands.set(commands[i].data.name, commands[i]);
-                if (client.debug) Logger.info({ type: "DEVELOPMENT READY/CMDS", msg: `${commands[i].data.name} has been loaded.` });
+            for (let i = 0; i < allCommands.length; i++) {
+                client.commands.set(allCommands[i].data.name, allCommands[i]);
+                Logger.debug({ type: "DEVELOPMENT READY/CMDS", msg: `${allCommands[i].data.name} has been loaded.` });
             };
 
-            await client.rest.put(Routes.applicationCommands(client.debug ? config.CLIENT_ID_DEV : config.CLIENT_ID), {
-                body: commands.map(cmd => cmd.data.toJSON())
+            await client.rest.put(Routes.applicationCommands(config.DEBUG ? config.CLIENT_ID_DEV : config.CLIENT_ID), {
+                body: allCommands.map(cmd => cmd.data.toJSON())
             });
-            Logger.log({ type: "READY/CMDS", msg: `Registered ${chalk.blueBright(commands.length)} commands on Discord.` });
+            Logger.log({ type: "READY/CMDS", msg: `Registered ${blueBright(allCommands.length.toString())} commands on Discord.` });
         } catch (err: any) {
             Logger.error({ type: "READY/CMDS", err });
         }

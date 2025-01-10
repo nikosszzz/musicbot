@@ -11,3 +11,4 @@ CONTRIBUTING.md
 /.vs
 /dist
 config.json
+.env

@@ -1,7 +1,12 @@
 import { Config } from "@common";
+import { config as dotEnvConf } from "@dotenvx/dotenvx";
+
+/* Read .env values if configured */
+dotEnvConf();
 
 export const config: Config = {
     TOKEN: process.env.TOKEN || "",
+    DEBUG: process.env.DEBUG?.toLowerCase() == "true" || false,
     DEVTOKEN: process.env.DEVTOKEN || "",
     CLIENT_ID: process.env.CLIENT_ID || "",
     CLIENT_ID_DEV: process.env.CLIENT_ID_DEV || "",

@@ -71,6 +71,7 @@ export class Song {
             });
         } else {
             songInfo = (await video_basic_info((await playSearch(search, { limit: 1 }))[0].url)).video_details;
+
             return new this({
                 url: songInfo.url,
                 title: songInfo.title!,
@@ -87,7 +88,7 @@ export class Song {
 
         if (!playStream) return;
 
-        return createAudioResource(playStream.stream, { metadata: this, inputType: playStream.type, inlineVolume: true });
+        return createAudioResource(playStream.stream, { metadata: this, inputType: playStream.type, inlineVolume: false });
     }
 
     public startMessage(): MessagePayload | MessageCreateOptions {

@@ -1,4 +1,5 @@
-import chalk from "chalk";
+import { red, yellowBright, blueBright, bold, redBright } from "yoctocolors";
+import { config } from "./config.js";
 
 /**
  * @name Music Bot Logger
@@ -13,8 +14,8 @@ export const Logger = {
      * @param err 
      */
     error({ type, err }: { type: string; err: Error | string }): void {
-        const errorMessage = typeof err === "string" ? err : (err as Error).stack || String(err);
-        console.error(chalk.red(`${chalk.bold(`[${type}]`)} Error logged! ${errorMessage}`));
+        const errorMessage = typeof err == "string" ? err : (err as Error).stack || String(err);
+        console.error(red(`${bold(`[${type}]`)} Error logged! ${errorMessage}`));
     },
     /**
      * @name log
@@ -23,7 +24,7 @@ export const Logger = {
      * @param msg 
      */
     log({ type, msg }: { type: string; msg: string }): void {
-        console.log(chalk.yellowBright(`${chalk.bold(`[${type}]`)} ${msg}`));
+        console.log(yellowBright(`${bold(`[${type}]`)} ${msg}`));
     },
     /**
      * @name info
@@ -32,7 +33,7 @@ export const Logger = {
      * @param msg 
      */
     info({ type, msg }: { type: string; msg: string }): void {
-        console.log(chalk.hex('#FFA500')(`${chalk.bold(`[${type}]`)} ${msg}`));
+        console.log(blueBright(`${bold(`[${type}]`)} ${msg}`));
     },
     /**
      * @name debug
@@ -41,6 +42,6 @@ export const Logger = {
      * @param msg 
      */
     debug({ type, msg }: { type: string; msg: string; }): void {
-        console.debug(chalk.blueBright(`${chalk.bold(`[${type}]`)} ${msg}`));
+        if (config.DEBUG) console.debug(redBright(`${bold(`[${type}]`)} ${msg}`));
     }
 };

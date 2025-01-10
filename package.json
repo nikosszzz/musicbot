@@ -1,6 +1,6 @@
 {
   "name": "music-bot",
-  "version": "3.4.0",
+  "version": "3.5.0",
   "description": "A general music Discord bot.",
   "main": "./src/bot.ts",
   "type": "module",
@@ -17,30 +17,32 @@
     "node": ">=20.0.0"
   },
   "dependencies": {
-    "@discordjs/voice": "^0.17.0",
+    "@discordjs/voice": "^0.18.0",
+    "@discordjs/opus": "^0.9.0",
+    "@dotenvx/dotenvx": "^1.31.0",
     "@joehoel/lyric-finder": "^1.0.2",
     "array-move": "^4.0.0",
-    "bufferutil": "^4.0.8",
-    "chalk": "^5.3.0",
-    "discord.js": "^14.16.2",
-    "dotenv": "^16.4.5",
+    "bufferutil": "^4.0.9",
+    "discord.js": "^14.17.3",
     "ffmpeg-static": "^5.2.0",
-    "opusscript": "^0.1.1",
     "play-dl": "^1.9.7",
-    "sodium-native": "^4.2.0",
     "string-progressbar": "^1.0.4",
-    "utf-8-validate": "^6.0.4"
+    "yoctocolors": "^2.1.1",
+    "zlib-sync": "^0.1.9"
   },
   "devDependencies": {
-    "@types/node": "^20.16.5",
-    "esbuild": "^0.23.1",
-    "typescript": "^5.6.2"
+    "@types/node": "^22.10.2",
+    "esbuild": "^0.24.0",
+    "typescript": "^5.7.2"
   },
   "scripts": {
     "start": "node ./dist/bundle.js",
     "dev": "node build.mjs --run",
     "lint": "eslint . --fix",
     "build": "node build.mjs"
+  },
+  "pnpm": {
+    "onlyBuiltDependencies": ["@discordjs/opus", "ffmpeg-static", "zlib-sync", "bufferutil", "esbuild"]
   },
   "license": "GPL-3.0"
 }

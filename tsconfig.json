@@ -33,6 +33,9 @@
       "@components/*": [
         "components/*.js"
       ],
+      "@commands/*": [
+        "commands/*.js"
+      ],
       "@bot": [
         "index.js"
       ]

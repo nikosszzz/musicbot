@@ -27,6 +27,18 @@
 - Run the `build` script.
 - Run the `bundle.js` output file in the `dist` folder or the `start` script.
 
+## ❓ Extra information
+
+As of @discordjs/voice version 0.18.0, you must only install one of the following packages yourself if your system doesn't support AES-256-GCM (verify by running require `('node:crypto').getCiphers().includes('aes-256-gcm')`)
+
+- sodium-native: ^3.3.0
+- sodium: ^3.0.2
+- @stablelib/xchacha20poly1305: ^2.0.0
+- @noble/ciphers: ^1.0.0
+- libsodium-wrappers: ^0.7.9
+
+You will also need to install node-gypm and the requirements that they tell you for a C++ compiler for your operating system as `zlib-sync` uses C++.
+
 ## 🛠️ Contributions
 
 If you think you can improve Music Bot, please submit a pull request that has well written and efficient code. Slow and poorly written code will be rejected or asked to be re-written properly.

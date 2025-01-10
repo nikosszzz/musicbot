@@ -10,18 +10,8 @@ import type { Bot } from "@components/Bot";
  * 
  */
 export class Manager {
-    private async loadModule(client: Bot, moduleFn: (client: Bot) => Promise<void>, moduleName: string): Promise<void> {
-        try {
-            Logger.log({ type: "MANAGER", msg: `${moduleName} module is initializing.` });
-            await moduleFn(client);
-            Logger.log({ type: "MANAGER", msg: `${moduleName} module has been initialized.` });
-        } catch (err: any) {
-            Logger.error({ type: "MANAGER", err });
-        }
-    }
-
     private async loadModules(client: Bot): Promise<void> {
-        Logger.log({ type: "MANAGER", msg: "Initializing modules."});
+        Logger.log({ type: "MANAGER", msg: "Initializing modules." });
 
         const modules = [
             { fn: commands, name: "Commands Handler" },
@@ -29,7 +19,13 @@ export class Manager {
         ];
 
         for (const { fn, name } of modules) {
-            await this.loadModule(client, fn, name);
+            try {
+                Logger.log({ type: "MANAGER", msg: `${name} module is initializing.` });
+                await fn(client);
+                Logger.log({ type: "MANAGER", msg: `${name} module has been initialized.` });
+            } catch (err: any) {
+                Logger.error({ type: "MANAGER", err });
+            }
         }
 
         Logger.log({ type: "MANAGER", msg: "All modules have been initialized." });
